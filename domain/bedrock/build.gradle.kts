@@ -1,0 +1,24 @@
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    jvmToolchain(21)
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        allWarningsAsErrors.set(true)
+        optIn.add("kotlinx.serialization.ExperimentalSerializationApi")
+    }
+}
+
+dependencies {
+    api(project(":core:common"))
+    implementation(libs.apksig)
+    testImplementation(libs.junit)
+}
