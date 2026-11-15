@@ -1,0 +1,6 @@
+{"latest":{"release":"1.21.4","snapshot":"25w02a"},"versions":[
+{"id":"25w02a","type":"snapshot","url":"https://piston-meta.mojang.com/v1/packages/aaa/25w02a.json","time":"2025-01-08T13:00:00+00:00","releaseTime":"2025-01-08T12:00:00+00:00","sha1":"0000000000000000000000000000000000000001","complianceLevel":1},
+{"id":"1.21.4","type":"release","url":"https://piston-meta.mojang.com/v1/packages/bbb/1.21.4.json","time":"2024-12-03T10:00:00+00:00","releaseTime":"2024-12-03T10:00:00+00:00","sha1":"0000000000000000000000000000000000000002","complianceLevel":1},
+{"id":"1.12.2","type":"release","url":"https://piston-meta.mojang.com/v1/packages/ccc/1.12.2.json","time":"2017-09-18T08:39:46+00:00","releaseTime":"2017-09-18T08:39:46+00:00","sha1":"0000000000000000000000000000000000000003","complianceLevel":0},
+{"id":"b1.7.3","type":"old_beta","url":"https://piston-meta.mojang.com/v1/packages/ddd/b1.7.3.json","time":"2011-07-08T00:00:00+00:00","releaseTime":"2011-07-08T00:00:00+00:00","sha1":"0000000000000000000000000000000000000004","complianceLevel":0}
+]}
