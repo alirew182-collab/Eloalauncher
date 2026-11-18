@@ -1,12 +1,12 @@
 package dev.eloa.launcher.feature.bedrock
 
+import androidx.core.net.toUri
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -35,10 +35,10 @@ class PackageInstallerGateway @Inject constructor(@ApplicationContext private va
     fun canRequestInstalls(): Boolean = pm.canRequestPackageInstalls()
 
     fun unknownSourcesSettingsIntent(): Intent =
-        Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${context.packageName}")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, "package:${context.packageName}".toUri()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
     fun appDetailsIntent(packageName: String): Intent =
-        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:$packageName".toUri()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
     @Suppress("DEPRECATION")
     fun installedPackage(packageName: String): InstalledPackage? = try {
@@ -64,7 +64,7 @@ class PackageInstallerGateway @Inject constructor(@ApplicationContext private va
         val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL).apply {
             setAppPackageName(packageName)
             setSize(files.sumOf { it.length() })
-            if (Build.VERSION.SDK_INT >= 26) setInstallReason(android.content.pm.PackageManager.INSTALL_REASON_USER)
+            setInstallReason(PackageManager.INSTALL_REASON_USER)
         }
         val id = installer.createSession(params)
         val session = installer.openSession(id)

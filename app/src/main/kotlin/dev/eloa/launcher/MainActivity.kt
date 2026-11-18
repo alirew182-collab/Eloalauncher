@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val s by vm.settings.collectAsStateWithLifecycle()
             val errors by vm.recentErrors.collectAsStateWithLifecycle()
+            LaunchedEffect(s.uiRefreshCapHz) { applyRefreshCap(s.uiRefreshCapHz) }
             LauncherTheme(
                 themeMode = runCatching { ThemeMode.valueOf(s.themeMode) }.getOrDefault(ThemeMode.SYSTEM),
                 accent = runCatching { AccentColor.valueOf(s.accent) }.getOrDefault(AccentColor.GRASS),
@@ -35,5 +37,19 @@ class MainActivity : ComponentActivity() {
                 AppNavHost(messages = messages, errorBadge = errors)
             }
         }
+    }
+
+    /** Caps only this window's refresh rate (saves battery on weak devices); system settings are untouched. */
+    private fun applyRefreshCap(hz: Int) {
+        val attrs = window.attributes
+        if (hz <= 0) {
+            attrs.preferredDisplayModeId = 0
+        } else {
+            @Suppress("DEPRECATION")
+            val display = if (android.os.Build.VERSION.SDK_INT >= 30) display else windowManager.defaultDisplay
+            val mode = display?.supportedModes?.filter { it.refreshRate <= hz + 0.5f }?.maxByOrNull { it.refreshRate }
+            attrs.preferredDisplayModeId = mode?.modeId ?: 0
+        }
+        window.attributes = attrs
     }
 }

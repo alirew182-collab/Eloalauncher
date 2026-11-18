@@ -1,5 +1,6 @@
 package dev.eloa.launcher.feature.diagnostics
 
+import androidx.core.content.edit
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -188,7 +189,7 @@ class DiagnosticsEngine @Inject constructor(
                 names.forEach { runCatching { mm.setEnabled(it, false) } }
                 "Disabled ${names.size} mod(s)"
             }
-            "clearcrash" -> { context.getSharedPreferences("crash", Context.MODE_PRIVATE).edit().clear().apply(); "Dismissed" }
+            "clearcrash" -> { context.getSharedPreferences("crash", Context.MODE_PRIVATE).edit { clear() }; "Dismissed" }
             else -> throw IllegalArgumentException("Unknown fix")
         }
         logger.i("Diagnostics", "Applied fix ${parts[0]}", mapOf("result" to msg))

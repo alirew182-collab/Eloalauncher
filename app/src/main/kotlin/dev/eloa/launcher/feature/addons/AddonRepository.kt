@@ -1,5 +1,6 @@
 package dev.eloa.launcher.feature.addons
 
+import androidx.core.net.toUri
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -188,7 +189,7 @@ class AddonRepository @Inject constructor(
     suspend fun copyToMojangFolder(id: Long): String = withContext(Dispatchers.IO) {
         val e = dao.byId(id) ?: throw IOException("Not found")
         val uriStr = settings.current().mojangFolderUri.ifEmpty { throw IOException("Choose the games/com.mojang folder in Add-ons → Settings first") }
-        val tree = SafTree(context.contentResolver, Uri.parse(uriStr))
+        val tree = SafTree(context.contentResolver, uriStr.toUri())
         val file = File(e.storedPath)
         var written = 0
         SafeZip.open(file).use { zip ->

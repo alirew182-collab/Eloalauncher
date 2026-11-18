@@ -41,7 +41,7 @@ class CleanupWorker @AssistedInject constructor(
             val wm = WorkManager.getInstance(context)
             if (!s.autoCleanupTemp) { wm.cancelUniqueWork(NAME); return }
             val req = PeriodicWorkRequestBuilder<CleanupWorker>(12, TimeUnit.HOURS)
-                .setConstraints(Constraints.Builder().setRequiresBatteryNotLow(true).setRequiresDeviceIdle(s.limitBackgroundWork && android.os.Build.VERSION.SDK_INT >= 23).build())
+                .setConstraints(Constraints.Builder().setRequiresBatteryNotLow(true).setRequiresDeviceIdle(s.limitBackgroundWork).build())
                 .build()
             wm.enqueueUniquePeriodicWork(NAME, ExistingPeriodicWorkPolicy.UPDATE, req)
         }

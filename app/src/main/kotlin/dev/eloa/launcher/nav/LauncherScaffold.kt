@@ -1,5 +1,7 @@
 package dev.eloa.launcher.nav
 
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,7 +40,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -62,7 +63,7 @@ fun LauncherScaffold(
             if (r == SnackbarResult.ActionPerformed) m.action?.invoke()
         }
     }
-    val wide = LocalConfiguration.current.screenWidthDp >= 840
+    val wide = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() } >= 840.dp
     val drawerContent: @Composable () -> Unit = {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(12.dp)) {
             Text("ELOA", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 12.dp))

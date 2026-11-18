@@ -157,7 +157,7 @@ private fun VersionCard(v: BedrockVersionEntity, selected: Boolean, onClick: () 
             }
             Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (selected) StatusChip("Selected", StatusLevel.INFO)
-                compatChip(v)
+                CompatChip(v)
                 if (!v.integrityOk) StatusChip("Damaged", StatusLevel.ERROR)
             }
         }
@@ -165,7 +165,7 @@ private fun VersionCard(v: BedrockVersionEntity, selected: Boolean, onClick: () 
 }
 
 @Composable
-private fun compatChip(v: BedrockVersionEntity) = when (v.compatStatus) {
+private fun CompatChip(v: BedrockVersionEntity) = when (v.compatStatus) {
     "COMPATIBLE" -> StatusChip("Compatible", StatusLevel.OK)
     "WARNING" -> StatusChip("Check", StatusLevel.WARNING)
     else -> StatusChip("Incompatible", StatusLevel.ERROR)
@@ -181,7 +181,7 @@ private fun VersionSheet(v: BedrockVersionEntity, selected: Boolean, vm: Bedrock
         Column(Modifier.padding(horizontal = 20.dp).padding(bottom = 32.dp).verticalScroll(rememberScrollState())) {
             Text(v.displayName, style = MaterialTheme.typography.headlineSmall)
             Spacer(Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { compatChip(v); StatusChip(if (v.signatureValid) "Signature OK" else "Bad signature", if (v.signatureValid) StatusLevel.OK else StatusLevel.ERROR) }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { CompatChip(v); StatusChip(if (v.signatureValid) "Signature OK" else "Bad signature", if (v.signatureValid) StatusLevel.OK else StatusLevel.ERROR) }
             Spacer(Modifier.height(12.dp))
             LabeledValue("Package", v.packageName)
             LabeledValue("Version", "${v.versionName ?: "?"} (code ${v.versionCode})")

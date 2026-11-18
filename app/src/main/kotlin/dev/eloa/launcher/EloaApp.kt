@@ -1,5 +1,6 @@
 package dev.eloa.launcher
 
+import androidx.core.content.edit
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -47,8 +48,10 @@ class EloaApp : Application(), Configuration.Provider {
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
             runCatching {
                 logger.critical("Crash", "Uncaught exception on ${t.name}", e)
-                getSharedPreferences("crash", MODE_PRIVATE).edit()
-                    .putLong("last_crash", System.currentTimeMillis()).putString("last_crash_type", e.javaClass.name).commit()
+                // Synchronous write: the process is about to die, apply() could be lost.
+                getSharedPreferences("crash", MODE_PRIVATE).edit(commit = true) {
+                    putLong("last_crash", System.currentTimeMillis()).putString("last_crash_type", e.javaClass.name)
+                }
                 Thread.sleep(300) // allow the log batch to flush
             }
             previous?.uncaughtException(t, e)
