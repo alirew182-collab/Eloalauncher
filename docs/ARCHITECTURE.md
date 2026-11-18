@@ -82,3 +82,12 @@ minSdk = 26 (Android 8.0), targetSdk = compileSdk = 36.
   Services, проверка владения игрой (entitlements). Требуется Azure Client ID,
   одобренный для Minecraft API: задаётся в настройках. Встроенного «чужого» ID нет.
   Токены шифруются AES-GCM ключом из Android Keystore. Офлайн-аккаунтов нет.
+
+## 5. Расширение
+
+* Новый backend исполнения Java Edition подключается реализацией `GameRuntimeBackend` и привязкой в
+  `di/BackendModule.kt` — план запуска, предстартовая проверка и UI уже готовы.
+* Новый загрузчик модов — реализация `LoaderProvider` + значение в `ModLoaderType`.
+* Новый тип контента — значение `JavaContentType` и правило в `ContentValidator`.
+* Новые проверки диагностики — блок `check(...)` в `DiagnosticsEngine` и, при необходимости, `AutoFix`.
+* Миграции Room: схемы экспортируются в `core/data/schemas`.
