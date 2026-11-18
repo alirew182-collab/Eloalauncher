@@ -100,7 +100,7 @@ class SettingsViewModel @Inject constructor(
             if (spec.preset == PerformancePreset.CUSTOM) it.copy(performancePreset = spec.preset, presetChosenByUser = userChosen)
             else it.copy(performancePreset = spec.preset, presetChosenByUser = userChosen, defaultMaxMemoryMb = spec.javaMaxMemoryMb,
                 maxConcurrentDownloads = spec.maxConcurrentDownloads, reduceMotion = !spec.uiAnimations, enableBlur = spec.blur,
-                uiRefreshCapHz = spec.uiRefreshCapHz, cacheLimitMb = spec.cacheLimitMb, limitBackgroundWork = spec.preset <= PerformancePreset.LOW)
+                uiRefreshCapHz = if (userChosen) spec.uiRefreshCapHz else it.uiRefreshCapHz, cacheLimitMb = spec.cacheLimitMb, limitBackgroundWork = spec.preset <= PerformancePreset.LOW)
         }
     }
 

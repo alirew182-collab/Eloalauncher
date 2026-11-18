@@ -55,7 +55,9 @@ class DeviceInfoProvider(private val context: Context) {
         val mi = ActivityManager.MemoryInfo().also { am.getMemoryInfo(it) }
         val pm = context.packageManager
         val gles = am.deviceConfigurationInfo.reqGlEsVersion
-        val vkVersionFeature = pm.systemAvailableFeatures.firstOrNull { it.name == PackageManager.FEATURE_VULKAN_HARDWARE_VERSION }
+        // Platform type: some ROMs (and test environments) return null here.
+        val features: Array<android.content.pm.FeatureInfo>? = pm.systemAvailableFeatures
+        val vkVersionFeature = features?.firstOrNull { it.name == PackageManager.FEATURE_VULKAN_HARDWARE_VERSION }
         val power = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         return DeviceInfo(
             manufacturer = Build.MANUFACTURER,

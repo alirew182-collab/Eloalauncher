@@ -59,7 +59,12 @@ object DataModule {
 
     @Provides @Singleton
     fun deviceInfo(@ApplicationContext ctx: Context) = DeviceInfoProvider(ctx)
+}
 
+/** Separate so tests can replace the hardware-backed cipher (Robolectric has no AndroidKeyStore). */
+@Module
+@InstallIn(SingletonComponent::class)
+object CipherModule {
     @Provides @Singleton
     fun secretCipher(): SecretCipher = KeystoreSecretCipher()
 }

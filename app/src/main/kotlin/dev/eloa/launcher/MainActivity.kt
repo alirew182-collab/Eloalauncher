@@ -45,9 +45,10 @@ class MainActivity : ComponentActivity() {
         if (hz <= 0) {
             attrs.preferredDisplayModeId = 0
         } else {
+            // decorView.display is valid once attached; fall back to the window manager's display.
             @Suppress("DEPRECATION")
-            val display = if (android.os.Build.VERSION.SDK_INT >= 30) display else windowManager.defaultDisplay
-            val mode = display?.supportedModes?.filter { it.refreshRate <= hz + 0.5f }?.maxByOrNull { it.refreshRate }
+            val target = window.decorView.display ?: runCatching { windowManager.defaultDisplay }.getOrNull()
+            val mode = target?.supportedModes?.filter { it.refreshRate <= hz + 0.5f }?.maxByOrNull { it.refreshRate }
             attrs.preferredDisplayModeId = mode?.modeId ?: 0
         }
         window.attributes = attrs

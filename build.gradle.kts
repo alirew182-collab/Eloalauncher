@@ -8,3 +8,11 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.hilt) apply false
 }
+
+// Robolectric downloads android-all jars itself; use the same Maven Central mirror as Gradle.
+subprojects {
+    tasks.withType<Test>().configureEach {
+        systemProperty("robolectric.dependency.repo.url", "https://maven-central.storage-download.googleapis.com/maven2/")
+        systemProperty("robolectric.dependency.repo.id", "central-mirror")
+    }
+}

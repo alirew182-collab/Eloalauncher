@@ -66,9 +66,18 @@ android {
     packaging {
         resources.excludes += setOf("/META-INF/{AL2.0,LGPL2.1}", "META-INF/versions/9/OSGI-INF/MANIFEST.MF")
     }
+    sourceSets {
+        // Real signed APK fixtures produced by scripts/make_apk_fixtures.sh
+        getByName("test").resources.srcDir("../domain/bedrock/src/test/resources")
+    }
     testOptions {
         unitTests.isIncludeAndroidResources = true
-        unitTests.all { it.maxHeapSize = "3g" }
+        unitTests.all { t ->
+            t.maxHeapSize = "3g"
+            // ComponentUiTest hosts composables in androidx ComponentActivity, which only the debug
+            // manifest provides (ui-test-manifest is debug-only by design). It runs in testDebugUnitTest.
+            if (t.name.contains("Release")) t.filter.excludeTestsMatching("*ComponentUiTest")
+        }
     }
     lint {
         abortOnError = true
@@ -120,6 +129,8 @@ dependencies {
     testImplementation(libs.compose.ui.test.junit4)
     testImplementation(libs.work.testing)
     testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.compiler)
     debugImplementation(libs.compose.ui.test.manifest)
     debugImplementation(libs.compose.ui.tooling)
 
