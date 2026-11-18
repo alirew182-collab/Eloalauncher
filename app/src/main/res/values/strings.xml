@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Eloa Launcher</string>
+    <string name="channel_downloads">Downloads and installation</string>
+    <string name="channel_downloads_desc">Progress of game file downloads</string>
+</resources>
