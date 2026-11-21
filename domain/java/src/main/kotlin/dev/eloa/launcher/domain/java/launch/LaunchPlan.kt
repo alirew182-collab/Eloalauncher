@@ -34,6 +34,10 @@ data class LaunchSettings(
     val extraGameArgs: List<String> = emptyList(),
     val launcherName: String = "EloaLauncher",
     val launcherVersion: String = "1.0",
+    /** Local world folder name to open directly (Quick Play, Minecraft 1.20+). */
+    val quickPlaySingleplayer: String? = null,
+    /** Environment for the runtime backend (renderer selection, resolution scale…). */
+    val environment: Map<String, String> = emptyMap(),
 )
 
 data class LaunchPlan(
@@ -45,6 +49,7 @@ data class LaunchPlan(
     val gameDir: File,
     val nativesDir: File,
     val requiredJavaMajor: Int,
+    val environment: Map<String, String> = emptyMap(),
 ) {
     /** Command line with secrets masked — safe for logs and UI. */
     fun redactedCommandLine(): String = SecretRedactor.redact(
@@ -81,7 +86,10 @@ object LaunchPlanBuilder {
         val natives = dirs.nativesDir(clientJarId)
         val assetsId = version.assetIndex?.id ?: version.assets ?: "legacy"
         val legacyAssets = assetsId == "legacy" || assetsId == "pre-1.6"
-        val features = env.features + mapOf("has_custom_resolution" to (settings.width != null && settings.height != null))
+        val features = env.features + mapOf(
+            "has_custom_resolution" to (settings.width != null && settings.height != null),
+            "is_quick_play_singleplayer" to (settings.quickPlaySingleplayer != null),
+        )
         val ruleEnv = env.copy(features = features)
 
         val vars = mapOf(
@@ -107,7 +115,7 @@ object LaunchPlanBuilder {
             "library_directory" to dirs.libraries.absolutePath,
             "resolution_width" to (settings.width?.toString() ?: "854"),
             "resolution_height" to (settings.height?.toString() ?: "480"),
-            "quickPlayPath" to "", "quickPlaySingleplayer" to "", "quickPlayMultiplayer" to "", "quickPlayRealms" to "",
+            "quickPlayPath" to "", "quickPlaySingleplayer" to (settings.quickPlaySingleplayer ?: ""), "quickPlayMultiplayer" to "", "quickPlayRealms" to "",
         )
 
         val jvm = ArrayList<String>()
@@ -135,7 +143,7 @@ object LaunchPlanBuilder {
         }
         // Drop quick play / empty-valued options that newer manifests always include.
         game += settings.extraGameArgs
-        return LaunchPlan(version.id, mainClass, classpath, jvm, removeEmptyOptions(game), gameDir, natives, version.javaVersion?.majorVersion ?: 8)
+        return LaunchPlan(version.id, mainClass, classpath, jvm, removeEmptyOptions(game), gameDir, natives, version.javaVersion?.majorVersion ?: 8, settings.environment)
     }
 
     private fun removeEmptyOptions(args: List<String>): List<String> {

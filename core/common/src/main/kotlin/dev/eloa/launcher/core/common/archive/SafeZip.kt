@@ -83,6 +83,8 @@ class SafeZip private constructor(private val zip: ZipFile, private val limits: 
             if (!info.isDirectory) {
                 val entry = zip.getEntry(info.name) ?: throw CorruptArchiveException("Missing entry ${info.name}")
                 try {
+                    // java.util.zip.ZipFile does not verify CRC-32 on read, so compute and compare it here.
+                    val crc = java.util.zip.CRC32()
                     zip.getInputStream(entry).use { input ->
                         var read = 0L
                         while (true) {
@@ -90,8 +92,11 @@ class SafeZip private constructor(private val zip: ZipFile, private val limits: 
                             if (n < 0) break
                             read += n
                             if (read > limits.maxEntrySize) throw ArchiveLimitException("Entry ${info.name} too large")
+                            crc.update(buffer, 0, n)
                         }
+                        if (entry.size >= 0 && read != entry.size) throw CorruptArchiveException("Size mismatch in ${info.name}")
                     }
+                    if (entry.crc != -1L && crc.value != entry.crc) throw CorruptArchiveException("CRC mismatch in ${info.name}")
                 } catch (ex: ZipException) {
                     throw CorruptArchiveException("CRC/format error in ${info.name}", ex)
                 } catch (ex: java.io.EOFException) {

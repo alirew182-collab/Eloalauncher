@@ -16,6 +16,8 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.json.put
 import okhttp3.FormBody
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -32,6 +34,7 @@ data class AuthEndpoints(
     val mcLogin: String = "https://api.minecraftservices.com/authentication/login_with_xbox",
     val entitlements: String = "https://api.minecraftservices.com/entitlements/mcstore",
     val profile: String = "https://api.minecraftservices.com/minecraft/profile",
+    val authorize: String = "https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize",
 )
 
 data class DeviceCode(val userCode: String, val deviceCode: String, val verificationUri: String, val expiresInSec: Long, val intervalSec: Long, val message: String?) {
@@ -69,6 +72,7 @@ sealed class AuthException(message: String) : IOException(message) {
     class NoProfile : AuthException("The account owns the game but has no Minecraft profile yet. Launch the official launcher once to create it.")
     class InvalidClient(detail: String) : AuthException("The configured Azure client ID was rejected: $detail. Use a client ID approved for the Minecraft API.")
     class Session : AuthException("The saved session is no longer valid. Please sign in again.")
+    class StateMismatch : AuthException("The sign-in response did not match this request (state mismatch). Start again.")
     class Http(code: Int, where: String) : AuthException("$where failed with HTTP $code")
 }
 
@@ -129,6 +133,54 @@ class MicrosoftAuth(
         if (body.s("error") == "invalid_grant") throw AuthException.Session()
         if (body.s("error") == "invalid_client" || body.s("error") == "unauthorized_client") throw AuthException.InvalidClient(body.s("error") ?: "")
         throw AuthException.Http(status, "Token refresh")
+    }
+
+    /**
+     * Authorization-code flow with PKCE (RFC 7636) for the system browser. The app opens
+     * [BrowserSignIn.url]; Microsoft redirects to [redirectUri] with `code` and `state`, which are
+     * passed to [exchangeCode]. No password ever passes through the launcher.
+     */
+    fun beginBrowserSignIn(redirectUri: String, random: java.security.SecureRandom = java.security.SecureRandom()): BrowserSignIn {
+        val verifier = Pkce.verifier(random)
+        val state = Pkce.verifier(random).take(32)
+        val url = endpoints.authorize.toHttpUrl().newBuilder()
+            .addQueryParameter("client_id", clientId)
+            .addQueryParameter("response_type", "code")
+            .addQueryParameter("redirect_uri", redirectUri)
+            .addQueryParameter("scope", "XboxLive.signin offline_access")
+            .addQueryParameter("state", state)
+            .addQueryParameter("code_challenge", Pkce.challenge(verifier))
+            .addQueryParameter("code_challenge_method", "S256")
+            .addQueryParameter("prompt", "select_account")
+            .build()
+        return BrowserSignIn(url.toString(), state, verifier, redirectUri)
+    }
+
+    /** Validates the redirect (state, errors) and redeems the code with the PKCE verifier. */
+    suspend fun exchangeCode(pending: BrowserSignIn, redirect: String): MsTokens {
+        val url = redirect.toHttpUrlOrNull() ?: customSchemeAsHttp(redirect) ?: throw AuthException.Declined()
+        if (url.queryParameter("state") != pending.state) throw AuthException.StateMismatch()
+        url.queryParameter("error")?.let { err ->
+            if (err == "access_denied") throw AuthException.Declined()
+            throw AuthException.InvalidClient(url.queryParameter("error_description")?.lineSequence()?.firstOrNull() ?: err)
+        }
+        val code = url.queryParameter("code") ?: throw AuthException.Declined()
+        val (status, body) = rawPostForm(endpoints.token, mapOf(
+            "grant_type" to "authorization_code", "client_id" to clientId, "code" to code,
+            "redirect_uri" to pending.redirectUri, "code_verifier" to pending.verifier, "scope" to "XboxLive.signin offline_access",
+        ))
+        if (status in 200..299) return tokensFrom(body)
+        when (body.s("error")) {
+            "invalid_grant" -> throw AuthException.Expired()
+            "invalid_client", "unauthorized_client", "invalid_request" -> throw AuthException.InvalidClient(body.s("error_description")?.lineSequence()?.firstOrNull() ?: body.s("error").orEmpty())
+            else -> throw AuthException.Http(status, "Code exchange")
+        }
+    }
+
+    private fun customSchemeAsHttp(uri: String): okhttp3.HttpUrl? {
+        val q = uri.substringAfter('?', "")
+        if (q.isEmpty()) return null
+        return "https://redirect.invalid/?$q".toHttpUrlOrNull()
     }
 
     /** Microsoft token → Minecraft session with ownership check. */
@@ -238,5 +290,23 @@ class MicrosoftAuth(
             if (r.length != 32) return raw
             return "${r.substring(0, 8)}-${r.substring(8, 12)}-${r.substring(12, 16)}-${r.substring(16, 20)}-${r.substring(20)}"
         }
+    }
+}
+
+/** Pending browser sign-in; [verifier] must stay in memory only. */
+data class BrowserSignIn(val url: String, val state: String, val verifier: String, val redirectUri: String) {
+    override fun toString() = "BrowserSignIn(state=***, verifier=***)"
+}
+
+object Pkce {
+    /** 43..128 chars from the unreserved set (RFC 7636 §4.1); 64 random bytes → 86 chars. */
+    fun verifier(random: java.security.SecureRandom): String {
+        val bytes = ByteArray(64).also(random::nextBytes)
+        return java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(bytes)
+    }
+
+    fun challenge(verifier: String): String {
+        val digest = java.security.MessageDigest.getInstance("SHA-256").digest(verifier.toByteArray(Charsets.US_ASCII))
+        return java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(digest)
     }
 }
