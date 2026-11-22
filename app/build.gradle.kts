@@ -81,7 +81,12 @@ android {
             if (t.name.contains("Release")) t.filter.excludeTestsMatching("*ComponentUiTest")
         }
     }
+    // The in-app language picker needs every language in every install, so no language splits.
+    bundle { language { enableSplit = false } }
     lint {
+        // Test sources are checked by the compiler and the tests themselves; lint 8.13 crashes
+        // with an internal FIR error on Compose test files (ComponentUiTest.kt).
+        ignoreTestSources = true
         abortOnError = true
         warningsAsErrors = false
         checkReleaseBuilds = true

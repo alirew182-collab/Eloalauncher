@@ -593,7 +593,6 @@
     <string name="pf_processors_fix">Install a Java runtime and the execution backend, then repair the profile.</string>
     <string name="pf_version_mismatch">A different version of the game is installed on the device.</string>
     <string name="play">Play</string>
-    <string name="play_installed">Play installed</string>
     <string name="play_time_statistics_are_not_available">Play time statistics are not available: the launcher cannot measure time spent inside the game.</string>
     <string name="positions_are_stored_relative_to_the">Positions are stored relative to the screen, so a layout fits any resolution and aspect ratio.</string>
     <string name="preparing">Preparing</string>
@@ -716,7 +715,7 @@
     <string name="search_mods">Search mods</string>
     <string name="search_versions">Search versions</string>
     <string name="select">Select</string>
-    <string name="selected">Selected</string>
+    <string name="label_selected">Selected</string>
     <string name="selected_for_launch">Selected for launch</string>
     <string name="sending_to_android_installer">Sending to Android installer</string>
     <string name="session_valid_until_1_s">Session valid until %1$s</string>

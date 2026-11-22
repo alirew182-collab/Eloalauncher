@@ -39,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
@@ -106,8 +105,8 @@ fun ControlEditorScreen(padding: PaddingValues, onDone: () -> Unit, vm: ControlE
     val selectedId by vm.selected.collectAsStateWithLifecycle()
     val l = layout
     if (l == null) { Box(Modifier.padding(padding).fillMaxSize(), contentAlignment = Alignment.Center) { Text(stringResource(R.string.layout_not_found)) }; return }
-    val cfg = LocalConfiguration.current
-    val aspect = max(cfg.screenWidthDp, cfg.screenHeightDp).toFloat() / min(cfg.screenWidthDp, cfg.screenHeightDp).coerceAtLeast(1)
+    val win = androidx.compose.ui.platform.LocalWindowInfo.current.containerSize
+    val aspect = max(win.width, win.height).toFloat() / min(win.width, win.height).coerceAtLeast(1)
     LazyColumn(Modifier.padding(padding).testTag("control_editor"), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
             val ratio = "%.2f".format(aspect)
@@ -146,7 +145,8 @@ private fun Canvas(l: ControlLayout, selectedId: String?, aspect: Float, vm: Con
         val wPx = with(density) { maxWidth.toPx() }
         val hPx = with(density) { maxHeight.toPx() }
         // Controls are sized in dp for the real screen; scale them to this preview.
-        val realW = with(density) { max(LocalConfiguration.current.screenWidthDp, LocalConfiguration.current.screenHeightDp).dp.toPx() }
+        val win = androidx.compose.ui.platform.LocalWindowInfo.current.containerSize
+        val realW = max(win.width, win.height).toFloat().coerceAtLeast(1f)
         val previewDensity = density.density * (wPx / realW)
         l.buttons.forEach { b ->
             val r = ControlLayouts.place(b, l.scale, wPx, hPx, previewDensity)

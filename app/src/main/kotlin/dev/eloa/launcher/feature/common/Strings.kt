@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
  * String resources outside composition (ViewModels, click handlers). Initialised with a context
  * that carries the selected app language; updated whenever the Activity is (re)created.
  */
+@android.annotation.SuppressLint("StaticFieldLeak") // Holds only an application-derived context, never an Activity.
 object Strings {
     @Volatile private var ctx: Context? = null
 

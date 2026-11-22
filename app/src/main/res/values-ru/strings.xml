@@ -593,7 +593,6 @@
     <string name="pf_processors_fix">Установите среду Java и бэкенд исполнения, затем восстановите профиль.</string>
     <string name="pf_version_mismatch">На устройстве установлена другая версия игры.</string>
     <string name="play">Играть</string>
-    <string name="play_installed">Играть в установленную</string>
     <string name="play_time_statistics_are_not_available">Статистика игрового времени недоступна: лаунчер не может измерить время внутри игры.</string>
     <string name="positions_are_stored_relative_to_the">Позиции хранятся относительно экрана, поэтому раскладка подходит к любому разрешению и соотношению сторон.</string>
     <string name="preparing">Подготовка</string>
@@ -716,7 +715,7 @@
     <string name="search_mods">Поиск модов</string>
     <string name="search_versions">Поиск версий</string>
     <string name="select">Выбрать</string>
-    <string name="selected">Выбрано</string>
+    <string name="label_selected">Выбрано</string>
     <string name="selected_for_launch">Выбрано для запуска</string>
     <string name="sending_to_android_installer">Передача установщику Android</string>
     <string name="session_valid_until_1_s">Сессия действует до %1$s</string>

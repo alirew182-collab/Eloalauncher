@@ -606,7 +606,6 @@ pf_processors	The mod loader still needs installer steps that run on a Java runt
 pf_processors_fix	Install a Java runtime and the execution backend, then repair the profile.	Установите среду Java и бэкенд исполнения, затем восстановите профиль.	Bir Java ortamı ve çalıştırma arka ucu yükleyin, ardından profili onarın.	Installieren Sie eine Java-Laufzeit und das Ausführungs-Backend und reparieren Sie dann das Profil.
 pf_version_mismatch	A different version of the game is installed on the device.	На устройстве установлена другая версия игры.	Cihazda oyunun farklı bir sürümü yüklü.	Auf dem Gerät ist eine andere Spielversion installiert.
 play	Play	Играть	Oyna	Spielen
-play_installed	Play installed	Играть в установленную	Yüklü olanı oyna	Installierte spielen
 play_time_statistics_are_not_available	Play time statistics are not available: the launcher cannot measure time spent inside the game.	Статистика игрового времени недоступна: лаунчер не может измерить время внутри игры.	Oyun süresi istatistikleri yok: başlatıcı oyun içinde geçen süreyi ölçemez.	Spielzeitstatistiken sind nicht verfügbar: Der Launcher kann die Zeit im Spiel nicht messen.
 positions_are_stored_relative_to_the	Positions are stored relative to the screen, so a layout fits any resolution and aspect ratio.	Позиции хранятся относительно экрана, поэтому раскладка подходит к любому разрешению и соотношению сторон.	Konumlar ekrana göre saklanır, bu yüzden düzen her çözünürlüğe ve en-boy oranına uyar.	Positionen werden relativ zum Bildschirm gespeichert, daher passt ein Layout zu jeder Auflösung und jedem Seitenverhältnis.
 preparing	Preparing	Подготовка	Hazırlanıyor	Wird vorbereitet
@@ -729,7 +728,7 @@ search_in_1_s	Search in %1$s	Поиск в %1$s	%1$s içinde ara	In %1$s suchen
 search_mods	Search mods	Поиск модов	Mod ara	Mods suchen
 search_versions	Search versions	Поиск версий	Sürüm ara	Versionen suchen
 select	Select	Выбрать	Seç	Auswählen
-selected	Selected	Выбрано	Seçili	Ausgewählt
+label_selected	Selected	Выбрано	Seçili	Ausgewählt
 selected_for_launch	Selected for launch	Выбрано для запуска	Başlatma için seçildi	Für den Start ausgewählt
 sending_to_android_installer	Sending to Android installer	Передача установщику Android	Android yükleyicisine gönderiliyor	Wird an den Android-Installer übergeben
 session_valid_until_1_s	Session valid until %1$s	Сессия действует до %1$s	Oturum %1$s tarihine kadar geçerli	Sitzung gültig bis %1$s

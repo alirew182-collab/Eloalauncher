@@ -42,6 +42,7 @@ class ModsViewModel @Inject constructor(
     private val repo: ContentRepository,
     private val selected: SelectedProfile,
     private val messages: UserMessages,
+    private val notifications: dev.eloa.launcher.feature.notifications.NotificationCenter,
 ) : ViewModel() {
     val selection: StateFlow<ProfileSelection> = selected.selection.stateIn(viewModelScope, SharingStarted.Eagerly, ProfileSelection(emptyList(), null))
     private val _ui = MutableStateFlow(ModsUi())
@@ -60,6 +61,9 @@ class ModsViewModel @Inject constructor(
             val requiredIds = mods.filter { it.enabled }.flatMap { f -> f.metadata.flatMap { md -> md.dependencies.filter { it.kind == dev.eloa.launcher.domain.java.mods.DependencyKind.REQUIRED }.map { it.modId } } }.toSet()
             val libs = mods.filter { f -> f.metadata.any { it.id in requiredIds || it.provides.any { pr -> pr in requiredIds } } }.map { it.fileName }.toSet()
             _ui.value = ModsUi(false, p, mods, issues, libs, backups)
+            val errors = issues.filter { it.severity == dev.eloa.launcher.domain.java.mods.IssueSeverity.ERROR }
+            if (errors.isNotEmpty()) notifications.post(dev.eloa.launcher.feature.notifications.NoticeType.INCOMPATIBLE_MOD, R.string.notice_incompatible_mod_title,
+                "${p.name}: " + errors.take(3).joinToString("; ") { it.message }, "mods")
         }
     }
 

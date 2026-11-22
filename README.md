@@ -1,62 +1,70 @@
 # Eloa Launcher
 
-Лаунчер Minecraft для Android, объединяющий **Bedrock Edition** (библиотека собственных APK,
-дополнения, миры) и **Java Edition** (версии Mojang, профили, Fabric/Quilt/Forge/NeoForge, моды,
-ресурспаки, шейдеры, датапаки, сборки), с файловым менеджером, диагностикой, журналом и
-Microsoft-авторизацией.
+Лаунчер Minecraft для Android. В одном приложении: Bedrock Edition (запуск установленной игры, свои APK, дополнения, резервные копии миров) и Java Edition (версии Mojang, профили, Fabric/Quilt/Forge/NeoForge, моды, ресурспаки, шейдеры, настройки игры, Microsoft-вход).
 
-* Kotlin · Jetpack Compose · Material 3 · Coroutines/Flow · Room · DataStore · Hilt · WorkManager · SAF
-* minSdk 26 (Android 8.0) · target/compileSdk 36
-* Архитектура и обоснование версий: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-* Инструкция пользователя: [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
-* Отчёт о тестировании и известные ограничения: [docs/TESTING.md](docs/TESTING.md)
+Kotlin, Jetpack Compose, Material 3, Coroutines, Room, DataStore, Hilt, WorkManager, SAF. minSdk 26 (Android 8.0), target/compileSdk 36. Интерфейс на английском, русском, турецком и немецком.
 
-## Важно: что работает и что нет
+* Архитектура и решения: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+* Как пользоваться: [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
+* Что проверено и чем: [docs/TESTING.md](docs/TESTING.md)
+* Изменения: [CHANGELOG.md](CHANGELOG.md), зависимости и лицензии: [LICENSES.md](LICENSES.md)
+
+## Что работает, а что нет
 
 | Возможность | Статус |
 |---|---|
-| Bedrock: импорт APK/APKS/XAPK, проверка подписи/целостности/ABI/minSdk, библиотека, установка через системный Package Installer, запуск | реализовано |
-| Bedrock: .mcpack/.mcaddon/.mcworld/.mctemplate/.mcstructure/.zip — анализ, зависимости, UUID, конфликты, передача в игру | реализовано |
-| Java: версии Mojang, загрузка/проверка всех файлов, профили, загрузчики Fabric/Quilt (полностью), Forge/NeoForge (кроме шагов processors) | реализовано |
-| Java: менеджер модов, ресурспаки, шейдеры, датапаки, миры, конфиги, сборки .mrpack/.eloapack | реализовано |
-| Java: **непосредственный запуск игры** | **нет**: требуется нативный backend (JVM для Android + LWJGL + GL-транслятор). Лаунчер готовит всё и показывает точную причину блокировки — без имитации запуска |
-| Microsoft-вход | реализован, но нужен ваш Azure Client ID, одобренный Mojang для Minecraft API |
+| Bedrock: обнаружение установленной игры, версия, запуск, инструкция по официальной установке | работает |
+| Bedrock: импорт своих APK/APKS/XAPK с проверкой подписи, ABI, minSdk; установка через системный установщик | работает |
+| Bedrock: .mcpack, .mcaddon, .mcworld, .mctemplate, .mcstructure, .zip — проверка manifest.json, UUID, зависимостей; передача в игру через Intent | работает |
+| Bedrock: резервные копии миров из папки, выданной через SAF, импорт .mcworld, проверка CRC и SHA-256, восстановление, экспорт | работает; миры во внутренней памяти Minecraft недоступны (ограничение Android) |
+| Java: версии Mojang с проверкой SHA-1, профили, загрузчики Fabric/Quilt полностью, Forge/NeoForge без шагов processors | работает |
+| Java: моды, ресурспаки, шейдеры, датапаки, миры, сборки .mrpack/.eloapack | работает |
+| Java: настройки игры записываются в `options.txt` профиля | работает |
+| Microsoft-вход: браузер (код + PKCE) и код устройства, режимы Online/Offline/Official/Local singleplayer | работает; нужен ваш Azure Client ID, одобренный Mojang |
+| Производительность: определение устройства, 5 режимов, память, оценка рендереров, тепловой статус | работает |
+| Управление: редактор сенсорных раскладок, профили геймпадов, тест ввода | работает; раскладки применяются игровым бэкендом, которого в сборке нет |
+| Обновления лаунчера из GitHub Releases с проверкой SHA-256 и подписи | работает |
+| **Непосредственный запуск Java Edition** | **нет**: нужен бэкенд (JVM для Android + LWJGL + слой трансляции OpenGL). Лаунчер готовит всё и показывает точную причину, без имитации запуска |
 
 ## Сборка
 
 ```bash
-# Требуется JDK 17+ (проверено на 21) и Android SDK (platform 36, build-tools 36.0.0)
+# JDK 17+ (проверено на 21), Android SDK: platform 36, build-tools 36.0.0
 echo "sdk.dir=/path/to/android-sdk" > local.properties
-./gradlew assembleDebug            # app/build/outputs/apk/debug/app-debug.apk
-./gradlew test                     # все unit/интеграционные/UI-тесты (JVM + Robolectric)
-./gradlew :app:lintDebug           # Android Lint
-python3 scripts/test_summary.py    # сводка результатов тестов
+./gradlew assembleDebug                 # app/build/outputs/apk/debug/app-debug.apk
+./gradlew test                          # модульные, интеграционные и UI-тесты (JVM + Robolectric)
+./gradlew :app:lintDebug                # Android Lint
+python3 scripts/i18n/gen_strings.py     # пересобрать строки из i18n/strings.tsv
+python3 scripts/test_summary.py         # сводка результатов тестов
 ```
+
+### Тексты и переводы
+
+Все тексты интерфейса лежат в `i18n/strings.tsv` (ключ, en, ru, tr, de). `scripts/i18n/gen_strings.py` создаёт из таблицы `res/values*/strings.xml`; файлы XML не редактируются вручную. `--check` падает, если перевода нет или XML устарели (так делает CI).
 
 ### Release
 
-Создайте собственный ключ (храните его и пароль вне репозитория — без него нельзя выпускать обновления):
+Ключ подписи создаёт и хранит владелец проекта, в репозиторий он не попадает:
 
 ```bash
 keytool -genkeypair -keystore ~/eloa-release.jks -alias eloa -keyalg RSA -keysize 4096 -validity 10000
-cp keystore.properties.example keystore.properties   # заполните пути и пароли
-./gradlew :app:assembleRelease                        # R8 + shrinkResources, подпись APK v2
+cp keystore.properties.example keystore.properties   # пути и пароли
+./gradlew :app:assembleRelease                        # R8, shrinkResources, подпись v2
 $ANDROID_HOME/build-tools/36.0.0/apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk
 ```
 
-Без `keystore.properties` release-сборка формируется неподписанной.
+Без `keystore.properties` release-сборка остаётся неподписанной. В GitHub Actions подпись берётся из секретов `ELOA_KEYSTORE_BASE64`, `ELOA_STORE_PASSWORD`, `ELOA_KEY_ALIAS`, `ELOA_KEY_PASSWORD`, если они заданы.
 
 ## Модули
 
 ```
-:core:common       безопасные архивы (Zip Slip, лимиты), хеши, версии/диапазоны, TOML, логирование
-:core:designsystem тема (тёмная/светлая/акценты), компоненты, skeleton
-:core:data         Room, DataStore, логгер, определение железа, шифрование токенов, хранилище
-:domain:bedrock    AXML-парсер, анализ APK + apksig, add-ons, NBT
-:domain:java       метаданные Mojang, загрузчик, установщики, загрузчики модов, моды, план запуска, авторизация
+:core:common       архивы (Zip Slip, лимиты, CRC), хеши, версии, TOML, логирование
+:core:designsystem тема, компоненты
+:core:data         Room (схема 2 + миграция), DataStore, Keystore-шифрование, устройство, режимы производительности
+:domain:bedrock    APK, подписи, дополнения, NBT, архивы миров
+:domain:java       метаданные, загрузки, установщики, загрузчики модов, план запуска, options.txt,
+                   режимы запуска, PKCE, рендереры, раскладки управления, анализ сбоев, обновления
 :app               DI, навигация, экраны, WorkManager, PackageInstaller, SAF
 ```
-
-Тестовые APK-фикстуры воспроизводимо генерируются `scripts/make_apk_fixtures.sh`.
 
 Minecraft — товарный знак Mojang Synergies AB. Проект не связан с Mojang или Microsoft.

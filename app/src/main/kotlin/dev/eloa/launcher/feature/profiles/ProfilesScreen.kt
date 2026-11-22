@@ -120,7 +120,7 @@ private fun ProfileCard(p: JavaProfileEntity, selected: Boolean, vm: ProfilesVie
                 Text(stringResource(R.string.created_1_s_last_played_2, formatDate(p.createdAt), formatDate(p.lastPlayedAt)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(6.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    if (selected) StatusChip(stringResource(R.string.selected), StatusLevel.INFO)
+                    if (selected) StatusChip(stringResource(R.string.label_selected), StatusLevel.INFO)
                     when (p.state) {
                         InstallState.INSTALLED -> StatusChip(stringResource(R.string.ready), StatusLevel.OK)
                         InstallState.FAILED -> StatusChip(stringResource(R.string.install_failed), StatusLevel.ERROR)

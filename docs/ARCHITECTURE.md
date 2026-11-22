@@ -8,7 +8,7 @@
 | Gradle | 8.14.3 (wrapper) |
 | Android SDK | установлен вручную: platform 36, build-tools 36.0.0, platform-tools |
 | Эмулятор / KVM | **нет** (`/dev/kvm` отсутствует) → инструментальные и UI-тесты выполняются на JVM через Robolectric |
-| Сеть | Google Maven, Maven Central, Gradle Portal — доступны. Mojang/Fabric/Forge meta API — **заблокированы** политикой контейнера сборки (на устройстве доступны). Сетевая логика тестируется на MockWebServer. |
+| Сеть | Google Maven, Maven Central, Gradle Portal, dl.google.com — доступны. Mojang/Fabric/Forge meta API и GitHub — **заблокированы** политикой контейнера сборки (на устройстве доступны). Сетевая логика тестируется на MockWebServer. |
 
 ## 2. Выбор версий
 
@@ -38,56 +38,97 @@ minSdk = 26 (Android 8.0), targetSdk = compileSdk = 36.
 ## 3. Модули
 
 ```
-:core:common      (Kotlin/JVM) — безопасная работа с архивами (Zip Slip, лимиты), хеши,
-                    семантические версии и диапазоны (SemVer/Fabric, Maven/Forge), TOML,
-                    API логирования, Result-типы. Без зависимостей от Android → быстрые тесты.
-:domain:bedrock   (Kotlin/JVM) — парсер бинарного AndroidManifest (AXML), анализ APK/APKS,
-                    проверка подписи (apksig), анализ Bedrock add-on (manifest.json, UUID,
-                    зависимости, конфликты), миров.
-:domain:java      (Kotlin/JVM) — модели метаданных Mojang (version_manifest_v2, version.json),
-                    правила библиотек, построение плана запуска (classpath, аргументы),
-                    менеджер загрузок (очередь, параллелизм, докачка, SHA-1, ретраи),
-                    установщики загрузчиков (Fabric/Quilt/Forge/NeoForge), парсеры метаданных
-                    модов (fabric.mod.json, quilt.mod.json, mods.toml, neoforge.mods.toml,
-                    mcmod.info), проверка зависимостей и конфликтов модов.
-:core:designsystem (Android) — тема Material 3 (тёмная/светлая/акценты), компоненты, skeleton.
-:core:data        (Android) — Room, DataStore, логирование в БД с ротацией, определение
-                    железа (SoC/CPU/GPU/RAM/Vulkan/GLES/термо), хранилище, шифрование токенов
-                    через Android Keystore.
-:app              (Android) — Hilt DI, навигация, экраны и ViewModel'и, WorkManager,
-                    PackageInstaller, SAF, Microsoft OAuth (device code flow).
+:core:common       (Kotlin/JVM) архивы (Zip Slip, лимиты, сверка CRC-32), хеши, версии и диапазоны,
+                   TOML, логирование с маскировкой секретов. Без Android-зависимостей.
+:domain:bedrock    (Kotlin/JVM) AXML, анализ APK/APKS, подписи (apksig), дополнения (manifest.json,
+                   UUID, зависимости), NBT, архивы миров (.mcworld: упаковка, проверка, восстановление).
+:domain:java       (Kotlin/JVM) метаданные Mojang, правила библиотек, план запуска, загрузчик с
+                   докачкой и SHA-1, установщики Fabric/Quilt/Forge/NeoForge, моды, options.txt,
+                   режимы запуска, PKCE, каталог рендереров, раскладки управления и профили
+                   геймпадов, анализатор сбоев, проверка обновлений.
+:core:designsystem (Android) тема и компоненты.
+:core:data         (Android) Room (схема 2, миграция 1→2), DataStore, Keystore-шифрование,
+                   сведения об устройстве, режимы производительности.
+:app               (Android) Hilt, навигация, экраны, ViewModel, WorkManager, PackageInstaller, SAF.
 ```
 
-Зависимости направлены строго вниз: `app → data/designsystem → domain → common`.
+Зависимости идут только вниз: `app → data/designsystem → domain → common`. Вся логика, которую
+можно проверить без устройства, лежит в JVM-модулях и покрыта JUnit-тестами.
 
-## 4. Ключевые решения и ограничения (честно)
+## 4. Навигация и интерфейс
 
-* **Bedrock**: установка только через системный `PackageInstaller` (сессии, подтверждение
-  пользователем). Если установленная копия подписана другим сертификатом или новее
-  импортируемой — установка не начинается, пользователь получает объяснение (Android не
-  допускает замену подписи и даунгрейд без удаления). Add-ons передаются в игру через
-  официальный `ACTION_VIEW` + `FileProvider` (Minecraft импортирует их сам) либо копируются
-  в папку `com.mojang`, доступ к которой пользователь выдал через SAF.
-* **Java Edition**: лаунчер полностью готовит экземпляр — метаданные Mojang, клиент,
-  библиотеки, нативы, ассеты с проверкой SHA-1, профили загрузчиков, план запуска
-  (classpath, JVM- и игровые аргументы). Непосредственное исполнение игры на Android требует
-  нативного порта JVM + LWJGL + GL-транслятора (уровень PojavLauncher), который не может быть
-  собран и проверен в этом окружении. Поэтому исполнение вынесено за интерфейс
-  `GameRuntimeBackend`; пока backend не установлен, кнопка запуска выполняет полную
-  предстартовую проверку и показывает точную причину невозможности запуска (без имитации).
-* **Forge/NeoForge**: установщик скачивается с официального maven, извлекаются
-  `install_profile.json`/`version.json`, библиотеки скачиваются; шаги `processors`
-  требуют исполнения Java и выполняются runtime-backend'ом.
-* **Microsoft-авторизация**: OAuth 2.0 Device Code Flow → Xbox Live → XSTS → Minecraft
-  Services, проверка владения игрой (entitlements). Требуется Azure Client ID,
-  одобренный для Minecraft API: задаётся в настройках. Встроенного «чужого» ID нет.
-  Токены шифруются AES-GCM ключом из Android Keystore. Офлайн-аккаунтов нет.
+* Телефоны: нижняя панель (Главная, Библиотека, Моды, Миры, Аккаунты, Настройки) и меню со всеми
+  разделами. 600–840 dp: боковая рейка. От 840 dp: постоянная боковая панель.
+* Главная: карточки Java Edition и Bedrock Edition (версия, статус установки, Play, Settings,
+  Versions), выбор режима запуска, варианты «карточки / дашборд / минимальный».
+* Тексты: `i18n/strings.tsv` → `res/values{,-ru,-tr,-de}/strings.xml` (генератор
+  `scripts/i18n/gen_strings.py`). Язык выбирается в настройках; на Android 13+ через системный
+  per-app language API, ниже — через обёртку контекста. Вне композиции строки берёт `str()`.
+* Оформление проверено по правилам unslop: ровные поверхности с тонкой границей вместо цветовых
+  градиентов, один акцентный цвет, начертания 400–600, регистр предложения, отступы кратны 4 dp.
+  Фирменная деталь — квадратный маркер статуса («блок»), он используется только для состояния.
 
-## 5. Расширение
+## 5. Ключевые решения и ограничения
 
-* Новый backend исполнения Java Edition подключается реализацией `GameRuntimeBackend` и привязкой в
-  `di/BackendModule.kt` — план запуска, предстартовая проверка и UI уже готовы.
-* Новый загрузчик модов — реализация `LoaderProvider` + значение в `ModLoaderType`.
-* Новый тип контента — значение `JavaContentType` и правило в `ContentValidator`.
-* Новые проверки диагностики — блок `check(...)` в `DiagnosticsEngine` и, при необходимости, `AutoFix`.
-* Миграции Room: схемы экспортируются в `core/data/schemas`.
+### Bedrock Edition
+* Обнаружение и запуск — `PackageManager` и launch-intent пакета `com.mojang.minecraftpe`
+  (видимость пакета объявлена в `<queries>`). Если игры нет — ссылка на Google Play.
+* Установка своих APK — только системный `PackageInstaller`; смену подписи и даунгрейд Android
+  не разрешает, лаунчер объясняет это заранее.
+* Дополнения передаются игре через `ACTION_VIEW` + `FileProvider` или копируются в папку
+  `com.mojang`, выданную через SAF.
+* Резервные копии миров читаются только из папки, выданной через SAF. Миры во внутренней памяти
+  Minecraft (`/data/data`, `Android/data` на Android 11+) недоступны — это защита системы, она не
+  обходится. Копия — обычный `.mcworld`, её может импортировать сама игра. Перед восстановлением
+  архив проверяется (CRC каждой записи, SHA-256, level.dat, безопасные пути), а заменяемый мир
+  сначала сохраняется.
+
+### Java Edition: бэкенд исполнения
+Лаунчер готовит экземпляр полностью: метаданные, клиент, библиотеки, нативы, ассеты (SHA-1),
+профили загрузчиков, `options.txt`, план запуска (classpath, аргументы JVM и игры, Quick Play для
+режима локальной игры, переменные окружения выбранного рендерера). Исполнение вынесено за
+интерфейс `GameRuntimeBackend`.
+
+Как устроен Amethyst (форк PojavLauncher, LGPL-3.0): JRE, собранная под bionic, распаковывается
+из APK; `libjli`/`libjvm` загружаются через JNI, `JLI_Launch` запускается в отдельном процессе;
+окно и ввод дают собственный форк LWJGL 3 (GLFW заменён мостом к Android Surface) и `libpojavexec`;
+OpenGL транслируется через GL4ES, LTW, MobileGlues или Zink. Все эти части — бинарные артефакты из
+релизов GitHub соответствующих проектов. В окружении сборки GitHub недоступен, а проверить
+нативный рендер без устройства нельзя, поэтому бэкенд в эту сборку не включён. Пока его нет, кнопка
+Play выполняет все проверки и честно показывает блокирующую причину (`NO_BACKEND`).
+
+Чтобы подключить бэкенд: реализовать `GameRuntimeBackend.launch(plan, runtime)` (процесс `:game`,
+`JLI_Launch` с `plan.jvmArgs + mainClass + plan.gameArgs`, окружение `plan.environment`), положить
+библиотеки рендереров и отметить их в `PerformanceViewModel.INSTALLED_RENDERERS`, связать в
+`di/BackendModule.kt`. Раскладка управления для оверлея уже публикуется в `controls/active.json`.
+
+### Аккаунты и режимы
+* Вход Microsoft: authorization code + PKCE в системном браузере (redirect `eloa-launcher://auth`,
+  проверка `state`, verifier только в памяти) или device code. Далее Xbox Live → XSTS →
+  Minecraft Services, проверка владения игрой. Нужен Azure Client ID, одобренный Mojang; чужой ID
+  не встроен.
+* Токены — AES-GCM, ключ в Android Keystore, резервное копирование Android отключено.
+* Режимы: Official account (обновляет сессию при наличии сети), Online (сеть обязательна),
+  Offline (без сетевых запросов, только для аккаунта, уже проверенного как владелец), Local
+  singleplayer (Offline + Quick Play в выбранный мир, Minecraft 1.20+). Недоступный режим
+  показывается с причиной. Токены не подделываются и не генерируются.
+
+### Производительность
+* Режимы Battery Saver, Balanced, Performance, Extreme Performance, Custom задают `options.txt`,
+  кучу Java, масштаб рендера и параметры лаунчера. Системные настройки не меняются.
+* Безопасный предел памяти: ОЗУ минус резерв для Android и драйверов (1,4–3 ГБ).
+* Рендереры оцениваются по строке GPU (Adreno/Mali/PowerVR/Xclipse), версиям OpenGL ES и Vulkan и
+  версии Minecraft (OpenGL 2.1 до 1.16.5, 3.2 core с 1.17).
+* Тепловой контроль только читает `PowerManager.currentThermalStatus` и headroom.
+
+### Обновления лаунчера
+GitHub Releases репозитория `BuildConfig.UPDATE_REPO`. Устанавливается только APK с опубликованным
+SHA-256, совпадающим с загрузкой, и с тем же сертификатом подписи, что у установленного
+приложения. Автопроверка выключена по умолчанию.
+
+## 6. Расширение
+* Бэкенд исполнения Java Edition — см. выше.
+* Новый загрузчик модов — `LoaderProvider` и значение в `ModLoaderType`.
+* Новая строка интерфейса — строка в `i18n/strings.tsv` на четырёх языках.
+* Новая причина сбоя — правило в `CrashAnalyzer` и пара строк `cc_*`/`cf_*`.
+* Миграции Room — схемы в `core/data/schemas`, тест `MigrationTest`.

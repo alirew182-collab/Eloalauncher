@@ -219,7 +219,7 @@ private fun Devices(vm: ControlsViewModel) {
                         Text(d.name, fontWeight = FontWeight.SemiBold)
                         Text("%04x:%04x".format(d.vendorId, d.productId), style = MonoStyle)
                     }
-                    if (selected?.id == d.id) StatusChip(stringResource(R.string.selected), StatusLevel.INFO)
+                    if (selected?.id == d.id) StatusChip(stringResource(R.string.label_selected), StatusLevel.INFO)
                 }
             }
         }

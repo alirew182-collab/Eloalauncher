@@ -593,7 +593,6 @@
     <string name="pf_processors_fix">Bir Java ortamı ve çalıştırma arka ucu yükleyin, ardından profili onarın.</string>
     <string name="pf_version_mismatch">Cihazda oyunun farklı bir sürümü yüklü.</string>
     <string name="play">Oyna</string>
-    <string name="play_installed">Yüklü olanı oyna</string>
     <string name="play_time_statistics_are_not_available">Oyun süresi istatistikleri yok: başlatıcı oyun içinde geçen süreyi ölçemez.</string>
     <string name="positions_are_stored_relative_to_the">Konumlar ekrana göre saklanır, bu yüzden düzen her çözünürlüğe ve en-boy oranına uyar.</string>
     <string name="preparing">Hazırlanıyor</string>
@@ -716,7 +715,7 @@
     <string name="search_mods">Mod ara</string>
     <string name="search_versions">Sürüm ara</string>
     <string name="select">Seç</string>
-    <string name="selected">Seçili</string>
+    <string name="label_selected">Seçili</string>
     <string name="selected_for_launch">Başlatma için seçildi</string>
     <string name="sending_to_android_installer">Android yükleyicisine gönderiliyor</string>
     <string name="session_valid_until_1_s">Oturum %1$s tarihine kadar geçerli</string>

@@ -159,7 +159,7 @@ private fun VersionCard(v: BedrockVersionEntity, selected: Boolean, onClick: () 
                 Text(stringResource(R.string.imported_1_s, formatDate(v.importedAt)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                if (selected) StatusChip(stringResource(R.string.selected), StatusLevel.INFO)
+                if (selected) StatusChip(stringResource(R.string.label_selected), StatusLevel.INFO)
                 CompatChip(v)
                 if (!v.integrityOk) StatusChip(stringResource(R.string.damaged), StatusLevel.ERROR)
             }
@@ -209,7 +209,7 @@ private fun VersionSheet(v: BedrockVersionEntity, selected: Boolean, vm: Bedrock
                 FilledTonalButton(onClick = { vm.requestInstall(v.id) }, modifier = Modifier.weight(1f).testTag("bedrock_install")) { Text(stringResource(R.string.install)) }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { vm.select(v.id) }, enabled = !selected, modifier = Modifier.weight(1f)) { Text(if (selected) stringResource(R.string.selected) else stringResource(R.string.select)) }
+                OutlinedButton(onClick = { vm.select(v.id) }, enabled = !selected, modifier = Modifier.weight(1f)) { Text(if (selected) stringResource(R.string.label_selected) else stringResource(R.string.select)) }
                 OutlinedButton(onClick = { vm.verify(v.id) }, modifier = Modifier.weight(1f).testTag("bedrock_verify")) { Text(stringResource(R.string.verify)) }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
