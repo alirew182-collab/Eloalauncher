@@ -111,8 +111,8 @@ fun BedrockScreen(padding: PaddingValues, vm: BedrockViewModel = hiltViewModel()
     ) { inner ->
         Column(Modifier.padding(inner)) {
             PrimaryTabRow(selectedTabIndex = tab) {
-                Tab(tab == 0, { tab = 0 }, text = { Text(stringResource(R.string.library_1_s, ui.versions.size)) })
-                Tab(tab == 1, { tab = 1 }, text = { Text(stringResource(R.string.import_history)) })
+                Tab(tab == 0, { tab = 0 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.library_1_s, ui.versions.size)) })
+                Tab(tab == 1, { tab = 1 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.import_history)) })
             }
             ProgressPanel(progress, vm::cancel, Modifier.padding(16.dp))
             when {

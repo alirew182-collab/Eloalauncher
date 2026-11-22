@@ -879,3 +879,5 @@ launch_minecraft_bedrock	Launch Minecraft Bedrock	Запустить Minecraft B
 crash_analysis	Crash analysis	Анализ сбоев	Çökme analizi	Absturzanalyse
 crash_none_found	No known failure pattern in recent errors	В недавних ошибках известных причин не найдено	Son hatalarda bilinen bir arıza kalıbı yok	Keine bekannte Fehlerursache in den letzten Fehlern
 crash_analyze_file	Analyse a game log or crash report	Проанализировать журнал игры или отчёт о сбое	Bir oyun kaydını veya çökme raporunu analiz et	Spielprotokoll oder Absturzbericht analysieren
+not_reported	Not reported	Не сообщается	Bildirilmiyor	Nicht gemeldet
+get_minecraft_bedrock	Get Minecraft Bedrock	Установить Minecraft Bedrock	Minecraft Bedrock'u edin	Minecraft Bedrock holen

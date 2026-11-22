@@ -54,7 +54,7 @@ fun JavaScreen(padding: PaddingValues, onNavigate: (Destination) -> Unit, vm: Ja
     val tabs = listOf(stringResource(R.string.overview), stringResource(R.string.nav_worlds), stringResource(R.string.datapacks), stringResource(R.string.configs))
     Column(Modifier.padding(padding)) {
         PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
-            tabs.forEachIndexed { i, t -> Tab(tab == i, { tab = i }, text = { Text(t) }, modifier = Modifier.testTag("java_tab_$i")) }
+            tabs.forEachIndexed { i, t -> Tab(tab == i, { tab = i }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(t) }, modifier = Modifier.testTag("java_tab_$i")) }
         }
         when (tab) {
             0 -> Overview(vm, onNavigate)

@@ -866,4 +866,6 @@
     <string name="crash_analysis">Çökme analizi</string>
     <string name="crash_none_found">Son hatalarda bilinen bir arıza kalıbı yok</string>
     <string name="crash_analyze_file">Bir oyun kaydını veya çökme raporunu analiz et</string>
+    <string name="not_reported">Bildirilmiyor</string>
+    <string name="get_minecraft_bedrock">Minecraft Bedrock\'u edin</string>
 </resources>

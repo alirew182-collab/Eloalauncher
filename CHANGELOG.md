@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0 (unreleased)
+## 1.1.0
 
 ### Added
 - Navigation: bottom bar with Home, Library, Mods, Worlds, Accounts and Settings on phones, a rail on medium screens and a permanent drawer on tablets. Top bar with notifications and account.

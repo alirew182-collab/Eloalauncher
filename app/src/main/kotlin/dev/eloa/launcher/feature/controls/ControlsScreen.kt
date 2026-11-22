@@ -139,8 +139,8 @@ fun ControlsScreen(padding: PaddingValues, onEdit: (String) -> Unit, vm: Control
     var tab by rememberSaveable { mutableIntStateOf(0) }
     Column(Modifier.padding(padding).testTag("controls")) {
         PrimaryTabRow(selectedTabIndex = tab) {
-            Tab(tab == 0, { tab = 0 }, text = { Text(stringResource(R.string.touch_layouts)) }, modifier = Modifier.testTag("controls_tab_touch"))
-            Tab(tab == 1, { tab = 1 }, text = { Text(stringResource(R.string.gamepads_keyboards)) }, modifier = Modifier.testTag("controls_tab_pads"))
+            Tab(tab == 0, { tab = 0 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.touch_layouts)) }, modifier = Modifier.testTag("controls_tab_touch"))
+            Tab(tab == 1, { tab = 1 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.gamepads_keyboards)) }, modifier = Modifier.testTag("controls_tab_pads"))
         }
         if (tab == 0) Layouts(vm, onEdit) else Devices(vm)
     }

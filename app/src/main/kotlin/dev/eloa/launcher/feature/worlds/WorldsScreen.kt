@@ -146,8 +146,8 @@ fun WorldsScreen(padding: PaddingValues) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     Column(Modifier.padding(padding).testTag("worlds")) {
         PrimaryTabRow(selectedTabIndex = tab) {
-            Tab(tab == 0, { tab = 0 }, text = { Text(stringResource(R.string.bedrock)) }, modifier = Modifier.testTag("worlds_tab_bedrock"))
-            Tab(tab == 1, { tab = 1 }, text = { Text(stringResource(R.string.java)) }, modifier = Modifier.testTag("worlds_tab_java"))
+            Tab(tab == 0, { tab = 0 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.bedrock)) }, modifier = Modifier.testTag("worlds_tab_bedrock"))
+            Tab(tab == 1, { tab = 1 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.java)) }, modifier = Modifier.testTag("worlds_tab_java"))
         }
         if (tab == 0) BedrockWorlds() else ContentScreen(JavaContentType.WORLDS, PaddingValues(0.dp))
     }

@@ -140,8 +140,8 @@ private fun EditionCardFrame(title: String, icon: ImageVector, modifier: Modifie
     Box(modifier.clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colorScheme.surfaceContainer).border(1.dp, x.hairline, RoundedCornerShape(20.dp)).padding(20.dp).testTag(tag)) {
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.primary), contentAlignment = Alignment.Center) {
-                    Icon(icon, null, tint = MaterialTheme.colorScheme.onPrimary)
+                Box(Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceContainerHighest), contentAlignment = Alignment.Center) {
+                    Icon(icon, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Spacer(Modifier.width(12.dp))
                 Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
@@ -228,7 +228,13 @@ private fun BedrockCard(s: HomeState, launching: Boolean, vm: HomeViewModel, onN
         Spacer(Modifier.height(10.dp))
         if (s.bedrock.launchable) StatusChip(stringResource(R.string.installed), StatusLevel.OK) else StatusChip(stringResource(R.string.not_installed), StatusLevel.WARNING)
         Spacer(Modifier.height(14.dp))
-        LaunchButton(if (launching) stringResource(R.string.starting) else stringResource(R.string.play), vm::launchBedrock, Modifier.fillMaxWidth(), enabled = !launching, icon = Icons.Outlined.PlayArrow, tag = "bedrock_play")
+        if (s.bedrock.launchable) {
+            LaunchButton(if (launching) stringResource(R.string.starting) else stringResource(R.string.play), vm::launchBedrock, Modifier.fillMaxWidth(), enabled = !launching,
+                icon = Icons.Outlined.PlayArrow, tag = "bedrock_play", emphasized = s.emphasis() == Edition.BEDROCK)
+        } else {
+            // Not installed: lead to detection and the official install instead of a Play button that can only fail.
+            LaunchButton(stringResource(R.string.get_minecraft_bedrock), { onNavigate(Destination.BEDROCK) }, Modifier.fillMaxWidth(), tag = "bedrock_play", emphasized = false)
+        }
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(onClick = { onNavigate(Destination.BEDROCK) }, modifier = Modifier.weight(1f)) {
@@ -261,5 +267,15 @@ private fun Dashboard(s: HomeState, onNavigate: (Destination) -> Unit) {
             AssistChip(onClick = { onNavigate(Destination.DOWNLOADS) }, label = { Text(stringResource(R.string.nav_downloads)) })
         }
         if (s.recent.isEmpty()) Text(stringResource(R.string.play_time_statistics_are_not_available), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+/** The edition whose Play button carries the accent: the one that can start, preferring the last used. */
+private fun HomeState.emphasis(): Edition {
+    val javaReady = selectedProfile?.state == InstallState.INSTALLED
+    return when {
+        javaReady && bedrock.launchable -> edition
+        bedrock.launchable -> Edition.BEDROCK
+        else -> Edition.JAVA
     }
 }

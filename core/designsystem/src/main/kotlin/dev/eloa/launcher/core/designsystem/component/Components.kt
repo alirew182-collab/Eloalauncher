@@ -305,16 +305,18 @@ fun MetricTile(label: String, value: String, icon: ImageVector, modifier: Modifi
 
 /** Big gradient call-to-action used for "PLAY". */
 @Composable
-fun LaunchButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, icon: ImageVector? = null, tag: String = "launch_button") {
+fun LaunchButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, icon: ImageVector? = null, tag: String = "launch_button", emphasized: Boolean = true) {
     Box(
         modifier.heightIn(min = 52.dp).clip(RoundedCornerShape(12.dp))
-            .background(if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant)
+            // One bright action per screen: secondary launch buttons use a neutral surface step.
+            .background(when { !enabled -> MaterialTheme.colorScheme.surfaceVariant; emphasized -> MaterialTheme.colorScheme.primary; else -> MaterialTheme.colorScheme.surfaceContainerHighest })
             .clickable(enabled = enabled, onClick = onClick).padding(horizontal = 28.dp, vertical = 14.dp).testTag(tag),
         contentAlignment = Alignment.Center,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if (icon != null) { Icon(icon, null, tint = MaterialTheme.colorScheme.onPrimary); Spacer(Modifier.width(10.dp)) }
-            Text(text, style = MaterialTheme.typography.titleMedium, color = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
+            val fg = when { !enabled -> MaterialTheme.colorScheme.onSurfaceVariant; emphasized -> MaterialTheme.colorScheme.onPrimary; else -> MaterialTheme.colorScheme.onSurface }
+            if (icon != null) { Icon(icon, null, tint = fg); Spacer(Modifier.width(10.dp)) }
+            Text(text, style = MaterialTheme.typography.titleMedium, color = fg, fontWeight = FontWeight.SemiBold)
         }
     }
 }

@@ -866,4 +866,6 @@
     <string name="crash_analysis">Absturzanalyse</string>
     <string name="crash_none_found">Keine bekannte Fehlerursache in den letzten Fehlern</string>
     <string name="crash_analyze_file">Spielprotokoll oder Absturzbericht analysieren</string>
+    <string name="not_reported">Nicht gemeldet</string>
+    <string name="get_minecraft_bedrock">Minecraft Bedrock holen</string>
 </resources>

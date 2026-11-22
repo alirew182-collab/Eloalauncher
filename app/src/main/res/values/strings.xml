@@ -866,4 +866,6 @@
     <string name="crash_analysis">Crash analysis</string>
     <string name="crash_none_found">No known failure pattern in recent errors</string>
     <string name="crash_analyze_file">Analyse a game log or crash report</string>
+    <string name="not_reported">Not reported</string>
+    <string name="get_minecraft_bedrock">Get Minecraft Bedrock</string>
 </resources>

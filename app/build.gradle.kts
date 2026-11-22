@@ -24,8 +24,8 @@ android {
         applicationId = "dev.eloa.launcher"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // GitHub repository whose releases the in-app update manager checks.
@@ -81,6 +81,8 @@ android {
             if (t.name.contains("Release")) t.filter.excludeTestsMatching("*ComponentUiTest")
         }
     }
+    // Ship only the languages the app is translated into, so library strings never mix with English UI.
+    androidResources { localeFilters += listOf("en", "ru", "tr", "de") }
     // The in-app language picker needs every language in every install, so no language splits.
     bundle { language { enableSplit = false } }
     lint {

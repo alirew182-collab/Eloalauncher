@@ -866,4 +866,6 @@
     <string name="crash_analysis">Анализ сбоев</string>
     <string name="crash_none_found">В недавних ошибках известных причин не найдено</string>
     <string name="crash_analyze_file">Проанализировать журнал игры или отчёт о сбое</string>
+    <string name="not_reported">Не сообщается</string>
+    <string name="get_minecraft_bedrock">Установить Minecraft Bedrock</string>
 </resources>

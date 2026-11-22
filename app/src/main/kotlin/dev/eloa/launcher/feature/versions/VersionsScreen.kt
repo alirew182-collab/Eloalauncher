@@ -65,8 +65,8 @@ fun VersionsScreen(padding: PaddingValues, vm: VersionsViewModel = hiltViewModel
     var delete by remember { mutableStateOf<InstalledVersion?>(null) }
     Column(Modifier.padding(padding)) {
         PrimaryTabRow(selectedTabIndex = tab) {
-            Tab(tab == 0, { tab = 0 }, text = { Text(stringResource(R.string.available)) })
-            Tab(tab == 1, { tab = 1 }, text = { Text(stringResource(R.string.installed_1_s, installed.size)) })
+            Tab(tab == 0, { tab = 0 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.available)) })
+            Tab(tab == 1, { tab = 1 }, unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant, text = { Text(stringResource(R.string.installed_1_s, installed.size)) })
         }
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.testTag("versions")) {
             if (tab == 0) {

@@ -202,8 +202,8 @@ fun PerformanceScreen(padding: PaddingValues, onNavigate: (Destination) -> Unit,
                     LabeledValue(stringResource(R.string.model), "${d.manufacturer} ${d.model}")
                     LabeledValue(stringResource(R.string.android), stringResource(R.string.s_1_s_api_2_s, d.androidRelease, d.sdkInt))
                     LabeledValue(stringResource(R.string.soc), listOfNotNull(d.socManufacturer, d.socModel).joinToString(" ").ifEmpty { d.cpuName ?: d.hardware })
-                    LabeledValue("CPU", "${d.cpuCores} × " + (d.cpuMaxFreqMhz.maxOrNull()?.let { stringResource(R.string.s_1_s_mhz, it) } ?: "?") + " · ${d.supportedAbis.joinToString()}")
-                    LabeledValue("GPU", listOfNotNull(d.gpu.vendor, d.gpu.renderer).joinToString(" · ").ifEmpty { "?" })
+                    LabeledValue("CPU", "${d.cpuCores} × " + (d.cpuMaxFreqMhz.maxOrNull()?.let { stringResource(R.string.s_1_s_mhz, it) } ?: stringResource(R.string.not_reported)) + " · ${d.supportedAbis.joinToString()}")
+                    LabeledValue("GPU", listOfNotNull(d.gpu.vendor, d.gpu.renderer).joinToString(" · ").ifEmpty { stringResource(R.string.not_reported) })
                     LabeledValue(stringResource(R.string.opengl_es), d.gpu.glVersion ?: d.glesVersion)
                     LabeledValue(stringResource(R.string.vulkan), if (d.vulkanSupported) d.vulkanVersion ?: "1.0" else "—")
                     ui.display?.let { LabeledValue(stringResource(R.string.display), stringResource(R.string.s_1_s_2_s_3_s, it.widthPx, it.heightPx, it.refreshHz.roundToInt())) }
