@@ -24,14 +24,14 @@ import androidx.compose.ui.unit.sp
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
 /** Accent palettes. Each defines the seed color used to derive the scheme. */
-enum class AccentColor(val seed: Color, val label: String) {
-    GRASS(Color(0xFF4CAF50), "Grass"),
-    DIAMOND(Color(0xFF26C6DA), "Diamond"),
-    REDSTONE(Color(0xFFE53935), "Redstone"),
-    GOLD(Color(0xFFFFB300), "Gold"),
-    AMETHYST(Color(0xFF9C6BFF), "Amethyst"),
-    LAPIS(Color(0xFF3F6BFF), "Lapis"),
-    DYNAMIC(Color(0xFF4CAF50), "System (Material You)"),
+enum class AccentColor(val seed: Color, @param:androidx.annotation.StringRes val labelRes: Int) {
+    GRASS(Color(0xFF4CAF50), dev.eloa.launcher.core.designsystem.R.string.ds_accent_grass),
+    DIAMOND(Color(0xFF26C6DA), dev.eloa.launcher.core.designsystem.R.string.ds_accent_diamond),
+    REDSTONE(Color(0xFFE53935), dev.eloa.launcher.core.designsystem.R.string.ds_accent_redstone),
+    GOLD(Color(0xFFFFB300), dev.eloa.launcher.core.designsystem.R.string.ds_accent_gold),
+    AMETHYST(Color(0xFF9C6BFF), dev.eloa.launcher.core.designsystem.R.string.ds_accent_amethyst),
+    LAPIS(Color(0xFF3F6BFF), dev.eloa.launcher.core.designsystem.R.string.ds_accent_lapis),
+    DYNAMIC(Color(0xFF4CAF50), dev.eloa.launcher.core.designsystem.R.string.ds_accent_dynamic),
 }
 
 @Immutable
@@ -39,14 +39,14 @@ data class LauncherExtras(
     val success: Color,
     val warning: Color,
     val danger: Color,
-    val heroGradient: List<Color>,
-    val cardGradient: List<Color>,
+    /** Quiet 1dp borders: the text colour at low opacity. */
+    val hairline: Color,
     val enableBlur: Boolean,
     val reduceMotion: Boolean,
 )
 
 val LocalLauncherExtras = staticCompositionLocalOf {
-    LauncherExtras(Color.Green, Color.Yellow, Color.Red, listOf(Color.Black, Color.DarkGray), listOf(Color.DarkGray, Color.Black), false, false)
+    LauncherExtras(Color.Green, Color.Yellow, Color.Red, Color.Gray, false, false)
 }
 
 private fun schemeFor(accent: Color, dark: Boolean): ColorScheme {
@@ -60,7 +60,7 @@ private fun schemeFor(accent: Color, dark: Boolean): ColorScheme {
             secondary = lerp(accent, Color(0xFF9AA59A), 0.6f),
             secondaryContainer = Color(0xFF2A302B),
             onSecondaryContainer = Color(0xFFDCE5DA),
-            tertiary = Color(0xFF7FD6E8),
+            tertiary = lerp(accent, Color(0xFFB8C2B6), 0.5f),
             background = Color(0xFF0E110F),
             onBackground = Color(0xFFE2E6E0),
             surface = Color(0xFF121613),
@@ -84,7 +84,7 @@ private fun schemeFor(accent: Color, dark: Boolean): ColorScheme {
             onPrimaryContainer = lerp(accent, Color.Black, 0.7f),
             secondary = lerp(accent, Color(0xFF55605A), 0.65f),
             secondaryContainer = Color(0xFFDDE6DA),
-            tertiary = Color(0xFF00677A),
+            tertiary = lerp(accent, Color(0xFF3F4A40), 0.5f),
             background = Color(0xFFF6F8F3),
             onBackground = Color(0xFF181D18),
             surface = Color(0xFFFBFDF8),
@@ -106,12 +106,14 @@ private fun Color.luminance(): Float = 0.2126f * red + 0.7152f * green + 0.0722f
 
 private val LauncherTypography = Typography().let { t ->
     t.copy(
-        displaySmall = t.displaySmall.copy(fontWeight = FontWeight.Black, letterSpacing = (-0.5).sp),
-        headlineMedium = t.headlineMedium.copy(fontWeight = FontWeight.Bold),
-        headlineSmall = t.headlineSmall.copy(fontWeight = FontWeight.Bold),
-        titleLarge = t.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-        titleMedium = t.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-        labelLarge = t.labelLarge.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.4.sp),
+        // Hierarchy from size and colour; weights stay between 400 and 600.
+        displaySmall = t.displaySmall.copy(fontWeight = FontWeight.Medium),
+        headlineMedium = t.headlineMedium.copy(fontWeight = FontWeight.SemiBold),
+        headlineSmall = t.headlineSmall.copy(fontWeight = FontWeight.SemiBold),
+        titleLarge = t.titleLarge.copy(fontWeight = FontWeight.Medium),
+        titleMedium = t.titleMedium.copy(fontWeight = FontWeight.Medium),
+        titleSmall = t.titleSmall.copy(fontWeight = FontWeight.Medium),
+        labelLarge = t.labelLarge.copy(fontWeight = FontWeight.Medium, letterSpacing = 0.1.sp),
     )
 }
 
@@ -134,9 +136,7 @@ fun LauncherTheme(
         success = if (dark) Color(0xFF6EDC7A) else Color(0xFF1E7B34),
         warning = if (dark) Color(0xFFFFC857) else Color(0xFF8A5A00),
         danger = scheme.error,
-        heroGradient = if (dark) listOf(lerp(scheme.primary, Color.Black, 0.55f), Color(0xFF101512), lerp(scheme.tertiary, Color.Black, 0.75f))
-        else listOf(lerp(scheme.primary, Color.White, 0.55f), Color(0xFFF7FAF4), lerp(scheme.tertiary, Color.White, 0.8f)),
-        cardGradient = listOf(scheme.surfaceContainerHigh, scheme.surfaceContainer),
+        hairline = scheme.onSurface.copy(alpha = if (dark) 0.08f else 0.10f),
         enableBlur = enableBlur && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
         reduceMotion = reduceMotion,
     )

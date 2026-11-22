@@ -28,6 +28,8 @@ android {
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        // GitHub repository whose releases the in-app update manager checks.
+        buildConfigField("String", "UPDATE_REPO", "\"alirew182-collab/Eloalauncher\"")
     }
 
     signingConfigs {

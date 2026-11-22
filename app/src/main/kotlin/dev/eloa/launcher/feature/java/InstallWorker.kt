@@ -49,6 +49,7 @@ class InstallWorker @AssistedInject constructor(
     private val storage: LauncherStorage,
     private val http: OkHttpClient,
     private val logger: AppLogger,
+    private val notifications: dev.eloa.launcher.feature.notifications.NotificationCenter,
 ) : CoroutineWorker(ctx, params) {
 
     private var lastNotify = 0L
@@ -85,6 +86,8 @@ class InstallWorker @AssistedInject constructor(
             if (mrpack != null) installModpackFiles(File(mrpack), profile.gameDirName)
             profiles.setInstalled(profileId, launchId, pending)
             logger.i("Install", "Profile ready: ${profile.name}", mapOf("version" to launchId))
+            notifications.post(dev.eloa.launcher.feature.notifications.NoticeType.DOWNLOAD_DONE, R.string.notice_install_done_title,
+                applicationContext.getString(R.string.notice_install_done_body, profile.name), "java")
             Result.success()
         } catch (e: CancellationException) {
             profiles.setInstallState(profileId, InstallState.NOT_INSTALLED, "Cancelled")
@@ -92,6 +95,11 @@ class InstallWorker @AssistedInject constructor(
         } catch (e: Exception) {
             logger.e("Install", "Installation failed for ${profile.name}", e)
             profiles.setInstallState(profileId, InstallState.FAILED, e.userMessage())
+            if (e is dev.eloa.launcher.domain.java.download.InsufficientSpaceException) {
+                notifications.post(dev.eloa.launcher.feature.notifications.NoticeType.LOW_STORAGE, R.string.notice_low_storage_title,
+                    applicationContext.getString(R.string.notice_low_storage_body, FileOps.formatSize(storage.freeBytes())), "files")
+            }
+            notifications.post(dev.eloa.launcher.feature.notifications.NoticeType.INSTALL_FAILED, R.string.notice_install_failed_title, "${profile.name}: ${e.userMessage()}", "downloads")
             Result.failure(workDataOf(KEY_ERROR to e.userMessage()))
         } finally {
             mrpack?.let { File(it).delete() }
@@ -161,12 +169,14 @@ class InstallWorker @AssistedInject constructor(
         private const val NOTIFICATION_ID = 4201
 
         fun workName(profileId: String) = "install-$profileId"
+        fun profileTag(profileId: String) = "profile:$profileId"
 
         fun enqueue(context: Context, profileId: String, mrpackPath: String? = null) {
             val req = OneTimeWorkRequestBuilder<InstallWorker>()
                 .setInputData(workDataOf(KEY_PROFILE to profileId, KEY_MRPACK to mrpackPath))
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .addTag("install")
+                .addTag(profileTag(profileId))
                 .build()
             WorkManager.getInstance(context).enqueueUniqueWork(workName(profileId), ExistingWorkPolicy.KEEP, req)
         }

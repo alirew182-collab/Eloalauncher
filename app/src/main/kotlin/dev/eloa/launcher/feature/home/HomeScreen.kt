@@ -1,8 +1,12 @@
 package dev.eloa.launcher.feature.home
 
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,24 +20,23 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.Analytics
 import androidx.compose.material.icons.outlined.ArrowDropDown
+import androidx.compose.material.icons.outlined.Coffee
 import androidx.compose.material.icons.outlined.Inventory2
 import androidx.compose.material.icons.outlined.Layers
 import androidx.compose.material.icons.outlined.Memory
 import androidx.compose.material.icons.outlined.PlayArrow
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SdStorage
-import androidx.compose.material.icons.outlined.VerifiedUser
-import androidx.compose.material.icons.outlined.Widgets
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Smartphone
+import androidx.compose.material.icons.outlined.Wifi
+import androidx.compose.material.icons.outlined.WifiOff
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,7 +46,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -52,6 +55,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.eloa.launcher.core.common.io.FileOps
 import dev.eloa.launcher.core.data.settings.Edition
+import dev.eloa.launcher.core.data.settings.HomeLayout
 import dev.eloa.launcher.core.designsystem.component.LaunchButton
 import dev.eloa.launcher.core.designsystem.component.LauncherCard
 import dev.eloa.launcher.core.designsystem.component.MetricTile
@@ -59,12 +63,13 @@ import dev.eloa.launcher.core.designsystem.component.SectionHeader
 import dev.eloa.launcher.core.designsystem.component.SkeletonList
 import dev.eloa.launcher.core.designsystem.component.StatusChip
 import dev.eloa.launcher.core.designsystem.component.StatusLevel
-import dev.eloa.launcher.core.designsystem.component.UsageBar
 import dev.eloa.launcher.core.designsystem.theme.LocalLauncherExtras
 import dev.eloa.launcher.feature.common.LaunchResultDialog
 import dev.eloa.launcher.feature.common.ProfileAvatar
 import dev.eloa.launcher.feature.common.SimpleMenu
 import dev.eloa.launcher.feature.common.formatDate
+import dev.eloa.launcher.feature.common.label
+import dev.eloa.launcher.feature.common.blockerText
 import dev.eloa.launcher.feature.java.InstallState
 import dev.eloa.launcher.feature.java.state
 import dev.eloa.launcher.nav.Destination
@@ -76,42 +81,53 @@ fun HomeScreen(padding: PaddingValues, onNavigate: (Destination) -> Unit, vm: Ho
     val outcome by vm.outcome.collectAsStateWithLifecycle()
     LaunchResultDialog(outcome, vm::dismissOutcome)
     LazyColumn(Modifier.padding(padding).testTag("home"), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        item { HeroCard(s, launching, vm, onNavigate) }
-        if (s.loading) { item { SkeletonList(3) }; return@LazyColumn }
-        item { StatusGrid(s, onNavigate) }
         item {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                AssistChip(onClick = { onNavigate(Destination.SETTINGS) }, label = { Text("Settings") }, leadingIcon = { Icon(Icons.Outlined.Settings, null) })
-                AssistChip(onClick = { onNavigate(Destination.VERSIONS) }, label = { Text("Versions") }, leadingIcon = { Icon(Icons.Outlined.Layers, null) })
-                AssistChip(onClick = { onNavigate(Destination.DIAGNOSTICS) }, label = { Text("Diagnose") }, leadingIcon = { Icon(Icons.Outlined.Analytics, null) })
+            BoxWithConstraints {
+                if (maxWidth >= 720.dp) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        JavaCard(s, launching == Edition.JAVA, vm, onNavigate, Modifier.weight(1f))
+                        BedrockCard(s, launching == Edition.BEDROCK, vm, onNavigate, Modifier.weight(1f))
+                    }
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                        JavaCard(s, launching == Edition.JAVA, vm, onNavigate, Modifier.fillMaxWidth())
+                        BedrockCard(s, launching == Edition.BEDROCK, vm, onNavigate, Modifier.fillMaxWidth())
+                    }
+                }
             }
         }
-        item { SectionHeader("Recently launched") }
-        if (s.recent.isEmpty()) item { Text("Nothing launched yet.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        if (s.loading) { item { SkeletonList(3) }; return@LazyColumn }
+        if (s.layout == HomeLayout.MINIMAL) return@LazyColumn
+        if (s.layout == HomeLayout.DASHBOARD) item { Dashboard(s, onNavigate) }
+        if (s.profiles.size > 1) {
+            item { SectionHeader(stringResource(R.string.quick_launch)) }
+            items(s.profiles.take(4), key = { "q" + it.id }) { p ->
+                LauncherCard(Modifier.fillMaxWidth(), onClick = { vm.selectProfile(p.id) }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        ProfileAvatar(p.iconKey, p.coverKey, 40.dp)
+                        Spacer(Modifier.width(12.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(p.name, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text("${p.minecraftVersion} · ${p.loader.lowercase()}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        OutlinedButton(onClick = { vm.launchJava(p.id) }, enabled = launching == null) { Text(stringResource(R.string.play)) }
+                    }
+                }
+            }
+        }
+        item { SectionHeader(stringResource(R.string.recently_launched)) }
+        if (s.recent.isEmpty()) item { Text(stringResource(R.string.nothing_launched_yet), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         items(s.recent, key = { it.id }) { h ->
             LauncherCard(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) {
-                        Text(h.title, style = MaterialTheme.typography.titleSmall)
-                        Text("${if (h.edition == "JAVA") "Java" else "Bedrock"} · ${h.subtitle} · ${formatDate(h.launchedAt)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        h.message?.let { Text(it, style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis) }
-                    }
-                    StatusChip(if (h.success) "Started" else "Blocked", if (h.success) StatusLevel.OK else StatusLevel.WARNING)
-                }
-            }
-        }
-        item { SectionHeader("Latest add-ons", action = { OutlinedButton(onClick = { onNavigate(Destination.ADDONS) }) { Text("All") } }) }
-        if (s.recentAddons.isEmpty()) item { Text("No add-ons imported yet.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
-        items(s.recentAddons, key = { "a" + it.id }) { a ->
-            LauncherCard(Modifier.fillMaxWidth(), onClick = { onNavigate(Destination.ADDONS) }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Outlined.Widgets, null, tint = MaterialTheme.colorScheme.primary)
+                    Icon(if (h.edition == "JAVA") Icons.Outlined.Coffee else Icons.Outlined.Smartphone, null, tint = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.width(12.dp))
                     Column(Modifier.weight(1f)) {
-                        Text(a.name, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        Text("${a.category} · ${formatDate(a.importedAt)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(h.title, style = MaterialTheme.typography.titleSmall)
+                        Text("${h.subtitle} · ${formatDate(h.launchedAt)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        h.message?.let { Text(it, style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis) }
                     }
-                    if (a.hasErrors) StatusChip("Issues", StatusLevel.WARNING)
+                    if (h.success) StatusChip(stringResource(R.string.started), StatusLevel.OK) else StatusChip(stringResource(R.string.blocked), StatusLevel.WARNING)
                 }
             }
         }
@@ -119,93 +135,131 @@ fun HomeScreen(padding: PaddingValues, onNavigate: (Destination) -> Unit, vm: Ho
 }
 
 @Composable
-private fun HeroCard(s: HomeState, launching: Boolean, vm: HomeViewModel, onNavigate: (Destination) -> Unit) {
+private fun EditionCardFrame(title: String, icon: ImageVector, modifier: Modifier, tag: String, content: @Composable () -> Unit) {
     val x = LocalLauncherExtras.current
-    Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp)).background(Brush.linearGradient(x.heroGradient)).padding(20.dp)) {
+    Box(modifier.clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colorScheme.surfaceContainer).border(1.dp, x.hairline, RoundedCornerShape(20.dp)).padding(20.dp).testTag(tag)) {
         Column {
-            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                listOf(Edition.JAVA to "Java Edition", Edition.BEDROCK to "Bedrock Edition").forEachIndexed { i, (e, label) ->
-                    SegmentedButton(selected = s.edition == e, onClick = { vm.selectEdition(e) }, shape = SegmentedButtonDefaults.itemShape(i, 2),
-                        modifier = Modifier.testTag("edition_${e.name}")) { Text(label) }
-                }
-            }
-            Spacer(Modifier.height(20.dp))
-            var menu by remember { mutableStateOf(false) }
-            Box {
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                    if (s.edition == Edition.JAVA) {
-                        val p = s.selectedProfile
-                        if (p != null) ProfileAvatar(p.iconKey, p.coverKey, 56.dp)
-                        Spacer(Modifier.width(14.dp))
-                        Column(Modifier.weight(1f)) {
-                            Text(p?.name ?: "No profile", style = MaterialTheme.typography.headlineSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(p?.let { "Minecraft ${it.minecraftVersion} · ${it.loader.lowercase().replaceFirstChar { c -> c.uppercase() }}${it.loaderVersion?.let { v -> " $v" } ?: ""}" } ?: "Create a profile to play Java Edition",
-                                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            p?.let { Text("Last played: ${formatDate(it.lastPlayedAt)}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-                        }
-                    } else {
-                        val b = s.selectedBedrock
-                        Column(Modifier.weight(1f)) {
-                            Text(b?.displayName ?: "Minecraft Bedrock", style = MaterialTheme.typography.headlineSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(b?.let { "${it.versionName} · ${it.abis.ifEmpty { "no native libs" }}" } ?: "No APK imported", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            Text("Installed on device: ${s.installedBedrockVersion ?: "none"}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                    }
-                    OutlinedButton(onClick = { menu = true }, modifier = Modifier.testTag("version_picker")) { Text("Change"); Icon(Icons.Outlined.ArrowDropDown, null) }
-                }
-                if (s.edition == Edition.JAVA) SimpleMenu(menu, { menu = false }, s.profiles, { "${it.name} (${it.minecraftVersion})" }) { vm.selectProfile(it.id) }
-                else SimpleMenu(menu, { menu = false }, s.bedrockVersions, { it.displayName }) { vm.selectBedrock(it.id) }
-            }
-            Spacer(Modifier.height(20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                LaunchButton(if (launching) "CHECKING…" else "PLAY", vm::launch, Modifier.weight(1f), enabled = !launching, icon = Icons.Outlined.PlayArrow)
+                Box(Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.primary), contentAlignment = Alignment.Center) {
+                    Icon(icon, null, tint = MaterialTheme.colorScheme.onPrimary)
+                }
+                Spacer(Modifier.width(12.dp))
+                Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
             }
-            Spacer(Modifier.height(12.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Outlined.AccountCircle, null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                Spacer(Modifier.width(6.dp))
-                Text(if (s.edition == Edition.JAVA) (s.account?.username?.let { "Signed in as $it" } ?: "Not signed in — Settings → Accounts") else "Bedrock uses the in-game account",
-                    style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
-                if (s.edition == Edition.JAVA && s.profiles.isEmpty()) OutlinedButton(onClick = { onNavigate(Destination.PROFILES) }) { Text("New profile") }
+            Spacer(Modifier.height(14.dp))
+            content()
+        }
+    }
+}
+
+@Composable
+private fun JavaCard(s: HomeState, launching: Boolean, vm: HomeViewModel, onNavigate: (Destination) -> Unit, modifier: Modifier) {
+    EditionCardFrame(stringResource(R.string.nav_java), Icons.Outlined.Coffee, modifier, "card_java") {
+        val p = s.selectedProfile
+        var menu by remember { mutableStateOf(false) }
+        Box {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                if (p != null) { ProfileAvatar(p.iconKey, p.coverKey, 48.dp); Spacer(Modifier.width(12.dp)) }
+                Column(Modifier.weight(1f)) {
+                    Text(p?.name ?: stringResource(R.string.no_profile), style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    if (p != null) Text(stringResource(R.string.minecraft_1_s_2_s, p.minecraftVersion, p.loader.lowercase()), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    else Text(stringResource(R.string.create_a_profile_to_play_java), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                if (s.profiles.size > 1) OutlinedButton(onClick = { menu = true }, modifier = Modifier.testTag("version_picker")) { Icon(Icons.Outlined.ArrowDropDown, null) }
+            }
+            SimpleMenu(menu, { menu = false }, s.profiles, { "${it.name} (${it.minecraftVersion})" }) { vm.selectProfile(it.id) }
+        }
+        Spacer(Modifier.height(10.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            when (p?.state) {
+                InstallState.INSTALLED -> StatusChip(stringResource(R.string.installed), StatusLevel.OK)
+                InstallState.INSTALLING, InstallState.QUEUED -> StatusChip(stringResource(R.string.installing), StatusLevel.INFO)
+                InstallState.FAILED -> StatusChip(stringResource(R.string.install_failed), StatusLevel.ERROR)
+                InstallState.NEEDS_PROCESSORS -> StatusChip(stringResource(R.string.loader_setup_pending), StatusLevel.WARNING)
+                InstallState.NOT_INSTALLED -> StatusChip(stringResource(R.string.not_installed), StatusLevel.WARNING)
+                null -> StatusChip(stringResource(R.string.no_profile), StatusLevel.WARNING)
+            }
+            ModePicker(s, vm)
+        }
+        Spacer(Modifier.height(14.dp))
+        LaunchButton(if (launching) stringResource(R.string.checking) else stringResource(R.string.play), { vm.launchJava() }, Modifier.fillMaxWidth(), enabled = !launching, icon = Icons.Outlined.PlayArrow)
+        Spacer(Modifier.height(10.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { onNavigate(Destination.GAME_SETTINGS) }, modifier = Modifier.weight(1f).testTag("java_settings")) {
+                Icon(Icons.Outlined.Settings, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.nav_settings), maxLines = 1)
+            }
+            OutlinedButton(onClick = { onNavigate(if (s.profiles.isEmpty()) Destination.PROFILES else Destination.VERSIONS) }, modifier = Modifier.weight(1f).testTag("java_versions")) {
+                Icon(Icons.Outlined.Layers, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.nav_versions), maxLines = 1)
             }
         }
     }
 }
 
 @Composable
-private fun StatusGrid(s: HomeState, onNavigate: (Destination) -> Unit) {
-    val filesStatus = when (s.edition) {
-        Edition.JAVA -> when (s.selectedProfile?.state) {
-            InstallState.INSTALLED -> "Installed" to StatusLevel.OK
-            InstallState.INSTALLING, InstallState.QUEUED -> "Installing" to StatusLevel.INFO
-            InstallState.FAILED -> "Failed" to StatusLevel.ERROR
-            InstallState.NEEDS_PROCESSORS -> "Needs runtime" to StatusLevel.WARNING
-            else -> "Not installed" to StatusLevel.WARNING
-        }
-        Edition.BEDROCK -> when {
-            s.selectedBedrock == null -> "No APK" to StatusLevel.WARNING
-            !s.selectedBedrock.integrityOk -> "Damaged" to StatusLevel.ERROR
-            else -> "Verified" to StatusLevel.OK
+private fun ModePicker(s: HomeState, vm: HomeViewModel) {
+    var open by remember { mutableStateOf(false) }
+    val current = s.modes.firstOrNull { it.mode == s.mode }
+    Box {
+        AssistChip(onClick = { open = true }, label = { Text(s.mode.label(), maxLines = 1) }, modifier = Modifier.testTag("mode_picker"),
+            leadingIcon = { if (current?.available == false) Icon(Icons.Outlined.WifiOff, null, Modifier.size(16.dp)) else Icon(Icons.Outlined.Wifi, null, Modifier.size(16.dp)) })
+        DropdownMenu(open, { open = false }) {
+            s.modes.forEach { m ->
+                DropdownMenuItem(
+                    text = {
+                        Column {
+                            Text(m.mode.label())
+                            if (!m.available) Text(blockerText(m.blockers.first()), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                        }
+                    },
+                    enabled = m.available, onClick = { vm.selectMode(m.mode); open = false },
+                    modifier = Modifier.testTag("mode_${m.mode.name}"),
+                )
+            }
         }
     }
+}
+
+@Composable
+private fun BedrockCard(s: HomeState, launching: Boolean, vm: HomeViewModel, onNavigate: (Destination) -> Unit, modifier: Modifier) {
+    EditionCardFrame(stringResource(R.string.nav_bedrock), Icons.Outlined.Smartphone, modifier, "card_bedrock") {
+        val v = s.bedrock.installedVersion
+        Text(if (v != null) stringResource(R.string.minecraft_1_s, v) else stringResource(R.string.not_installed_on_this_device), style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.library_1_s_apk_version_s, s.bedrockVersions.size), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Spacer(Modifier.height(10.dp))
+        if (s.bedrock.launchable) StatusChip(stringResource(R.string.installed), StatusLevel.OK) else StatusChip(stringResource(R.string.not_installed), StatusLevel.WARNING)
+        Spacer(Modifier.height(14.dp))
+        LaunchButton(if (launching) stringResource(R.string.starting) else stringResource(R.string.play), vm::launchBedrock, Modifier.fillMaxWidth().testTag("bedrock_play"), enabled = !launching, icon = Icons.Outlined.PlayArrow)
+        Spacer(Modifier.height(10.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { onNavigate(Destination.BEDROCK) }, modifier = Modifier.weight(1f)) {
+                Icon(Icons.Outlined.Settings, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.nav_settings), maxLines = 1)
+            }
+            OutlinedButton(onClick = { onNavigate(Destination.BEDROCK) }, modifier = Modifier.weight(1f)) {
+                Icon(Icons.Outlined.Layers, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.nav_versions), maxLines = 1)
+            }
+        }
+    }
+}
+
+@Composable
+private fun Dashboard(s: HomeState, onNavigate: (Destination) -> Unit) {
+    val sys = s.system
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            MetricTile("Game files", filesStatus.first, Icons.Outlined.VerifiedUser, Modifier.weight(1f), filesStatus.second)
-            val sys = s.system
-            MetricTile("Free RAM", sys?.let { "${it.availRamMb} / ${it.totalRamMb} MB" } ?: "…", Icons.Outlined.Memory, Modifier.weight(1f),
+            MetricTile(stringResource(R.string.free_ram), sys?.let { stringResource(R.string.s_1_s_2_s_mb, it.availRamMb, it.totalRamMb) } ?: "…", Icons.Outlined.Memory, Modifier.weight(1f),
                 sys?.let { if (it.availRamMb < 700) StatusLevel.WARNING else null })
+            MetricTile(stringResource(R.string.free_storage), sys?.let { FileOps.formatSize(it.freeStorage) } ?: "…", Icons.Outlined.SdStorage, Modifier.weight(1f),
+                sys?.let { if (it.freeStorage < 1_000_000_000L) StatusLevel.WARNING else null })
         }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            MetricTile("Launcher data", s.system?.let { FileOps.formatSize(it.launcherBytes) } ?: "…", Icons.Outlined.SdStorage, Modifier.weight(1f))
-            MetricTile("Profiles · APKs", "${s.profiles.size} · ${s.bedrockVersions.size}", Icons.Outlined.Inventory2, Modifier.weight(1f))
+            MetricTile(stringResource(R.string.nav_profiles), s.profiles.size.toString(), Icons.Outlined.Inventory2, Modifier.weight(1f))
+            MetricTile(stringResource(R.string.network), if (sys?.online == true) stringResource(R.string.mode_online) else stringResource(R.string.mode_offline), if (sys?.online == true) Icons.Outlined.Wifi else Icons.Outlined.WifiOff, Modifier.weight(1f))
         }
-        s.system?.let { sys ->
-            LauncherCard(Modifier.fillMaxWidth(), onClick = { onNavigate(Destination.FILES) }) {
-                Text("Device storage: ${FileOps.formatSize(sys.freeStorage)} free of ${FileOps.formatSize(sys.totalStorage)}", style = MaterialTheme.typography.bodySmall)
-                Spacer(Modifier.height(8.dp))
-                UsageBar(1f - sys.freeStorage.toFloat() / sys.totalStorage.coerceAtLeast(1))
-            }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            AssistChip(onClick = { onNavigate(Destination.PERFORMANCE) }, label = { Text(stringResource(R.string.preset_performance)) })
+            AssistChip(onClick = { onNavigate(Destination.DIAGNOSTICS) }, label = { Text(stringResource(R.string.diagnose)) })
+            AssistChip(onClick = { onNavigate(Destination.DOWNLOADS) }, label = { Text(stringResource(R.string.nav_downloads)) })
         }
-        if (s.edition == Edition.JAVA) Text("Java profile memory: ${s.selectedProfile?.maxMemoryMb ?: "—"} MB", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium)
+        if (s.recent.isEmpty()) Text(stringResource(R.string.play_time_statistics_are_not_available), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

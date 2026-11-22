@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.bedrock
 
+import dev.eloa.launcher.feature.common.str
+import dev.eloa.launcher.R
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -61,8 +63,8 @@ class BedrockViewModel @Inject constructor(
         if (uris.isEmpty()) return
         job = viewModelScope.launch {
             try {
-                _progress.value = ProgressInfo("Importing ${uris.size} file(s)", 0f, null)
-                _report.value = repo.import(uris) { label, f -> _progress.value = ProgressInfo("Importing", f, label) }
+                _progress.value = ProgressInfo(str(R.string.importing_1_s_file_s, uris.size), 0f, null)
+                _report.value = repo.import(uris) { label, f -> _progress.value = ProgressInfo(str(R.string.progress_importing), f, label) }
             } catch (e: Exception) { messages.error(e.userMessage()) } finally { _progress.value = null }
         }
     }
@@ -70,18 +72,18 @@ class BedrockViewModel @Inject constructor(
     fun cancel() { job?.cancel(); _progress.value = null }
     fun dismissReport() { _report.value = null }
 
-    fun select(id: Long) = viewModelScope.launch { settings.update { it.copy(selectedBedrockId = id, selectedEdition = Edition.BEDROCK) }; messages.info("Selected for launch") }
+    fun select(id: Long) = viewModelScope.launch { settings.update { it.copy(selectedBedrockId = id, selectedEdition = Edition.BEDROCK) }; messages.info(R.string.selected_for_launch) }
     fun rename(id: Long, name: String) = viewModelScope.launch { repo.rename(id, name) }
     fun setNotes(id: Long, notes: String) = viewModelScope.launch { repo.setNotes(id, notes) }
     fun delete(id: Long, files: Boolean) = viewModelScope.launch {
-        runCatching { repo.delete(id, files) }.onSuccess { messages.info(if (files) "Removed with files" else "Removed from library (files kept)") }.onFailure { messages.error(it.userMessage()) }
+        runCatching { repo.delete(id, files) }.onSuccess { messages.info(if (files) str(R.string.removed_with_files) else str(R.string.removed_from_library_files_kept)) }.onFailure { messages.error(it.userMessage()) }
     }
 
     fun verify(id: Long) {
         job = viewModelScope.launch {
-            _progress.value = ProgressInfo("Verifying files", 0f, null)
+            _progress.value = ProgressInfo(str(R.string.verifying_files), 0f, null)
             try {
-                val (ok, msg) = repo.verify(id) { _progress.value = ProgressInfo("Verifying files", it, null) }
+                val (ok, msg) = repo.verify(id) { _progress.value = ProgressInfo(str(R.string.verifying_files), it, null) }
                 if (ok) messages.info(msg) else messages.error(msg)
             } catch (e: Exception) { messages.error(e.userMessage()) } finally { _progress.value = null }
         }
@@ -96,9 +98,9 @@ class BedrockViewModel @Inject constructor(
         if (!installer.canRequestInstalls()) { _needsPermission.value = true; return }
         job = viewModelScope.launch {
             try {
-                _progress.value = ProgressInfo("Sending to Android installer", 0f, p.entity.displayName, cancellable = false)
-                repo.install(p.entity.id) { _progress.value = ProgressInfo("Sending to Android installer", it, p.entity.displayName, cancellable = false) }
-                _progress.value = ProgressInfo("Waiting for confirmation…", null, "Confirm the installation in the system dialog", cancellable = false)
+                _progress.value = ProgressInfo(str(R.string.sending_to_android_installer), 0f, p.entity.displayName, cancellable = false)
+                repo.install(p.entity.id) { _progress.value = ProgressInfo(str(R.string.sending_to_android_installer), it, p.entity.displayName, cancellable = false) }
+                _progress.value = ProgressInfo(str(R.string.waiting_for_confirmation), null, str(R.string.confirm_the_installation_in_the_system), cancellable = false)
             } catch (e: InstallPermissionMissing) { _needsPermission.value = true; _progress.value = null }
             catch (e: Exception) { messages.error(e.userMessage()); _progress.value = null }
         }
@@ -109,11 +111,11 @@ class BedrockViewModel @Inject constructor(
     fun appSettingsIntent(): Intent = installer.appDetailsIntent(KnownPackages.MINECRAFT_BEDROCK)
 
     fun launch(id: Long) = viewModelScope.launch { _outcome.value = launcher.launchBedrock(id) }
-    fun launchInstalled() { if (!launcher.launchInstalledBedrock()) messages.error("Minecraft Bedrock is not installed on this device.") }
+    fun launchInstalled() { if (!launcher.launchInstalledBedrock()) messages.error(R.string.minecraft_bedrock_is_not_installed_on) }
     fun dismissOutcome() { _outcome.value = null }
 
     fun exportMetadata(uri: Uri) = viewModelScope.launch {
-        runCatching { repo.exportMetadata(uri) }.onSuccess { messages.info("Library metadata exported") }.onFailure { messages.error(it.userMessage()) }
+        runCatching { repo.exportMetadata(uri) }.onSuccess { messages.info(R.string.library_metadata_exported) }.onFailure { messages.error(it.userMessage()) }
     }
 
     fun files(e: BedrockVersionEntity) = repo.files(e)

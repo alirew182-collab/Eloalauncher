@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.javaui
 
+import dev.eloa.launcher.feature.common.str
+import dev.eloa.launcher.R
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,9 +36,9 @@ import javax.inject.Inject
 fun installProgress(context: Context, profileId: String): Flow<ProgressInfo?> =
     WorkManager.getInstance(context).getWorkInfosForUniqueWorkFlow(InstallWorker.workName(profileId)).map { infos ->
         val w = infos.firstOrNull { !it.state.isFinished } ?: return@map null
-        val stage = w.progress.getString(InstallWorker.KEY_STAGE) ?: if (w.state == WorkInfo.State.ENQUEUED) "Waiting to start" else "Preparing"
+        val stage = w.progress.getString(InstallWorker.KEY_STAGE) ?: if (w.state == WorkInfo.State.ENQUEUED) str(R.string.waiting_to_start) else str(R.string.preparing)
         val f = w.progress.getFloat(InstallWorker.KEY_FRACTION, -1f)
-        ProgressInfo("Installing: $stage", if (f < 0) null else f, w.progress.getString(InstallWorker.KEY_DETAIL))
+        ProgressInfo(str(R.string.installing_1_s, stage), if (f < 0) null else f, w.progress.getString(InstallWorker.KEY_DETAIL))
     }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -67,19 +69,19 @@ class JavaViewModel @Inject constructor(
     fun install() {
         val p = selection.value.selected ?: return
         InstallWorker.enqueue(context, p.id)
-        messages.info("Installation of ${p.name} started — progress is also shown in the notification.")
+        messages.info(R.string.installation_of_1_s_started_progress, p.name)
     }
 
     fun cancelInstall() { selection.value.selected?.let { InstallWorker.cancel(context, it.id) } }
 
     fun verify() {
         val p = selection.value.selected ?: return
-        val id = p.launchVersionId ?: return messages.error("Install the profile first")
+        val id = p.launchVersionId ?: return messages.error(R.string.install_the_profile_first)
         viewModelScope.launch {
             _busy.value = true
             try {
                 val r = java.verify(id)
-                if (r.ok) messages.info("All ${r.checked} files verified") else messages.error("${r.missing.size} missing and ${r.corrupted.size} damaged file(s). Use Repair to fix them.")
+                if (r.ok) messages.info(R.string.all_1_s_files_verified, r.checked) else messages.error(R.string.s_1_s_missing_and_2_s, r.missing.size, r.corrupted.size)
             } catch (e: Exception) { messages.error(e.userMessage()) } finally { _busy.value = false }
         }
     }

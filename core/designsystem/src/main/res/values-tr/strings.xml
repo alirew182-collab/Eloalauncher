@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED from i18n/strings.tsv by scripts/i18n/gen_strings.py. Do not edit. -->
+<resources>
+    <string name="ds_accent_amethyst">Ametist</string>
+    <string name="ds_accent_diamond">Elmas</string>
+    <string name="ds_accent_dynamic">Sistem (Material You)</string>
+    <string name="ds_accent_gold">Altın</string>
+    <string name="ds_accent_grass">Çimen</string>
+    <string name="ds_accent_lapis">Lapis</string>
+    <string name="ds_accent_redstone">Kızıltaş</string>
+    <string name="ds_cancel">İptal</string>
+    <string name="ds_clear_search">Aramayı temizle</string>
+    <string name="ds_dismiss">Kapat</string>
+    <string name="ds_loading">Yükleniyor</string>
+    <string name="ds_must_not_be_empty">Boş olamaz</string>
+    <string name="ds_retry">Yeniden dene</string>
+    <string name="ds_save">Kaydet</string>
+    <string name="ds_search">Ara</string>
+</resources>

@@ -14,7 +14,13 @@ import dev.eloa.launcher.domain.java.launch.LaunchPreflight
 import dev.eloa.launcher.domain.java.launch.LaunchSettings
 import dev.eloa.launcher.domain.java.launch.PreflightIssue
 import dev.eloa.launcher.domain.java.launch.PreflightSeverity
+import dev.eloa.launcher.domain.java.launch.LaunchMode
+import dev.eloa.launcher.domain.java.render.GpuProfile
+import dev.eloa.launcher.domain.java.render.RendererCatalog
+import dev.eloa.launcher.domain.java.render.RendererId
 import dev.eloa.launcher.domain.java.runtime.JavaRuntimeInfo
+import dev.eloa.launcher.core.data.device.DeviceInfo
+import dev.eloa.launcher.core.data.settings.SettingsRepository
 import dev.eloa.launcher.feature.bedrock.BedrockRepository
 import dev.eloa.launcher.feature.bedrock.PackageInstallerGateway
 import dev.eloa.launcher.feature.common.userMessage
@@ -25,6 +31,7 @@ import dev.eloa.launcher.feature.java.ProfileRepository
 import dev.eloa.launcher.feature.java.state
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -49,7 +56,8 @@ class UnavailableBackend @Inject constructor() : GameRuntimeBackend {
 sealed interface LaunchOutcome {
     data object Started : LaunchOutcome
     data class Blocked(val title: String, val issues: List<PreflightIssue>, val commandPreview: String?) : LaunchOutcome
-    data class Failed(val message: String) : LaunchOutcome
+    /** [resId] (when non-zero) is a localized explanation shown instead of [message]. */
+    data class Failed(val message: String, @androidx.annotation.StringRes val resId: Int = 0) : LaunchOutcome
 }
 
 @Singleton
@@ -65,6 +73,7 @@ class LaunchCoordinator @Inject constructor(
     private val history: LaunchHistoryDao,
     private val backend: GameRuntimeBackend,
     private val logger: AppLogger,
+    private val settings: SettingsRepository,
 ) {
     fun recent(limit: Int) = history.observeRecent(limit)
 
@@ -97,24 +106,40 @@ class LaunchCoordinator @Inject constructor(
         return true
     }
 
-    suspend fun prepareJava(profileId: String): LaunchOutcome = withContext(Dispatchers.IO) {
+    /**
+     * Runs the full pre-launch pipeline for a Java profile and hands the plan to the runtime
+     * backend. Nothing is simulated: if any requirement is missing the exact reasons are returned.
+     */
+    suspend fun prepareJava(profileId: String, modeOverride: LaunchMode? = null, quickPlayWorld: String? = null): LaunchOutcome = withContext(Dispatchers.IO) {
         val p = profiles.get(profileId) ?: return@withContext LaunchOutcome.Failed("Profile not found")
+        val mode = modeOverride ?: runCatching { LaunchMode.valueOf(settings.current().launchMode) }.getOrDefault(LaunchMode.OFFICIAL_ACCOUNT)
         val outcome = try {
             val launchId = p.launchVersionId
             if (p.state != InstallState.INSTALLED && p.state != InstallState.NEEDS_PROCESSORS || launchId == null) {
                 LaunchOutcome.Blocked("${p.name} is not installed", listOf(PreflightIssue(PreflightSeverity.BLOCKER, "NOT_INSTALLED",
                     "Game files for this profile have not been installed yet.", "Tap “Install” on the profile.")), null)
             } else {
-                val identity = accounts.launchIdentity()
+                val identity = accounts.launchIdentity(mode)
                 val version = java.installer().resolveLocal(launchId)
                 val gameDir = storage.instance(p.gameDirName).also { it.ensure() }.gameDir
+                val world = if (mode == LaunchMode.LOCAL_SINGLEPLAYER) {
+                    val saves = File(gameDir, "saves").listFiles { f -> f.isDirectory && File(f, "level.dat").isFile }.orEmpty().map { it.name }
+                    quickPlayWorld?.takeIf { it in saves } ?: saves.firstOrNull()
+                } else null
+                val dev = device.collect(includeGpu = true)
+                val rendererId = rendererFor(p.renderer, dev.gpuProfile(), p.minecraftVersion)
+                val env = rendererId?.let { RendererCatalog.environment(it, p.resolutionScale) }.orEmpty()
                 val plan = LaunchPlanBuilder.build(version, java.dirs, gameDir, identity,
                     LaunchSettings(p.minMemoryMb, p.maxMemoryMb, p.width, p.height,
                         p.jvmArgs.split(' ').filter { it.isNotBlank() }, p.gameArgs.split(' ').filter { it.isNotBlank() },
-                        launcherVersion = BuildConfig.VERSION_NAME),
+                        launcherVersion = BuildConfig.VERSION_NAME, quickPlaySingleplayer = world, environment = env),
                     java.ruleEnv, java.clientJarIdFor(launchId))
-                val runtime = java.runtimeFor(plan.requiredJavaMajor)
-                val issues = LaunchPreflight.check(plan, runtime, device.memorySnapshot().first / 1_048_576, p.pendingProcessors, backend.available)
+                val runtime = java.runtimeFor(plan.requiredJavaMajor, p.runtimeName)
+                val issues = LaunchPreflight.check(plan, runtime, device.memorySnapshot().first / 1_048_576, p.pendingProcessors, backend.available).toMutableList()
+                if (rendererId == null) issues += PreflightIssue(PreflightSeverity.BLOCKER, "NO_RENDERER",
+                    "No compatible OpenGL translation layer for this GPU and Minecraft ${p.minecraftVersion}.", "Check Performance → Renderers.")
+                if (mode == LaunchMode.LOCAL_SINGLEPLAYER && world == null) issues += PreflightIssue(PreflightSeverity.BLOCKER, "NO_WORLD",
+                    "Local singleplayer needs an existing world in this profile.", "Create or import a world first.")
                 if (issues.any { it.severity == PreflightSeverity.BLOCKER } || runtime == null) {
                     LaunchOutcome.Blocked("Java Edition cannot start yet", issues, plan.redactedCommandLine())
                 } else {
@@ -127,13 +152,22 @@ class LaunchCoordinator @Inject constructor(
             logger.e("Launch", "Java launch failed for ${p.name}", e)
             LaunchOutcome.Failed(e.userMessage())
         }
-        record("JAVA", p.id, p.name, "${p.minecraftVersion} · ${p.loader}", outcome)
+        record("JAVA", p.id, p.name, "${p.minecraftVersion} · ${p.loader} · ${mode.name}", outcome)
         outcome
     }
+
+    private fun rendererFor(stored: String, gpu: GpuProfile, mc: String): RendererId? =
+        runCatching { RendererId.valueOf(stored) }.getOrNull() ?: RendererCatalog.autoSelect(gpu, mc)
 
     private suspend fun record(edition: String, id: String, title: String, subtitle: String, o: LaunchOutcome) {
         val msg = when (o) { is LaunchOutcome.Blocked -> o.issues.firstOrNull { it.severity == PreflightSeverity.BLOCKER }?.message ?: o.title; is LaunchOutcome.Failed -> o.message; else -> null }
         history.insert(LaunchHistoryEntity(edition = edition, targetId = id, title = title, subtitle = subtitle, launchedAt = System.currentTimeMillis(), success = o is LaunchOutcome.Started, message = msg))
         logger.i("Launch", "$edition launch: ${o::class.simpleName}", mapOf("target" to title))
     }
+}
+
+/** GPU facts needed by the renderer catalog. */
+fun DeviceInfo.gpuProfile(): GpuProfile {
+    val (maj, min) = glesVersion.split('.').let { (it.getOrNull(0)?.toIntOrNull() ?: 2) to (it.getOrNull(1)?.toIntOrNull() ?: 0) }
+    return GpuProfile(gpu.renderer, maj, min, if (vulkanSupported) vulkanVersion ?: "1.0" else null)
 }

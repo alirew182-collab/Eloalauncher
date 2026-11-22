@@ -239,9 +239,9 @@ def process(path, rows, by_text, dry):
     new = "".join(out)
     if changed and not dry:
         if "import androidx.compose.ui.res.stringResource" not in new and "stringResource(" in new:
-            new = re.sub(r"(\npackage [^\n]+\n)", r"\1\nimport androidx.compose.ui.res.stringResource", new, count=1)
+            new = re.sub(r"(^package [^\n]+\n)", r"\1\nimport androidx.compose.ui.res.stringResource", new, count=1)
         if "import dev.eloa.launcher.R\n" not in new:
-            new = re.sub(r"(\npackage [^\n]+\n)", r"\1\nimport dev.eloa.launcher.R", new, count=1)
+            new = re.sub(r"(^package [^\n]+\n)", r"\1\nimport dev.eloa.launcher.R", new, count=1)
         path.write_text(new, encoding="utf-8")
     return changed, skipped
 

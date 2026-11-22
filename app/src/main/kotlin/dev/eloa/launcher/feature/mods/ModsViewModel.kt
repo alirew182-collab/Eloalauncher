@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.mods
 
+import dev.eloa.launcher.feature.common.str
+import dev.eloa.launcher.R
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -62,15 +64,15 @@ class ModsViewModel @Inject constructor(
     }
 
     private fun act(msg: String?, block: suspend (JavaProfileEntity) -> Unit) {
-        val p = _ui.value.profile ?: return messages.error("Create a profile first")
+        val p = _ui.value.profile ?: return messages.error(R.string.create_a_profile_first)
         viewModelScope.launch {
             runCatching { withContext(Dispatchers.IO) { block(p) } }.onSuccess { msg?.let(messages::info); refresh() }.onFailure { messages.error(it.userMessage()) }
         }
     }
 
-    fun import(uris: List<Uri>) = uris.forEach { u -> act("Mod imported") { repo.importMod(it, u) } }
+    fun import(uris: List<Uri>) = uris.forEach { u -> act(str(R.string.mod_imported)) { repo.importMod(it, u) } }
     fun toggle(m: ModFile) = act(null) { repo.modManager(it).setEnabled(m.fileName, !m.enabled) }
-    fun delete(m: ModFile) = act("Deleted ${m.displayName}") { repo.modManager(it).delete(m.fileName) }
-    fun backup() = act("Backup created") { repo.modManager(it).backup() }
-    fun restore(f: File) = act("Mods restored (previous state was backed up)") { repo.modManager(it).restore(f) }
+    fun delete(m: ModFile) = act(str(R.string.deleted_1_s, m.displayName)) { repo.modManager(it).delete(m.fileName) }
+    fun backup() = act(str(R.string.msg_backup_created)) { repo.modManager(it).backup() }
+    fun restore(f: File) = act(str(R.string.mods_restored_previous_state_was_backed)) { repo.modManager(it).restore(f) }
 }

@@ -36,7 +36,7 @@ object DataModule {
 
     @Provides @Singleton
     fun database(@ApplicationContext ctx: Context): LauncherDatabase =
-        Room.databaseBuilder(ctx, LauncherDatabase::class.java, LauncherDatabase.NAME).build()
+        Room.databaseBuilder(ctx, LauncherDatabase::class.java, LauncherDatabase.NAME).addMigrations(LauncherDatabase.MIGRATION_1_2).build()
 
     @Provides fun bedrockDao(db: LauncherDatabase) = db.bedrockDao()
     @Provides fun addonDao(db: LauncherDatabase) = db.addonDao()
@@ -44,6 +44,8 @@ object DataModule {
     @Provides fun accountDao(db: LauncherDatabase) = db.accountDao()
     @Provides fun logDao(db: LauncherDatabase) = db.logDao()
     @Provides fun launchHistoryDao(db: LauncherDatabase) = db.launchHistoryDao()
+    @Provides fun worldBackupDao(db: LauncherDatabase) = db.worldBackupDao()
+    @Provides fun notificationDao(db: LauncherDatabase) = db.notificationDao()
 
     @Provides @Singleton
     fun settings(@ApplicationContext ctx: Context) = SettingsRepository(ctx.settingsStore)

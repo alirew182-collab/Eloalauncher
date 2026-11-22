@@ -111,7 +111,41 @@ class JavaRepository @Inject constructor(
             .sortedByDescending { it.majorVersion }
     }
 
-    fun runtimeFor(major: Int): JavaRuntimeInfo? = runtimes().filter { it.majorVersion >= major }.minByOrNull { it.majorVersion }
+    /**
+     * Runtime for a version needing Java [major]. Automatic choice prefers the exact major version
+     * (newer Java can break old Minecraft/Forge), then the closest newer one. A manually chosen
+     * runtime ([preferredName]) is used as-is; preflight reports it if it is too old.
+     */
+    fun runtimeFor(major: Int, preferredName: String? = null): JavaRuntimeInfo? {
+        val all = runtimes()
+        if (preferredName != null) all.firstOrNull { it.home.name == preferredName }?.let { return it }
+        return all.firstOrNull { it.majorVersion == major } ?: all.filter { it.majorVersion >= major }.minByOrNull { it.majorVersion }
+    }
+
+    /** Required Java major per Minecraft version (as declared by Mojang in version.json). */
+    fun requiredJava(versionId: String): Int? = runCatching {
+        dev.eloa.launcher.domain.java.meta.VersionJson.parse(dirs.versionJson(clientJarIdFor(versionId)).readText()).javaVersion?.majorVersion
+    }.getOrNull()
+
+    /** Recursively hashes every file of a runtime and compares with the manifest stored at import. */
+    fun verifyRuntime(info: JavaRuntimeInfo): Boolean = runCatching {
+        val manifest = java.io.File(info.home, ".eloa-files.sha256")
+        if (!manifest.isFile) return@runCatching JavaRuntimeInspector.inspect(info.home, Build.SUPPORTED_ABIS.first()).majorVersion == info.majorVersion
+        manifest.readLines().filter { it.isNotBlank() }.all { line ->
+            val hash = line.substringBefore("  "); val rel = line.substringAfter("  ")
+            val f = PathSafety.resolveInside(info.home, rel)
+            f.isFile && dev.eloa.launcher.core.common.hash.Hashing.digest(f, dev.eloa.launcher.core.common.hash.HashAlgorithm.SHA256) == hash
+        }
+    }.getOrDefault(false)
+
+    fun runtimeSize(info: JavaRuntimeInfo): Long = FileOps.sizeOf(info.home)
+
+    private fun writeRuntimeManifest(home: File) {
+        val lines = home.walkTopDown().filter { it.isFile && it.name != ".eloa-files.sha256" }.map { f ->
+            dev.eloa.launcher.core.common.hash.Hashing.digest(f, dev.eloa.launcher.core.common.hash.HashAlgorithm.SHA256) + "  " + f.relativeTo(home).invariantSeparatorsPath
+        }.joinToString("\n")
+        File(home, ".eloa-files.sha256").writeText(lines)
+    }
 
     suspend fun importRuntime(uri: Uri): JavaRuntimeInfo = withContext(Dispatchers.IO) {
         val tmp = storage.copyToTemp(uri, 1024L * 1024 * 1024)
@@ -119,6 +153,7 @@ class JavaRepository @Inject constructor(
             val abi = Build.SUPPORTED_ABIS.first()
             val name = PathSafety.sanitizeFileName(storage.displayName(uri).substringBeforeLast('.'), "runtime")
             JavaRuntimeInspector.importZip(tmp, PathSafety.resolveInside(dirs.runtimes, name), abi).also {
+                writeRuntimeManifest(it.home)
                 logger.i("Runtime", "Imported Java ${it.fullVersion} (${it.arch})")
             }
         } finally { tmp.delete() }

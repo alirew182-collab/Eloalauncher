@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.common
 
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,7 +39,7 @@ fun LaunchResultDialog(outcome: LaunchOutcome?, onDismiss: () -> Unit) {
         null, LaunchOutcome.Started -> return
         is LaunchOutcome.Failed -> AlertDialog(
             modifier = Modifier.testTag("launch_result"),
-            onDismissRequest = onDismiss, title = { Text("Launch failed") }, text = { Text(outcome.message) },
+            onDismissRequest = onDismiss, title = { Text(stringResource(R.string.launch_failed)) }, text = { Text(if (outcome.resId != 0) stringResource(outcome.resId) else outcome.message) },
             confirmButton = { TextButton(onClick = onDismiss) { Text("OK") } },
         )
         is LaunchOutcome.Blocked -> {
@@ -53,13 +55,15 @@ fun LaunchResultDialog(outcome: LaunchOutcome?, onDismiss: () -> Unit) {
                                 Icon(statusIcon(lvl), null, tint = statusColor(lvl), modifier = Modifier.size(20.dp))
                                 Spacer(Modifier.width(10.dp))
                                 Column {
-                                    Text(i.message, style = MaterialTheme.typography.bodyMedium)
-                                    i.fix?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary) }
+                                    val local = issueText(i.code)
+                                    Text(local?.first ?: i.message, style = MaterialTheme.typography.bodyMedium)
+                                    if (local != null) Text(i.message, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    (local?.second ?: i.fix)?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary) }
                                 }
                             }
                         }
                         if (outcome.commandPreview != null) {
-                            TextButton(onClick = { showCmd = !showCmd }) { Text(if (showCmd) "Hide launch command" else "Show prepared launch command") }
+                            TextButton(onClick = { showCmd = !showCmd }) { Text(if (showCmd) stringResource(R.string.hide_launch_command) else stringResource(R.string.show_prepared_launch_command)) }
                             if (showCmd) { Spacer(Modifier.height(4.dp)); Text(outcome.commandPreview, style = MonoStyle, modifier = Modifier.fillMaxWidth()) }
                         }
                     }
@@ -68,4 +72,21 @@ fun LaunchResultDialog(outcome: LaunchOutcome?, onDismiss: () -> Unit) {
             )
         }
     }
+}
+
+/** Localized explanation and fix for known preflight codes; null → show the technical message. */
+@Composable
+private fun issueText(code: String): Pair<String, String?>? = when (code) {
+    "NOT_INSTALLED" -> stringResource(R.string.pf_not_installed) to stringResource(R.string.pf_not_installed_fix)
+    "MISSING_FILES" -> stringResource(R.string.pf_missing_files) to stringResource(R.string.pf_missing_files_fix)
+    "NO_GAME_DIR" -> stringResource(R.string.pf_no_game_dir) to stringResource(R.string.pf_no_game_dir_fix)
+    "PROCESSORS" -> stringResource(R.string.pf_processors) to stringResource(R.string.pf_processors_fix)
+    "NO_RUNTIME" -> stringResource(R.string.pf_no_runtime) to stringResource(R.string.pf_no_runtime_fix)
+    "OLD_RUNTIME" -> stringResource(R.string.pf_old_runtime) to stringResource(R.string.pf_no_runtime_fix)
+    "LOW_RAM" -> stringResource(R.string.pf_low_ram) to stringResource(R.string.pf_low_ram_fix)
+    "NO_BACKEND" -> stringResource(R.string.pf_no_backend) to stringResource(R.string.pf_no_backend_fix)
+    "NO_RENDERER" -> stringResource(R.string.pf_no_renderer) to stringResource(R.string.pf_no_renderer_fix)
+    "NO_WORLD" -> stringResource(R.string.pf_no_world) to stringResource(R.string.pf_no_world_fix)
+    "VERSION_MISMATCH" -> stringResource(R.string.pf_version_mismatch) to null
+    else -> null
 }

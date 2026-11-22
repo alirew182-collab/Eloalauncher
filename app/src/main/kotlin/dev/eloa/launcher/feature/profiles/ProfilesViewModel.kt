@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.profiles
 
+import dev.eloa.launcher.feature.common.str
+import dev.eloa.launcher.R
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
@@ -44,12 +46,12 @@ class ProfilesViewModel @Inject constructor(
         runCatching { block() }.onSuccess { messages.info(msg) }.onFailure { messages.error(it.userMessage()) }
     }
 
-    fun select(id: String) = act("Profile selected") { settings.update { it.copy(selectedProfileId = id) } }
-    fun clone(id: String, files: Boolean) = act("Profile cloned") { repo.clone(id, files) }
-    fun delete(id: String, files: Boolean) = act(if (files) "Profile and its game folder deleted" else "Profile deleted (game folder kept)") { repo.delete(id, files) }
-    fun export(id: String, uri: Uri) = act("Configuration exported") { repo.exportConfig(id, uri) }
-    fun import(uri: Uri) = act("Profile imported — install it to download game files") { repo.importConfig(uri) }
-    fun install(id: String) { InstallWorker.enqueue(context, id); messages.info("Installation started") }
+    fun select(id: String) = act(str(R.string.profile_selected)) { settings.update { it.copy(selectedProfileId = id) } }
+    fun clone(id: String, files: Boolean) = act(str(R.string.profile_cloned)) { repo.clone(id, files) }
+    fun delete(id: String, files: Boolean) = act(if (files) str(R.string.profile_and_its_game_folder_deleted) else str(R.string.profile_deleted_game_folder_kept)) { repo.delete(id, files) }
+    fun export(id: String, uri: Uri) = act(str(R.string.configuration_exported)) { repo.exportConfig(id, uri) }
+    fun import(uri: Uri) = act(str(R.string.profile_imported_install_it_to_download)) { repo.importConfig(uri) }
+    fun install(id: String) { InstallWorker.enqueue(context, id); messages.info(R.string.installation_started) }
 }
 
 data class EditorState(
@@ -123,21 +125,21 @@ class ProfileEditorViewModel @Inject constructor(
             try {
                 val list = java.loaderVersions(type, cfg.minecraftVersion)
                 _state.value = _state.value.copy(loaderVersions = list, loaderLoading = false,
-                    loaderError = if (list.isEmpty()) "${type.displayName} is not available for ${cfg.minecraftVersion}" else null)
+                    loaderError = if (list.isEmpty()) str(R.string.s_1_s_is_not_available_for, type.displayName, cfg.minecraftVersion) else null)
             } catch (e: Exception) {
                 _state.value = _state.value.copy(loaderLoading = false, loaderError = e.userMessage())
             }
         }
     }
 
-    fun memoryWarning(): String? = PerformanceAdvisor.memoryWarning(_state.value.config.maxMemoryMb, _state.value.totalRamMb)
+    fun memoryWarning(): dev.eloa.launcher.core.data.performance.MemoryWarning? = PerformanceAdvisor.memoryWarning(_state.value.config.maxMemoryMb, _state.value.totalRamMb)
 
     fun validate(): String? {
         val c = _state.value.config
         return repo.validateName(c.name)
-            ?: if (c.minecraftVersion.isBlank()) "Choose a Minecraft version" else null
-            ?: if (c.minMemoryMb > c.maxMemoryMb) "Minimum memory exceeds maximum" else null
-            ?: LaunchPlanBuilder.validateExtraJvmArgs(c.jvmArgs.split(' ').filter { it.isNotBlank() }).firstOrNull()?.let { "JVM argument not allowed: $it" }
+            ?: if (c.minecraftVersion.isBlank()) str(R.string.choose_a_minecraft_version) else null
+            ?: if (c.minMemoryMb > c.maxMemoryMb) str(R.string.minimum_memory_exceeds_maximum) else null
+            ?: LaunchPlanBuilder.validateExtraJvmArgs(c.jvmArgs.split(' ').filter { it.isNotBlank() }).firstOrNull()?.let { str(R.string.jvm_argument_not_allowed_1_s, it) }
             ?: if (ModLoaderType.valueOf(c.loader) != ModLoaderType.VANILLA && _state.value.loaderError != null && _state.value.loaderVersions.isEmpty() && !_state.value.loaderLoading) _state.value.loaderError else null
     }
 
@@ -148,7 +150,7 @@ class ProfileEditorViewModel @Inject constructor(
             val pid = if (id == null) repo.create(c).id else { repo.update(id, c); id }
             settings.update { it.copy(selectedProfileId = pid) }
             if (installNow) InstallWorker.enqueue(context, pid)
-            messages.info(if (installNow) "Saved — installing game files" else "Profile saved")
+            messages.info(if (installNow) str(R.string.saved_installing_game_files) else str(R.string.profile_saved))
             _state.value = _state.value.copy(saved = true)
         } catch (e: Exception) { messages.error(e.userMessage()) }
     }

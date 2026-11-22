@@ -1,5 +1,8 @@
 package dev.eloa.launcher.feature.modpacks
 
+import dev.eloa.launcher.feature.common.str
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -68,7 +71,7 @@ class ModpacksViewModel @Inject constructor(
     fun selectProfile(id: String) = viewModelScope.launch { selected.select(id) }
 
     fun open(uri: Uri) = viewModelScope.launch {
-        _progress.value = ProgressInfo("Reading modpack", null, null, cancellable = false)
+        _progress.value = ProgressInfo(str(R.string.reading_modpack), null, null, cancellable = false)
         try { _preview.value = repo.preview(uri) } catch (e: Exception) { messages.error(e.userMessage()) } finally { _progress.value = null }
     }
 
@@ -78,15 +81,15 @@ class ModpacksViewModel @Inject constructor(
         val (file, p) = _preview.value ?: return
         _preview.value = null
         viewModelScope.launch {
-            runCatching { repo.install(file, p) }.onSuccess { messages.info("Profile “${p.name}” created; files are being installed") }.onFailure { file.delete(); messages.error(it.userMessage()) }
+            runCatching { repo.install(file, p) }.onSuccess { messages.info(R.string.profile_1_s_created_files_are, p.name) }.onFailure { file.delete(); messages.error(it.userMessage()) }
         }
     }
 
     fun export(uri: Uri, worlds: Boolean) {
         val p = selection.value.selected ?: return
         viewModelScope.launch {
-            _progress.value = ProgressInfo("Exporting ${p.name}", null, null, cancellable = false)
-            try { messages.info("Exported ${repo.export(p, uri, worlds)} files") } catch (e: Exception) { messages.error(e.userMessage()) } finally { _progress.value = null }
+            _progress.value = ProgressInfo(str(R.string.exporting_1_s, p.name), null, null, cancellable = false)
+            try { messages.info(R.string.exported_1_s_files, repo.export(p, uri, worlds)) } catch (e: Exception) { messages.error(e.userMessage()) } finally { _progress.value = null }
         }
     }
 }
@@ -102,20 +105,20 @@ fun ModpacksScreen(padding: PaddingValues, vm: ModpacksViewModel = hiltViewModel
     Column(Modifier.padding(padding).verticalScroll(rememberScrollState()).padding(16.dp).testTag("modpacks"), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         ProgressPanel(progress, {})
         LauncherCard(Modifier.fillMaxWidth()) {
-            Text("Import a modpack", style = MaterialTheme.typography.titleMedium)
-            Text("Supported: Modrinth packs (.mrpack) and packs exported by this launcher (.eloapack). Mod files of Modrinth packs are downloaded only from the hosts allowed by the Modrinth format and verified by SHA-1. Nothing is executed during import.",
+            Text(stringResource(R.string.import_a_modpack), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.supported_modrinth_packs_mrpack_and_packs),
                 style = MaterialTheme.typography.bodySmall)
             Spacer(Modifier.height(10.dp))
-            Button(onClick = { opener.launch(arrayOf("*/*")) }, modifier = Modifier.testTag("modpack_import")) { Text("Choose file") }
+            Button(onClick = { opener.launch(arrayOf("*/*")) }, modifier = Modifier.testTag("modpack_import")) { Text(stringResource(R.string.choose_file)) }
         }
         LauncherCard(Modifier.fillMaxWidth()) {
-            Text("Export a profile as modpack", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.export_a_profile_as_modpack), style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
             ProfileSelectorBar(selection, vm::selectProfile)
-            Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(worlds, { worlds = it }); Text("Include worlds (saves)") }
-            Text("Includes mods, config, resource packs, shader packs and options.txt. Account data is never exported.", style = MaterialTheme.typography.bodySmall)
+            Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(worlds, { worlds = it }); Text(stringResource(R.string.include_worlds_saves)) }
+            Text(stringResource(R.string.includes_mods_config_resource_packs_shader), style = MaterialTheme.typography.bodySmall)
             Spacer(Modifier.height(8.dp))
-            FilledTonalButton(onClick = { exporter.launch("${selection.selected?.name ?: "profile"}.eloapack") }, enabled = selection.selected != null) { Text("Export .eloapack") }
+            FilledTonalButton(onClick = { exporter.launch("${selection.selected?.name ?: "profile"}.eloapack") }, enabled = selection.selected != null) { Text(stringResource(R.string.export_eloapack)) }
         }
     }
     preview?.let { (_, p) ->
@@ -125,14 +128,14 @@ fun ModpacksScreen(padding: PaddingValues, vm: ModpacksViewModel = hiltViewModel
             text = {
                 Column {
                     p.summary?.takeIf { it.isNotBlank() }?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
-                    LabeledValue("Format", p.format)
-                    LabeledValue("Minecraft", p.minecraftVersion)
-                    LabeledValue("Loader", "${p.loader} ${p.loaderVersion ?: ""}")
-                    LabeledValue(if (p.format == "Modrinth") "Files to download" else "Bundled files", p.fileCount.toString())
+                    LabeledValue(stringResource(R.string.format), p.format)
+                    LabeledValue(stringResource(R.string.minecraft), p.minecraftVersion)
+                    LabeledValue(stringResource(R.string.loader), "${p.loader} ${p.loaderVersion ?: ""}")
+                    LabeledValue(if (p.format == stringResource(R.string.modrinth)) stringResource(R.string.files_to_download) else stringResource(R.string.bundled_files), p.fileCount.toString())
                 }
             },
-            confirmButton = { Button(onClick = vm::install) { Text("Create profile & install") } },
-            dismissButton = { TextButton(onClick = vm::cancelPreview) { Text("Cancel") } },
+            confirmButton = { Button(onClick = vm::install) { Text(stringResource(R.string.create_profile_install)) } },
+            dismissButton = { TextButton(onClick = vm::cancelPreview) { Text(stringResource(dev.eloa.launcher.core.designsystem.R.string.ds_cancel)) } },
         )
     }
 }

@@ -1,5 +1,8 @@
 package dev.eloa.launcher.feature.addonsui
 
+import dev.eloa.launcher.feature.common.str
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -66,7 +69,7 @@ import dev.eloa.launcher.domain.bedrock.apk.Severity
 import dev.eloa.launcher.feature.addons.packs
 import dev.eloa.launcher.feature.common.formatDate
 
-private val TYPE_FILTERS = listOf("All", "BEHAVIOR", "RESOURCE", "WORLD", "SKIN", "STRUCTURE", "Problems", "Disabled")
+private val TYPE_FILTERS = listOf("ALL", "BEHAVIOR", "RESOURCE", "WORLD", "SKIN", "STRUCTURE", "PROBLEMS", "DISABLED")
 
 @Composable
 fun AddonsScreen(padding: PaddingValues, vm: AddonsViewModel = hiltViewModel()) {
@@ -80,7 +83,7 @@ fun AddonsScreen(padding: PaddingValues, vm: AddonsViewModel = hiltViewModel()) 
     LaunchedEffect(intent) {
         intent?.let { i ->
             try { context.startActivity(i) } catch (_: ActivityNotFoundException) {
-                context.startActivity(Intent.createChooser(Intent(i).setPackage(null), "Open with").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                context.startActivity(Intent.createChooser(Intent(i).setPackage(null), str(R.string.open_with)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             }
             vm.consumeIntent()
         }
@@ -94,50 +97,52 @@ fun AddonsScreen(padding: PaddingValues, vm: AddonsViewModel = hiltViewModel()) 
         }
     }
     var query by rememberSaveable { mutableStateOf("") }
-    var filter by rememberSaveable { mutableStateOf("All") }
-    var category by rememberSaveable { mutableStateOf("All categories") }
+    var filter by rememberSaveable { mutableStateOf("ALL") }
+    var category by rememberSaveable { mutableStateOf("") }
 
     Box(Modifier.fillMaxSize().padding(padding)) {
         LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.testTag("addons")) {
             item { ProgressPanel(progress, {}) }
             item {
                 LauncherCard(Modifier.fillMaxWidth()) {
-                    Text("Installing into Minecraft", style = MaterialTheme.typography.titleSmall)
-                    Text("“Open in Minecraft” hands the file to the game, which imports it itself (recommended). Alternatively link a games/com.mojang folder you can access (e.g. when the game uses external storage) to copy packs and worlds directly.",
+                    Text(stringResource(R.string.installing_into_minecraft), style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.open_in_minecraft_hands_the_file),
                         style = MaterialTheme.typography.bodySmall)
                     Spacer(Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(onClick = { tree.launch(null) }) { Text(if (folder.isEmpty()) "Link com.mojang folder" else "Change folder") }
-                        if (folder.isNotEmpty()) TextButton(onClick = vm::unlinkMojangFolder) { Text("Unlink") }
-                        OutlinedButton(onClick = { backup.launch("bedrock-addons-backup.zip") }, enabled = !addons.isNullOrEmpty()) { Text("Backup all") }
+                        OutlinedButton(onClick = { tree.launch(null) }) { Text(if (folder.isEmpty()) stringResource(R.string.link_com_mojang_folder) else stringResource(R.string.change_folder)) }
+                        if (folder.isNotEmpty()) TextButton(onClick = vm::unlinkMojangFolder) { Text(stringResource(R.string.unlink)) }
+                        OutlinedButton(onClick = { backup.launch("bedrock-addons-backup.zip") }, enabled = !addons.isNullOrEmpty()) { Text(stringResource(R.string.backup_all)) }
                     }
                 }
             }
-            item { SearchField(query, { query = it }, placeholder = "Search add-ons") }
-            item { ChipRow(TYPE_FILTERS, filter, { it.lowercase().replaceFirstChar { c -> c.uppercase() } }, { filter = it }) }
+            item { SearchField(query, { query = it }, placeholder = stringResource(R.string.search_add_ons)) }
+            val special = mapOf("ALL" to str(R.string.particles_all), "PROBLEMS" to str(R.string.problems), "DISABLED" to str(R.string.disabled))
+            item { ChipRow(TYPE_FILTERS, filter, { special[it] ?: it.lowercase().replaceFirstChar { c -> c.uppercase() } }, { filter = it }) }
             val list = addons
             if (list == null) { item { SkeletonList(4) }; return@LazyColumn }
-            val categories = listOf("All categories") + list.map { it.category }.filter { it.isNotBlank() }.distinct().sorted()
-            if (categories.size > 2) item { ChipRow(categories, category, { it }, { category = it }) }
+            val allCats = str(R.string.all_categories)
+            val categories = listOf("") + list.map { it.category }.filter { it.isNotBlank() }.distinct().sorted()
+            if (categories.size > 2) item { ChipRow(categories, category, { it.ifEmpty { allCats } }, { category = it }) }
             val shown = list.filter { a ->
                 (query.isBlank() || a.name.contains(query, true) || a.description.contains(query, true)) &&
-                    (category == "All categories" || a.category == category) &&
-                    when (filter) { "All" -> true; "Problems" -> a.hasErrors; "Disabled" -> !a.enabled; else -> a.packTypes.split(',').contains(filter) }
+                    (category.isEmpty() || a.category == category) &&
+                    when (filter) { "ALL" -> true; "PROBLEMS" -> a.hasErrors; "DISABLED" -> !a.enabled; else -> a.packTypes.split(',').contains(filter) }
             }
             if (shown.isEmpty()) item {
-                EmptyState(Icons.Outlined.Widgets, if (list.isEmpty()) "No add-ons yet" else "No matches",
-                    "Import .mcpack, .mcaddon, .mcworld, .mctemplate, .mcstructure or .zip. Manifests, UUIDs, dependencies and versions are checked first.",
-                    actionLabel = if (list.isEmpty()) "Import" else null, onAction = { picker.launch(arrayOf("*/*")) })
+                EmptyState(Icons.Outlined.Widgets, if (list.isEmpty()) stringResource(R.string.no_add_ons_yet) else stringResource(R.string.no_matches),
+                    stringResource(R.string.import_mcpack_mcaddon_mcworld_mctemplate_mcstruc),
+                    actionLabel = if (list.isEmpty()) stringResource(R.string.label_import) else null, onAction = { picker.launch(arrayOf("*/*")) })
             }
             items(shown, key = { it.id }) { a -> AddonCard(a, { vm.open(a) }, { vm.toggle(a) }) }
         }
-        ExtendedFloatingActionButton(onClick = { picker.launch(arrayOf("*/*")) }, icon = { Icon(Icons.Outlined.Add, null) }, text = { Text("Import") },
+        ExtendedFloatingActionButton(onClick = { picker.launch(arrayOf("*/*")) }, icon = { Icon(Icons.Outlined.Add, null) }, text = { Text(stringResource(R.string.label_import)) },
             modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp).testTag("addon_import"))
     }
     results?.let { r ->
         AlertDialog(
             modifier = Modifier.testTag("addon_results"),
-            onDismissRequest = vm::dismissResults, title = { Text("Import results") },
+            onDismissRequest = vm::dismissResults, title = { Text(stringResource(R.string.import_results)) },
             text = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     r.forEach { res ->
@@ -161,7 +166,7 @@ private fun AddonCard(a: AddonEntity, onOpen: () -> Unit, onToggle: () -> Unit) 
                 Text("${a.kind.lowercase()} · ${a.packTypes.lowercase().replace(",", ", ")} · ${a.version ?: ""} · ${FileOps.formatSize(a.sizeBytes)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     if (a.category.isNotBlank()) StatusChip(a.category, StatusLevel.INFO)
-                    if (a.hasErrors) StatusChip("Problems", StatusLevel.ERROR)
+                    if (a.hasErrors) StatusChip(stringResource(R.string.problems), StatusLevel.ERROR)
                 }
             }
             Switch(a.enabled, { onToggle() }, modifier = Modifier.testTag("addon_toggle"))
@@ -180,42 +185,42 @@ private fun AddonSheet(d: AddonDetails, folderLinked: Boolean, vm: AddonsViewMod
             Text(a.name, style = MaterialTheme.typography.headlineSmall)
             if (a.description.isNotBlank()) Text(a.description, style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(8.dp))
-            LabeledValue("File", a.fileName)
-            LabeledValue("Type", "${a.kind} · ${a.packTypes}")
-            LabeledValue("Version", a.version ?: "—")
-            LabeledValue("Min. game version", a.minEngineVersion ?: "—")
-            LabeledValue("Size", FileOps.formatSize(a.sizeBytes))
-            LabeledValue("Imported", formatDate(a.importedAt))
-            LabeledValue("Category", a.category.ifBlank { "—" })
+            LabeledValue(stringResource(R.string.file), a.fileName)
+            LabeledValue(stringResource(R.string.type), "${a.kind} · ${a.packTypes}")
+            LabeledValue(stringResource(R.string.version), a.version ?: "—")
+            LabeledValue(stringResource(R.string.min_game_version), a.minEngineVersion ?: "—")
+            LabeledValue(stringResource(R.string.sort_size), FileOps.formatSize(a.sizeBytes))
+            LabeledValue(stringResource(R.string.imported), formatDate(a.importedAt))
+            LabeledValue(stringResource(R.string.category), a.category.ifBlank { "—" })
             a.packs().forEach { p ->
                 Spacer(Modifier.height(6.dp))
                 Text("${p.type.lowercase()} pack: ${p.name} ${p.version}", style = MaterialTheme.typography.titleSmall)
                 Text("UUID ${p.uuid}", style = MonoStyle)
-                if (p.dependencies.isNotEmpty()) Text("Depends on: ${p.dependencies.joinToString()}", style = MaterialTheme.typography.bodySmall)
+                if (p.dependencies.isNotEmpty()) Text(stringResource(R.string.depends_on_1_s, p.dependencies.joinToString()), style = MaterialTheme.typography.bodySmall)
             }
             if (d.conflicts.isNotEmpty() || a.findings.isNotBlank()) {
                 Spacer(Modifier.height(8.dp))
-                Text("Checks", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.checks), style = MaterialTheme.typography.titleSmall)
                 (d.conflicts.map { "${it.severity}: ${it.message}" } + a.findings.lines().filter { it.isNotBlank() }).distinct().forEach { Text("• $it", style = MaterialTheme.typography.bodySmall) }
             }
             Spacer(Modifier.height(8.dp))
-            Text("Contents (${d.contents.size} files)", style = MaterialTheme.typography.titleSmall)
+            Text(stringResource(R.string.contents_1_s_files, d.contents.size), style = MaterialTheme.typography.titleSmall)
             d.contents.take(40).forEach { (n, s) -> Text("$n · ${FileOps.formatSize(s)}", style = MonoStyle, maxLines = 1, overflow = TextOverflow.Ellipsis) }
-            if (d.contents.size > 40) Text("…and ${d.contents.size - 40} more", style = MaterialTheme.typography.labelSmall)
+            if (d.contents.size > 40) Text(stringResource(R.string.and_1_s_more, d.contents.size - 40), style = MaterialTheme.typography.labelSmall)
             Spacer(Modifier.height(14.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = { vm.openInMinecraft(a) }, modifier = Modifier.weight(1f).testTag("addon_open_mc")) { Text("Open in Minecraft") }
-                FilledTonalButton(onClick = { vm.copyToMojang(a) }, enabled = folderLinked && a.kind != "MCSTRUCTURE", modifier = Modifier.weight(1f)) { Text("Copy to com.mojang") }
+                Button(onClick = { vm.openInMinecraft(a) }, modifier = Modifier.weight(1f).testTag("addon_open_mc")) { Text(stringResource(R.string.open_in_minecraft)) }
+                FilledTonalButton(onClick = { vm.copyToMojang(a) }, enabled = folderLinked && a.kind != "MCSTRUCTURE", modifier = Modifier.weight(1f)) { Text(stringResource(R.string.copy_to_com_mojang)) }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { rename = true }, modifier = Modifier.weight(1f)) { Text("Rename") }
-                OutlinedButton(onClick = { editCategory = true }, modifier = Modifier.weight(1f)) { Text("Category") }
-                TextButton(onClick = { confirmDelete = true }, modifier = Modifier.weight(1f)) { Text("Delete", color = MaterialTheme.colorScheme.error) }
+                OutlinedButton(onClick = { rename = true }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.action_rename)) }
+                OutlinedButton(onClick = { editCategory = true }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.category)) }
+                TextButton(onClick = { confirmDelete = true }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error) }
             }
             Spacer(Modifier.width(1.dp))
         }
     }
-    if (confirmDelete) ConfirmDialog("Delete ${a.name}?", "The add-on file will be removed from the launcher library. Copies already imported into Minecraft are not affected.", "Delete", { vm.delete(a); confirmDelete = false }, { confirmDelete = false }, destructive = true)
-    if (editCategory) TextInputDialog("Category", "Category", a.category, { vm.setCategory(a, it); editCategory = false }, { editCategory = false }, validate = { if (it.length > 40) "Too long" else null })
-    if (rename) TextInputDialog("Rename", "Name", a.name, { vm.rename(a, it); rename = false }, { rename = false })
+    if (confirmDelete) ConfirmDialog(stringResource(R.string.delete_1_s, a.name), stringResource(R.string.the_add_on_file_will_be), stringResource(R.string.action_delete), { vm.delete(a); confirmDelete = false }, { confirmDelete = false }, destructive = true)
+    if (editCategory) TextInputDialog(str(R.string.category), str(R.string.category), a.category, { vm.setCategory(a, it); editCategory = false }, { editCategory = false }, validate = { if (it.length > 40) str(R.string.too_long) else null })
+    if (rename) TextInputDialog(stringResource(R.string.action_rename), stringResource(R.string.sort_name), a.name, { vm.rename(a, it); rename = false }, { rename = false })
 }

@@ -61,10 +61,23 @@ class SettingsAndMiscTest {
         val weak = HardwareSummary(2_000, 4, true, 3, true)
         val mid = HardwareSummary(6_000, 8, true, 3, false)
         val strong = HardwareSummary(16_000, 8, true, 3, false)
-        assertEquals(PerformancePreset.ULTRA_LOW, PerformanceAdvisor.recommend(weak))
+        assertEquals(PerformancePreset.EXTREME_PERFORMANCE, PerformanceAdvisor.recommend(weak))
         assertEquals(PerformancePreset.BALANCED, PerformanceAdvisor.recommend(mid))
-        assertEquals(PerformancePreset.ULTRA, PerformanceAdvisor.recommend(strong))
-        assertEquals(PerformancePreset.ULTRA_LOW, PerformanceAdvisor.recommend(HardwareSummary(8_000, 8, false, 3, false)))
+        assertEquals(PerformancePreset.PERFORMANCE, PerformanceAdvisor.recommend(HardwareSummary(4_000, 8, true, 3, false)))
+        assertEquals(PerformancePreset.BALANCED, PerformanceAdvisor.recommend(strong))
+        assertEquals(PerformancePreset.EXTREME_PERFORMANCE, PerformanceAdvisor.recommend(HardwareSummary(8_000, 8, false, 3, false)))
+        // Lighter modes never ask for more than heavier ones.
+        listOf(weak, mid, strong).forEach { hw ->
+            val ext = PerformanceAdvisor.spec(PerformancePreset.EXTREME_PERFORMANCE, hw)
+            val bal = PerformanceAdvisor.spec(PerformancePreset.BALANCED, hw)
+            val bat = PerformanceAdvisor.spec(PerformancePreset.BATTERY_SAVER, hw)
+            assertTrue(ext.game.renderDistance <= bal.game.renderDistance && ext.resolutionScale < bal.resolutionScale)
+            assertTrue(bat.game.maxFps <= bal.game.maxFps)
+        }
+        // Values stored by launcher 1.0 are migrated.
+        assertEquals(PerformancePreset.EXTREME_PERFORMANCE, PerformancePreset.parse("ULTRA_LOW"))
+        assertEquals(PerformancePreset.PERFORMANCE, PerformancePreset.parse("ULTRA"))
+        assertNull(PerformancePreset.parse("bogus"))
         PerformancePreset.entries.forEach { p ->
             listOf(weak, mid, strong).forEach { hw ->
                 val spec = PerformanceAdvisor.spec(p, hw)

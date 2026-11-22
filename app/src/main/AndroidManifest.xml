@@ -16,6 +16,7 @@
     <queries>
         <package android:name="com.mojang.minecraftpe" />
         <package android:name="com.mojang.minecraftedu" />
+        <package android:name="com.android.vending" />
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https" />
@@ -34,6 +35,7 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/Theme.Eloa"
+        android:localeConfig="@xml/locales_config"
         tools:targetApi="36">
 
         <activity
@@ -45,6 +47,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Redirect from the system browser after Microsoft sign-in (authorization code + PKCE). -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="eloa-launcher" android:host="auth" />
             </intent-filter>
         </activity>
 

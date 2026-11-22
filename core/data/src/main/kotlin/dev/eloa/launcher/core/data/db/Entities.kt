@@ -1,5 +1,6 @@
 package dev.eloa.launcher.core.data.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -91,6 +92,12 @@ data class JavaProfileEntity(
     val installState: String = "NOT_INSTALLED",
     val pendingProcessors: Int = 0,
     val lastError: String? = null,
+    /** Folder name of the chosen Java runtime; null = pick automatically for the version. */
+    @ColumnInfo(defaultValue = "NULL") val runtimeName: String? = null,
+    /** RendererId name or AUTO. */
+    @ColumnInfo(defaultValue = "AUTO") val renderer: String = "AUTO",
+    /** Render resolution scale handed to the runtime backend (0.25..1). */
+    @ColumnInfo(defaultValue = "1.0") val resolutionScale: Float = 1f,
 )
 
 @Entity(tableName = "accounts")
@@ -134,4 +141,41 @@ data class LaunchHistoryEntity(
     val launchedAt: Long,
     val success: Boolean,
     val message: String?,
+)
+
+/** A Bedrock world backup stored as .mcworld in the launcher's private storage. */
+@Entity(tableName = "world_backups", indices = [Index("createdAt"), Index("worldKey")])
+data class WorldBackupEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    /** Stable id of the source world (folder name in minecraftWorlds), empty for imports. */
+    val worldKey: String,
+    val levelName: String,
+    /** User-editable label of this backup. */
+    val label: String,
+    val storedPath: String,
+    val sizeBytes: Long,
+    val sha256: String,
+    val createdAt: Long,
+    /** SAF_FOLDER, IMPORT or LIBRARY. */
+    val source: String,
+    val lastPlayed: Long?,
+    val gameVersion: String?,
+    val gameType: Int?,
+    val thumbnailPath: String?,
+    val lastVerifiedAt: Long? = null,
+    val verifyOk: Boolean = true,
+)
+
+/** In-app notification centre entry. */
+@Entity(tableName = "notifications", indices = [Index("createdAt")])
+data class NotificationEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    /** DOWNLOAD_DONE, INSTALL_FAILED, LOW_STORAGE, INCOMPATIBLE_MOD, UPDATE_AVAILABLE, DAMAGED_FILE, OVERHEATING, INFO */
+    val type: String,
+    val title: String,
+    val message: String,
+    val createdAt: Long,
+    val read: Boolean = false,
+    /** Navigation route to open from the notification, if any. */
+    val route: String? = null,
 )

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED from i18n/strings.tsv by scripts/i18n/gen_strings.py. Do not edit. -->
+<resources>
+    <string name="ds_accent_amethyst">Amethyst</string>
+    <string name="ds_accent_diamond">Diamant</string>
+    <string name="ds_accent_dynamic">System (Material You)</string>
+    <string name="ds_accent_gold">Gold</string>
+    <string name="ds_accent_grass">Gras</string>
+    <string name="ds_accent_lapis">Lapislazuli</string>
+    <string name="ds_accent_redstone">Redstone</string>
+    <string name="ds_cancel">Abbrechen</string>
+    <string name="ds_clear_search">Suche löschen</string>
+    <string name="ds_dismiss">Schließen</string>
+    <string name="ds_loading">Wird geladen</string>
+    <string name="ds_must_not_be_empty">Darf nicht leer sein</string>
+    <string name="ds_retry">Erneut versuchen</string>
+    <string name="ds_save">Speichern</string>
+    <string name="ds_search">Suchen</string>
+</resources>

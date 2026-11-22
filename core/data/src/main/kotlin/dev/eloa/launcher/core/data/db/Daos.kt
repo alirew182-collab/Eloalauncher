@@ -140,3 +140,49 @@ interface LaunchHistoryDao {
     @Query("SELECT * FROM launch_history ORDER BY launchedAt DESC LIMIT :limit")
     fun observeRecent(limit: Int): Flow<List<LaunchHistoryEntity>>
 }
+
+@Dao
+interface WorldBackupDao {
+    @Query("SELECT * FROM world_backups ORDER BY createdAt DESC")
+    fun observeAll(): Flow<List<WorldBackupEntity>>
+
+    @Query("SELECT * FROM world_backups WHERE id = :id")
+    suspend fun byId(id: Long): WorldBackupEntity?
+
+    @Query("SELECT * FROM world_backups WHERE sha256 = :sha LIMIT 1")
+    suspend fun bySha(sha: String): WorldBackupEntity?
+
+    @Insert suspend fun insert(e: WorldBackupEntity): Long
+    @Update suspend fun update(e: WorldBackupEntity)
+    @Delete suspend fun delete(e: WorldBackupEntity)
+}
+
+@Dao
+interface NotificationDao {
+    @Query("SELECT * FROM notifications ORDER BY createdAt DESC LIMIT :limit")
+    fun observe(limit: Int = 200): Flow<List<NotificationEntity>>
+
+    @Query("SELECT COUNT(*) FROM notifications WHERE read = 0")
+    fun observeUnread(): Flow<Int>
+
+    @Insert suspend fun insert(e: NotificationEntity): Long
+
+    @Query("UPDATE notifications SET read = 1")
+    suspend fun markAllRead()
+
+    @Query("UPDATE notifications SET read = 1 WHERE id = :id")
+    suspend fun markRead(id: Long)
+
+    @Query("DELETE FROM notifications WHERE id = :id")
+    suspend fun delete(id: Long)
+
+    @Query("DELETE FROM notifications")
+    suspend fun clear()
+
+    /** Keeps the newest [keep] entries. */
+    @Query("DELETE FROM notifications WHERE id NOT IN (SELECT id FROM notifications ORDER BY createdAt DESC LIMIT :keep)")
+    suspend fun trim(keep: Int)
+
+    @Query("SELECT COUNT(*) FROM notifications WHERE type = :type AND createdAt > :since")
+    suspend fun countSince(type: String, since: Long): Int
+}

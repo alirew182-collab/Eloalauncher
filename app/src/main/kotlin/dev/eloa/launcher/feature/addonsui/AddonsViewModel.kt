@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.addonsui
 
+import dev.eloa.launcher.feature.common.str
+import dev.eloa.launcher.R
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -44,8 +46,8 @@ class AddonsViewModel @Inject constructor(
         if (uris.isEmpty()) return
         viewModelScope.launch {
             try {
-                _progress.value = ProgressInfo("Checking add-ons", 0f, null, cancellable = false)
-                _results.value = repo.import(uris) { n, f -> _progress.value = ProgressInfo("Checking add-ons", f, n, cancellable = false) }
+                _progress.value = ProgressInfo(str(R.string.checking_add_ons), 0f, null, cancellable = false)
+                _results.value = repo.import(uris) { n, f -> _progress.value = ProgressInfo(str(R.string.checking_add_ons), f, n, cancellable = false) }
             } catch (e: Exception) { messages.error(e.userMessage()) } finally { _progress.value = null }
         }
     }
@@ -60,13 +62,13 @@ class AddonsViewModel @Inject constructor(
     }
 
     fun toggle(a: AddonEntity) = act(null) { repo.setEnabled(a.id, !a.enabled) }
-    fun setCategory(a: AddonEntity, c: String) = act("Category updated") { repo.setCategory(a.id, c); _details.value = _details.value?.let { d -> d.copy(addon = d.addon.copy(category = c)) } }
-    fun rename(a: AddonEntity, n: String) = act("Renamed") { repo.rename(a.id, n); _details.value = _details.value?.let { d -> d.copy(addon = d.addon.copy(name = n)) } }
-    fun delete(a: AddonEntity) = act("Deleted ${a.name}") { repo.delete(a.id); _details.value = null }
-    fun backup(uri: Uri) = act(null) { messages.info("Backed up ${repo.backup(uri)} add-on(s)") }
+    fun setCategory(a: AddonEntity, c: String) = act(str(R.string.category_updated)) { repo.setCategory(a.id, c); _details.value = _details.value?.let { d -> d.copy(addon = d.addon.copy(category = c)) } }
+    fun rename(a: AddonEntity, n: String) = act(str(R.string.renamed)) { repo.rename(a.id, n); _details.value = _details.value?.let { d -> d.copy(addon = d.addon.copy(name = n)) } }
+    fun delete(a: AddonEntity) = act(str(R.string.deleted_1_s, a.name)) { repo.delete(a.id); _details.value = null }
+    fun backup(uri: Uri) = act(null) { messages.info(R.string.backed_up_1_s_add_on, repo.backup(uri)) }
     fun copyToMojang(a: AddonEntity) = act(null) { messages.info(repo.copyToMojangFolder(a.id)) }
     fun openInMinecraft(a: AddonEntity) = act(null) { _launchIntent.value = repo.openInMinecraftIntent(a.id) }
     fun consumeIntent() { _launchIntent.value = null }
-    fun setMojangFolder(uri: Uri) = act("Folder linked") { settings.update { it.copy(mojangFolderUri = uri.toString()) } }
-    fun unlinkMojangFolder() = act("Folder unlinked") { settings.update { it.copy(mojangFolderUri = "") } }
+    fun setMojangFolder(uri: Uri) = act(str(R.string.folder_linked)) { settings.update { it.copy(mojangFolderUri = uri.toString()) } }
+    fun unlinkMojangFolder() = act(str(R.string.folder_unlinked)) { settings.update { it.copy(mojangFolderUri = "") } }
 }

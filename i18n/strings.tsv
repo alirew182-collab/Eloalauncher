@@ -1,0 +1,871 @@
+key	en	ru	tr	de
+a_backup_of_the_previous_content	A backup of the previous content is kept	Предыдущее содержимое сохраняется в резервной копии	Önceki içeriğin yedeği saklanır	Eine Sicherung des vorherigen Inhalts wird behalten
+about	About	О приложении	Hakkında	Über
+above_the_safe_limit_android_may	Above the safe limit; Android may close the game	Выше безопасного предела; Android может закрыть игру	Güvenli sınırın üzerinde; Android oyunu kapatabilir	Über dem sicheren Limit; Android kann das Spiel schließen
+above_the_safe_limit_for_this	Above the safe limit for this device; Android may close the game	Выше безопасного предела для этого устройства; Android может закрыть игру	Bu cihaz için güvenli sınırın üzerinde; Android oyunu kapatabilir	Über dem sicheren Limit dieses Geräts; Android kann das Spiel schließen
+accent_colour	Accent colour	Акцентный цвет	Vurgu rengi	Akzentfarbe
+action	Action	Действие	Eylem	Aktion
+action_delete	Delete	Удалить	Sil	Löschen
+action_edit	Edit	Изменить	Düzenle	Bearbeiten
+action_export	Export	Экспорт	Dışa aktar	Exportieren
+action_rename	Rename	Переименовать	Yeniden adlandır	Umbenennen
+actions	Actions	Действия	Eylemler	Aktionen
+active	Active	Активен	Etkin	Aktiv
+add_button	Add button	Добавить кнопку	Düğme ekle	Taste hinzufügen
+added_1_s	Added: %1$s	Добавлено: %1$s	Eklendi: %1$s	Hinzugefügt: %1$s
+advanced	Advanced	Дополнительно	Gelişmiş	Erweitert
+agents_and_boot_class_path_options	Agents and boot class path options are rejected for safety	Агенты и параметры boot class path отклоняются из соображений безопасности	Ajanlar ve boot class path seçenekleri güvenlik için reddedilir	Agents und Boot-Classpath-Optionen werden aus Sicherheitsgründen abgelehnt
+agents_and_boot_classpath_overrides_are	Agents and boot classpath overrides are rejected for safety	Агенты и переопределения boot classpath отклоняются из соображений безопасности	Ajanlar ve boot classpath geçersiz kılmaları güvenlik için reddedilir	Agents und Boot-Classpath-Überschreibungen werden aus Sicherheitsgründen abgelehnt
+all_1_s_files_verified	All %1$s files verified	Все файлы (%1$s) проверены	%1$s dosyanın tümü doğrulandı	Alle %1$s Dateien geprüft
+all_categories	All categories	Все категории	Tüm kategoriler	Alle Kategorien
+all_log_entries_will_be_deleted	All log entries will be deleted. Export them first if you need them for a bug report.	Все записи журнала будут удалены. Если они нужны для отчёта об ошибке, сначала экспортируйте их.	Tüm kayıt girdileri silinecek. Hata raporu için gerekiyorsa önce dışa aktarın.	Alle Protokolleinträge werden gelöscht. Exportieren Sie sie zuerst, wenn Sie sie für einen Fehlerbericht brauchen.
+allow_installing_updates	Allow installing updates	Разрешить установку обновлений	Güncelleme yüklemeye izin ver	Installation von Updates erlauben
+already_in_library_1_s	Already in library: %1$s	Уже в библиотеке: %1$s	Zaten kütüphanede: %1$s	Bereits in der Bibliothek: %1$s
+also_delete_its_game_folder_mods	Also delete its game folder (mods, worlds, configs)	Также удалить папку игры (моды, миры, конфиги)	Oyun klasörünü de sil (modlar, dünyalar, yapılandırmalar)	Auch den Spielordner löschen (Mods, Welten, Konfigurationen)
+also_delete_the_stored_apk_copies	Also delete the stored APK copies (%1$s)	Также удалить сохранённые копии APK (%1$s)	Saklanan APK kopyalarını da sil (%1$s)	Auch die gespeicherten APK-Kopien löschen (%1$s)
+and_1_s_more	…and %1$s more	…и ещё %1$s	…ve %1$s tane daha	…und %1$s weitere
+android	Android	Android	Android	Android
+android_12_and_newer_only	Android 12 and newer only	Только Android 12 и новее	Yalnızca Android 12 ve üstü	Nur Android 12 und neuer
+android_backup	Android backup	Резервное копирование Android	Android yedeklemesi	Android-Sicherung
+android_lets_the_launcher_read_only	Android lets the launcher read only folders you grant. Choose games/com.mojang (or its minecraftWorlds folder) if your Minecraft stores worlds in shared storage. Worlds kept in Minecraft's private app storage cannot be read; export them from the game as .mcworld and import them here instead.	Android позволяет лаунчеру читать только папки, к которым вы дали доступ. Выберите games/com.mojang (или её папку minecraftWorlds), если Minecraft хранит миры в общей памяти. Миры во внутренней памяти Minecraft прочитать нельзя: экспортируйте их из игры в .mcworld и импортируйте сюда.	Android, başlatıcının yalnızca izin verdiğiniz klasörleri okumasına izin verir. Minecraft dünyaları paylaşılan depolamada tutuyorsa games/com.mojang'ı (veya minecraftWorlds klasörünü) seçin. Minecraft'ın özel uygulama depolamasındaki dünyalar okunamaz; bunları oyundan .mcworld olarak dışa aktarıp buraya içe aktarın.	Android erlaubt dem Launcher nur das Lesen freigegebener Ordner. Wählen Sie games/com.mojang (oder dessen Ordner minecraftWorlds), wenn Minecraft Welten im gemeinsamen Speicher ablegt. Welten im privaten App-Speicher von Minecraft sind nicht lesbar; exportieren Sie sie im Spiel als .mcworld und importieren Sie sie hier.
+android_requires_you_to_allow_this	Android requires you to allow this launcher to install apps. You will be taken to the system setting; come back and tap Install again.	Android требует разрешить лаунчеру устанавливать приложения. Откроется системная настройка; вернитесь и снова нажмите «Установить».	Android, bu başlatıcının uygulama yüklemesine izin vermenizi gerektirir. Sistem ayarına yönlendirileceksiniz; geri dönüp yeniden Yükle'ye dokunun.	Android verlangt, dass Sie diesem Launcher das Installieren von Apps erlauben. Die Systemeinstellung wird geöffnet; kehren Sie zurück und tippen Sie erneut auf „Installieren“.
+animations	Animations	Анимации	Animasyonlar	Animationen
+apk_files	APK files	Файлы APK	APK dosyaları	APK-Dateien
+app_name	Eloa Launcher	Eloa Launcher	Eloa Launcher	Eloa Launcher
+app_tagline	Minecraft launcher	Лаунчер Minecraft	Minecraft başlatıcısı	Minecraft-Launcher
+appearance	Appearance	Оформление	Görünüm	Darstellung
+application_client_id	Application (client) ID	ID приложения (client ID)	Uygulama (istemci) kimliği	Anwendungs-ID (Client-ID)
+applies_to_profile_1_s	Applies to profile: %1$s	Применяется к профилю: %1$s	Uygulandığı profil: %1$s	Gilt für Profil: %1$s
+apply	Apply	Применить	Uygula	Anwenden
+apply_fix	Apply fix?	Применить исправление?	Düzeltme uygulansın mı?	Korrektur anwenden?
+architecture	Architecture	Архитектура	Mimari	Architektur
+audio_and_input	Audio and input	Звук и ввод	Ses ve giriş	Audio und Eingabe
+authors	Authors	Авторы	Yazarlar	Autoren
+auto_choice	Auto choice	Автовыбор	Otomatik seçim	Automatische Wahl
+automatic_checks	Automatic checks	Автоматические проверки	Otomatik denetimler	Automatische Prüfungen
+available	Available	Доступные	Mevcut	Verfügbar
+azure_application	Azure application	Приложение Azure	Azure uygulaması	Azure-Anwendung
+back_up	Back up	Создать копию	Yedekle	Sichern
+back_up_a_world_from_the	Back up a world from the folder above or import a .mcworld file	Создайте копию мира из папки выше или импортируйте файл .mcworld	Yukarıdaki klasörden bir dünyayı yedekleyin veya bir .mcworld dosyası içe aktarın	Sichern Sie eine Welt aus dem Ordner oben oder importieren Sie eine .mcworld-Datei
+back_up_all	Back up all	Копировать все	Tümünü yedekle	Alle sichern
+backed_up_1_s_add_on	Backed up %1$s add-on(s)	Сохранено дополнений: %1$s	%1$s eklenti yedeklendi	%1$s Add-on(s) gesichert
+background	Background	Фоновая работа	Arka plan	Hintergrund
+backup	Backup	Резервная копия	Yedek	Sicherung
+backup_all	Backup all	Копировать все	Tümünü yedekle	Alles sichern
+backup_metadata	Backup metadata	Сохранить метаданные	Meta verileri yedekle	Metadaten sichern
+backup_saved_to_backups_1_s	Backup saved to Backups/%1$s	Копия сохранена в Backups/%1$s	Yedek Backups/%1$s konumuna kaydedildi	Sicherung unter Backups/%1$s gespeichert
+bad_signature	Bad signature	Неверная подпись	Geçersiz imza	Ungültige Signatur
+battery	Battery	Батарея	Pil	Akku
+battery_saver	Battery saver	Энергосбережение	Pil tasarrufu	Energiesparmodus
+bedrock	Bedrock	Bedrock	Bedrock	Bedrock
+before_installing_the_launcher_checks_the	Before installing, the launcher checks the SHA-256 and that the APK is signed with the same key as this app. Android then asks you to confirm.	Перед установкой лаунчер сверяет SHA-256 и проверяет, что APK подписан тем же ключом, что и это приложение. Затем Android попросит подтверждение.	Kurulumdan önce başlatıcı SHA-256 değerini ve APK'nın bu uygulamayla aynı anahtarla imzalandığını denetler. Ardından Android onay ister.	Vor der Installation prüft der Launcher die SHA-256-Summe und ob die APK mit demselben Schlüssel signiert ist wie diese App. Danach fragt Android nach einer Bestätigung.
+beta	 (beta)	 (бета)	 (beta)	 (Beta)
+biome_blend_1_s	Biome blend: %1$s	Смешивание биомов: %1$s	Biyom geçişi: %1$s	Biomübergang: %1$s
+blocked	Blocked	Заблокирован	Engellendi	Blockiert
+blocker_no_account	Sign in with a Microsoft account that owns the game first.	Сначала войдите в аккаунт Microsoft, которому принадлежит игра.	Önce oyuna sahip bir Microsoft hesabıyla giriş yapın.	Melden Sie sich zuerst mit einem Microsoft-Konto an, das das Spiel besitzt.
+blocker_no_network	No internet connection.	Нет подключения к интернету.	İnternet bağlantısı yok.	Keine Internetverbindung.
+blocker_no_worlds	The profile has no local worlds yet.	В профиле пока нет локальных миров.	Profilde henüz yerel dünya yok.	Das Profil hat noch keine lokalen Welten.
+blocker_quick_play	This Minecraft version has no Quick Play (needs 1.20+).	В этой версии Minecraft нет Quick Play (нужна 1.20+).	Bu Minecraft sürümünde Hızlı Oyna yok (1.20+ gerekir).	Diese Minecraft-Version hat kein Quick Play (benötigt 1.20+).
+blocker_token_expired	Offline and the saved session expired — use Offline mode.	Нет сети, а сохранённая сессия истекла — используйте режим «Офлайн».	Çevrimdışı ve kayıtlı oturumun süresi doldu — Çevrimdışı modu kullanın.	Offline und gespeicherte Sitzung abgelaufen – nutzen Sie den Offline-Modus.
+bluetooth_and_usb_gamepads_keyboards_and	Bluetooth and USB gamepads, keyboards and mice detected by Android	Геймпады, клавиатуры и мыши Bluetooth и USB, обнаруженные Android	Android tarafından algılanan Bluetooth ve USB oyun kumandaları, klavyeler ve fareler	Von Android erkannte Bluetooth- und USB-Gamepads, Tastaturen und Mäuse
+blur_effects	Blur effects	Эффекты размытия	Bulanıklık efektleri	Unschärfeeffekte
+bundled_files	Bundled files	Вложенные файлы	Paketteki dosyalar	Enthaltene Dateien
+button	Button	Кнопка	Düğme	Taste
+cache	Cache	Кэш	Önbellek	Cache
+camera_sensitivity_1_s	Camera sensitivity: %1$s%%	Чувствительность камеры: %1$s%%	Kamera hassasiyeti: %%%1$s	Kameraempfindlichkeit: %1$s %%
+cannot_load_versions_1_s	Cannot load versions: %1$s	Не удалось загрузить версии: %1$s	Sürümler yüklenemedi: %1$s	Versionen konnten nicht geladen werden: %1$s
+category	Category	Категория	Kategori	Kategorie
+category_updated	Category updated	Категория обновлена	Kategori güncellendi	Kategorie aktualisiert
+cause	Cause	Причина	Neden	Ursache
+cc_corrupt	Corrupted file	Повреждённый файл	Bozuk dosya	Beschädigte Datei
+cc_disk	Storage full	Хранилище заполнено	Depolama dolu	Speicher voll
+cc_java	Wrong Java version	Неподходящая версия Java	Yanlış Java sürümü	Falsche Java-Version
+cc_mixin	Mixin failure (mod conflict)	Ошибка Mixin (конфликт модов)	Mixin hatası (mod çakışması)	Mixin-Fehler (Mod-Konflikt)
+cc_mod_dep	Missing mod dependency	Не хватает зависимости мода	Mod bağımlılığı eksik	Fehlende Mod-Abhängigkeit
+cc_mod_dup	Duplicate mods	Дублирующиеся моды	Yinelenen modlar	Doppelte Mods
+cc_mod_mc	Mod made for another Minecraft version	Мод для другой версии Minecraft	Başka Minecraft sürümü için mod	Mod für eine andere Minecraft-Version
+cc_native	Native library missing	Отсутствует нативная библиотека	Yerel kütüphane eksik	Native Bibliothek fehlt
+cc_network	Network error	Ошибка сети	Ağ hatası	Netzwerkfehler
+cc_oom	Out of memory	Нехватка памяти	Bellek yetersiz	Zu wenig Arbeitsspeicher
+cc_opengl	OpenGL not supported	OpenGL не поддерживается	OpenGL desteklenmiyor	OpenGL nicht unterstützt
+cc_renderer	Renderer crashed	Сбой рендерера	İşleyici çöktü	Renderer abgestürzt
+cc_session	Invalid session	Недействительная сессия	Geçersiz oturum	Ungültige Sitzung
+cc_signal	Native crash	Нативный сбой	Yerel çökme	Nativer Absturz
+cc_unknown	Unknown cause	Причина не определена	Bilinmeyen neden	Unbekannte Ursache
+cd_back	Back	Назад	Geri	Zurück
+cd_open_navigation	Open navigation	Открыть меню	Menüyü aç	Navigation öffnen
+certificate_sha_256	Certificate SHA-256	SHA-256 сертификата	Sertifika SHA-256	Zertifikat-SHA-256
+cf_corrupt	Run "Verify files" for the profile; damaged files are downloaded again.	Запустите «Проверить файлы» для профиля; повреждённые файлы будут загружены заново.	Profil için "Dosyaları doğrula"yı çalıştırın; hasarlı dosyalar yeniden indirilir.	Führen Sie für das Profil „Dateien prüfen“ aus; beschädigte Dateien werden neu geladen.
+cf_disk	Free some storage (Settings → Storage) and retry.	Освободите место (Настройки → Хранилище) и повторите.	Biraz alan boşaltın (Ayarlar → Depolama) ve tekrar deneyin.	Geben Sie Speicher frei (Einstellungen → Speicher) und versuchen Sie es erneut.
+cf_java	Install or select the Java runtime this Minecraft version requires (Library → Java runtimes).	Установите или выберите среду Java, нужную этой версии Minecraft (Библиотека → Среды Java).	Bu Minecraft sürümünün gerektirdiği Java ortamını yükleyin veya seçin (Kütüphane → Java çalışma ortamları).	Installieren oder wählen Sie die Java-Laufzeit, die diese Minecraft-Version benötigt (Bibliothek → Java-Laufzeiten).
+cf_mixin	Two mods modify the same code. Disable recently added mods one by one.	Два мода изменяют один и тот же код. Отключайте недавно добавленные моды по одному.	İki mod aynı kodu değiştiriyor. Son eklenen modları tek tek devre dışı bırakın.	Zwei Mods ändern denselben Code. Deaktivieren Sie zuletzt hinzugefügte Mods einzeln.
+cf_mod_dep	Install the missing mod shown below, or disable the mod that needs it.	Установите недостающий мод, указанный ниже, или отключите мод, который его требует.	Aşağıda gösterilen eksik modu yükleyin veya ona ihtiyaç duyan modu devre dışı bırakın.	Installieren Sie den unten genannten fehlenden Mod oder deaktivieren Sie den Mod, der ihn benötigt.
+cf_mod_dup	Remove one of the duplicate mod files in Mods.	Удалите один из дублирующихся файлов мода в разделе «Моды».	Modlar bölümünde yinelenen mod dosyalarından birini kaldırın.	Entfernen Sie unter „Mods“ eine der doppelten Mod-Dateien.
+cf_mod_mc	Use a mod build for this Minecraft version or change the profile's version.	Используйте сборку мода для этой версии Minecraft или смените версию профиля.	Bu Minecraft sürümü için mod yapısını kullanın veya profil sürümünü değiştirin.	Nutzen Sie einen Mod-Build für diese Minecraft-Version oder ändern Sie die Profilversion.
+cf_native	Repair the version files and make sure the runtime matches your device architecture.	Восстановите файлы версии и убедитесь, что среда Java подходит к архитектуре устройства.	Sürüm dosyalarını onarın ve çalışma ortamının cihaz mimarinize uyduğundan emin olun.	Versionsdateien reparieren und sicherstellen, dass die Laufzeit zur Gerätearchitektur passt.
+cf_network	Check the internet connection or use Offline mode for singleplayer.	Проверьте подключение к интернету или используйте режим «Офлайн» для одиночной игры.	İnternet bağlantısını kontrol edin veya tek oyunculu için Çevrimdışı modu kullanın.	Prüfen Sie die Internetverbindung oder nutzen Sie für Einzelspieler den Offline-Modus.
+cf_oom	Lower the view distance or allocate a bit more memory in Game settings (stay below the safe limit).	Уменьшите дальность прорисовки или немного увеличьте память в настройках игры (не выше безопасного предела).	Görüş mesafesini düşürün veya Oyun ayarlarında biraz daha bellek ayırın (güvenli sınırın altında kalın).	Sichtweite senken oder in den Spieleinstellungen etwas mehr Speicher zuweisen (unter dem sicheren Limit bleiben).
+cf_opengl	Choose a different renderer in Performance → Renderers.	Выберите другой рендерер: Производительность → Рендереры.	Performans → İşleyiciler'den farklı bir işleyici seçin.	Wählen Sie unter Leistung → Renderer einen anderen Renderer.
+cf_renderer	Switch renderer or lower graphics settings; check that your GPU driver supports the chosen layer.	Смените рендерер или снизьте графику; проверьте, что драйвер GPU поддерживает выбранный слой.	İşleyiciyi değiştirin veya grafik ayarlarını düşürün; GPU sürücünüzün seçilen katmanı desteklediğini kontrol edin.	Renderer wechseln oder Grafik reduzieren; prüfen, ob der GPU-Treiber die gewählte Schicht unterstützt.
+cf_session	Refresh the account in Accounts or sign in again.	Обновите аккаунт в разделе «Аккаунты» или войдите заново.	Hesaplar'da hesabı yenileyin veya yeniden giriş yapın.	Aktualisieren Sie das Konto unter „Konten“ oder melden Sie sich erneut an.
+cf_signal	A native component crashed. Try another renderer and lower settings; export the log if it repeats.	Сбой нативного компонента. Попробуйте другой рендерер и более низкие настройки; при повторении экспортируйте журнал.	Yerel bir bileşen çöktü. Başka bir işleyici ve daha düşük ayarlar deneyin; tekrar ederse kaydı dışa aktarın.	Eine native Komponente ist abgestürzt. Anderen Renderer und niedrigere Einstellungen probieren; bei Wiederholung Protokoll exportieren.
+cf_unknown	No known pattern found. Export the log and check the last error lines.	Известные шаблоны не найдены. Экспортируйте журнал и проверьте последние строки ошибок.	Bilinen bir kalıp bulunamadı. Kaydı dışa aktarın ve son hata satırlarını kontrol edin.	Kein bekanntes Muster gefunden. Exportieren Sie das Protokoll und prüfen Sie die letzten Fehlerzeilen.
+change_folder	Change folder	Сменить папку	Klasörü değiştir	Ordner ändern
+change_world	Change world	Сменить мир	Dünyayı değiştir	Welt wechseln
+channel_alerts	Alerts	Оповещения	Uyarılar	Hinweise
+channel_alerts_desc	Finished downloads, errors, updates, overheating	Завершённые загрузки, ошибки, обновления, перегрев	Biten indirmeler, hatalar, güncellemeler, aşırı ısınma	Abgeschlossene Downloads, Fehler, Updates, Überhitzung
+channel_downloads	Downloads and installation	Загрузки и установка	İndirmeler ve kurulum	Downloads und Installation
+channel_downloads_desc	Progress of game file downloads	Ход загрузки игровых файлов	Oyun dosyası indirme ilerlemesi	Fortschritt beim Herunterladen der Spieldateien
+check	Check	Проверить	Kontrol et	Prüfen
+check_for_updates_daily	Check for updates daily	Проверять обновления ежедневно	Güncellemeleri her gün denetle	Täglich nach Updates suchen
+check_integrity	Check integrity	Проверить целостность	Bütünlüğü denetle	Integrität prüfen
+check_now	Check now	Проверить сейчас	Şimdi denetle	Jetzt prüfen
+checking	Checking	Проверка	Denetleniyor	Prüfung läuft
+checking_1_s	Checking: %1$s	Проверка: %1$s	Denetleniyor: %1$s	Prüfung: %1$s
+checking_1_s_2	Checking %1$s…	Проверка %1$s…	%1$s denetleniyor…	%1$s wird geprüft…
+checking_add_ons	Checking add-ons	Проверка дополнений	Eklentiler denetleniyor	Add-ons werden geprüft
+checks	Checks	Проверки	Denetimler	Prüfungen
+checksum_published	Checksum published	Контрольная сумма опубликована	Sağlama toplamı yayımlandı	Prüfsumme veröffentlicht
+choose	Choose	Выбрать	Seç	Auswählen
+choose_a_minecraft_version	Choose a Minecraft version	Выберите версию Minecraft	Bir Minecraft sürümü seçin	Wählen Sie eine Minecraft-Version
+choose_file	Choose file	Выбрать файл	Dosya seç	Datei auswählen
+choose_folder	Choose folder	Выбрать папку	Klasör seç	Ordner auswählen
+clean_now	Clean now	Очистить сейчас	Şimdi temizle	Jetzt bereinigen
+clean_temporary_files_automatically	Clean temporary files automatically	Автоматически очищать временные файлы	Geçici dosyaları otomatik temizle	Temporäre Dateien automatisch bereinigen
+clear	Clear	Очистить	Temizle	Leeren
+clear_all	Clear all	Очистить всё	Tümünü temizle	Alle löschen
+clear_all_notifications	Clear all notifications?	Очистить все уведомления?	Tüm bildirimler temizlensin mi?	Alle Benachrichtigungen löschen?
+clear_the_log	Clear the log?	Очистить журнал?	Kayıt temizlensin mi?	Protokoll leeren?
+clone	Clone	Клонировать	Kopyala	Klonen
+clone_1_s	Clone “%1$s”	Клонировать «%1$s»	"%1$s" kopyala	„%1$s“ klonen
+close	Close	Закрыть	Kapat	Schließen
+clouds	Clouds	Облака	Bulutlar	Wolken
+clouds_fancy	Fancy	Детальные	Şık	Schön
+clouds_fast	Fast	Быстрые	Hızlı	Schnell
+clouds_off	Off	Выкл.	Kapalı	Aus
+compatibility	Compatibility	Совместимость	Uyumluluk	Kompatibilität
+compatibility_check	Compatibility check	Проверка совместимости	Uyumluluk denetimi	Kompatibilitätsprüfung
+compatible	Compatible	Совместим	Uyumlu	Kompatibel
+component	Component	Компонент	Bileşen	Komponente
+configs	Configs	Конфиги	Yapılandırmalar	Konfigurationen
+configuration_exported	Configuration exported	Конфигурация экспортирована	Yapılandırma dışa aktarıldı	Konfiguration exportiert
+configuration_files	Configuration files	Файлы конфигурации	Yapılandırma dosyaları	Konfigurationsdateien
+confirm_the_installation_in_the_system	Confirm the installation in the system dialog	Подтвердите установку в системном диалоге	Kurulumu sistem penceresinde onaylayın	Bestätigen Sie die Installation im Systemdialog
+connect_to_the_internet_and_retry	Connect to the internet and retry	Подключитесь к интернету и повторите	İnternete bağlanıp tekrar deneyin	Mit dem Internet verbinden und erneut versuchen
+connected_devices	Connected devices	Подключённые устройства	Bağlı cihazlar	Verbundene Geräte
+contacting_microsoft	Contacting Microsoft…	Связь с Microsoft…	Microsoft'a bağlanılıyor…	Verbindung zu Microsoft…
+contents_1_s_files	Contents (%1$s files)	Содержимое (файлов: %1$s)	İçerik (%1$s dosya)	Inhalt (%1$s Dateien)
+continue_in_the_browser	Continue in the browser	Продолжите в браузере	Tarayıcıda devam edin	Im Browser fortfahren
+copied_1_s	Copied %1$s	Скопировано: %1$s	Kopyalandı: %1$s	Kopiert: %1$s
+copied_to_clipboard	Copied to clipboard	Скопировано в буфер обмена	Panoya kopyalandı	In die Zwischenablage kopiert
+copy	Copy	Копировать	Kopyala	Kopieren
+copy_all	Copy all	Копировать всё	Tümünü kopyala	Alles kopieren
+copy_code_open	Copy code and open	Скопировать код и открыть	Kodu kopyala ve aç	Code kopieren und öffnen
+copy_entry	Copy entry	Копировать запись	Girdiyi kopyala	Eintrag kopieren
+copy_only_the_settings_or_the	Copy only the settings, or the settings together with the game folder (mods, configs, worlds)?	Скопировать только настройки или настройки вместе с папкой игры (моды, конфиги, миры)?	Yalnızca ayarlar mı, yoksa ayarlar oyun klasörüyle birlikte mi (modlar, yapılandırmalar, dünyalar) kopyalansın?	Nur die Einstellungen kopieren oder zusammen mit dem Spielordner (Mods, Konfigurationen, Welten)?
+copy_to_com_mojang	Copy to com.mojang	Копировать в com.mojang	com.mojang'a kopyala	Nach com.mojang kopieren
+cover	Cover	Обложка	Kapak	Titelbild
+create	Create	Создать	Oluştur	Erstellen
+create_a_java_edition_profile_first	Create a Java Edition profile first; each profile has its own %1$s	Сначала создайте профиль Java Edition; у каждого профиля свои %1$s	Önce bir Java Edition profili oluşturun; her profilin kendi %1$s öğeleri vardır	Erstellen Sie zuerst ein Java-Edition-Profil; jedes Profil hat eigene %1$s
+create_a_new_vanilla_profile_with	Create a new vanilla profile with Minecraft %1$s and download its files from Mojang? You can add a mod loader in the profile editor.	Создать новый ванильный профиль с Minecraft %1$s и скачать его файлы с серверов Mojang? Модлоадер можно добавить в редакторе профиля.	Minecraft %1$s ile yeni bir vanilla profil oluşturulup dosyaları Mojang'dan indirilsin mi? Mod yükleyiciyi profil düzenleyicide ekleyebilirsiniz.	Ein neues Vanilla-Profil mit Minecraft %1$s erstellen und die Dateien von Mojang herunterladen? Einen Mod-Loader können Sie im Profileditor hinzufügen.
+create_a_profile_first	Create a profile first	Сначала создайте профиль	Önce bir profil oluşturun	Erstellen Sie zuerst ein Profil
+create_a_profile_to_play_java	Create a profile to play Java Edition	Создайте профиль, чтобы играть в Java Edition	Java Edition oynamak için bir profil oluşturun	Erstellen Sie ein Profil, um Java Edition zu spielen
+create_a_profile_with_fabric_quilt	Create a profile with Fabric, Quilt, Forge or NeoForge to manage mods	Создайте профиль с Fabric, Quilt, Forge или NeoForge, чтобы управлять модами	Modları yönetmek için Fabric, Quilt, Forge veya NeoForge ile bir profil oluşturun	Erstellen Sie ein Profil mit Fabric, Quilt, Forge oder NeoForge, um Mods zu verwalten
+create_and_edit	Create and edit	Создать и изменить	Oluştur ve düzenle	Erstellen und bearbeiten
+create_install	Create and install	Создать и установить	Oluştur ve yükle	Erstellen und installieren
+create_profile	Create profile	Создать профиль	Profil oluştur	Profil erstellen
+create_profile_install	Create profile and install	Создать профиль и установить	Profil oluştur ve yükle	Profil erstellen und installieren
+create_profiles_like_vanilla_fabric_performance	Create profiles like “Vanilla”, “Fabric Performance” or “RPG Modpack”, each with its own version, loader, mods and settings	Создавайте профили вроде «Vanilla», «Fabric Performance» или «RPG Modpack», каждый со своей версией, загрузчиком, модами и настройками	"Vanilla", "Fabric Performance" veya "RPG Modpack" gibi, her biri kendi sürümü, yükleyicisi, modları ve ayarları olan profiller oluşturun	Erstellen Sie Profile wie „Vanilla“, „Fabric Performance“ oder „RPG Modpack“, jeweils mit eigener Version, Loader, Mods und Einstellungen
+created_1_s_last_played_2	Created %1$s · last played %2$s	Создан %1$s · последняя игра %2$s	Oluşturma %1$s · son oynama %2$s	Erstellt %1$s · zuletzt gespielt %2$s
+current_mods_will_be_replaced_by	Current mods will be replaced by this snapshot. The current state is backed up automatically first.	Текущие моды будут заменены этим снимком. Перед этим текущее состояние автоматически сохраняется.	Mevcut modlar bu anlık görüntüyle değiştirilecek. Önce mevcut durum otomatik olarak yedeklenir.	Die aktuellen Mods werden durch diesen Stand ersetzt. Der aktuelle Zustand wird vorher automatisch gesichert.
+damaged	Damaged	Повреждён	Hasarlı	Beschädigt
+datapacks	Datapacks	Датапаки	Veri paketleri	Datenpakete
+defaults	Defaults	По умолчанию	Varsayılanlar	Standardwerte
+delete_1_s	Delete %1$s?	Удалить %1$s?	%1$s silinsin mi?	%1$s löschen?
+delete_1_s_2	Delete “%1$s”?	Удалить «%1$s»?	"%1$s" silinsin mi?	„%1$s“ löschen?
+delete_all_data	Delete all data?	Удалить все данные?	Tüm veriler silinsin mi?	Alle Daten löschen?
+delete_all_launcher_data	Delete all launcher data	Удалить все данные лаунчера	Tüm başlatıcı verilerini sil	Alle Launcher-Daten löschen
+delete_backup	Delete backup?	Удалить резервную копию?	Yedek silinsin mi?	Sicherung löschen?
+delete_everything	Delete everything	Удалить всё	Her şeyi sil	Alles löschen
+delete_java_1_s	Delete Java %1$s?	Удалить Java %1$s?	Java %1$s silinsin mi?	Java %1$s löschen?
+delete_layout	Delete layout?	Удалить раскладку?	Düzen silinsin mi?	Layout löschen?
+deleted_1_s	Deleted %1$s	Удалено: %1$s	Silindi: %1$s	Gelöscht: %1$s
+density_comfortable	Comfortable	Просторная	Rahat	Großzügig
+density_compact	Compact	Компактная	Sıkı	Kompakt
+density_default	Default	Обычная	Varsayılan	Standard
+dependencies	Dependencies	Зависимости	Bağımlılıklar	Abhängigkeiten
+depends_on_1_s	Depends on: %1$s	Зависит от: %1$s	Bağımlı olduğu: %1$s	Hängt ab von: %1$s
+description	Description	Описание	Açıklama	Beschreibung
+detected_with_public_android_apis_only	Detected with public Android APIs only	Определено только через публичные API Android	Yalnızca herkese açık Android API'leriyle algılandı	Nur über öffentliche Android-APIs ermittelt
+device	Device	Устройство	Cihaz	Gerät
+device_architecture	Device architecture	Архитектура устройства	Cihaz mimarisi	Gerätearchitektur
+device_ram_1_s_mb_safe	Device RAM %1$s MB · safe maximum %2$s MB	ОЗУ устройства %1$s МБ · безопасный максимум %2$s МБ	Cihaz RAM'i %1$s MB · güvenli üst sınır %2$s MB	Geräte-RAM %1$s MB · sicheres Maximum %2$s MB
+diagnose	Diagnose	Диагностика	Tanıla	Diagnose
+diagnostic_centre	Diagnostic centre	Центр диагностики	Tanılama merkezi	Diagnosezentrum
+disabled	Disabled	Отключён	Devre dışı	Deaktiviert
+disabled_so_tokens_are_never_copied	Disabled, so tokens are never copied to cloud backups	Отключено, поэтому токены не попадают в облачные копии	Devre dışı; böylece belirteçler hiçbir zaman bulut yedeklerine kopyalanmaz	Deaktiviert, damit Tokens nie in Cloud-Sicherungen landen
+display	Display	Экран	Ekran	Display
+done	Done	Готово	Tamam	Fertig
+download_and_install	Download and install	Скачать и установить	İndir ve yükle	Herunterladen und installieren
+downloading	Downloading	Загрузка	İndiriliyor	Wird geladen
+ds_accent_amethyst	Amethyst	Аметист	Ametist	Amethyst
+ds_accent_diamond	Diamond	Алмаз	Elmas	Diamant
+ds_accent_dynamic	System (Material You)	Системный (Material You)	Sistem (Material You)	System (Material You)
+ds_accent_gold	Gold	Золото	Altın	Gold
+ds_accent_grass	Grass	Трава	Çimen	Gras
+ds_accent_lapis	Lapis	Лазурит	Lapis	Lapislazuli
+ds_accent_redstone	Redstone	Редстоун	Kızıltaş	Redstone
+ds_cancel	Cancel	Отмена	İptal	Abbrechen
+ds_clear_search	Clear search	Очистить поиск	Aramayı temizle	Suche löschen
+ds_dismiss	Dismiss	Закрыть	Kapat	Schließen
+ds_loading	Loading	Загрузка	Yükleniyor	Wird geladen
+ds_must_not_be_empty	Must not be empty	Не может быть пустым	Boş olamaz	Darf nicht leer sein
+ds_retry	Retry	Повторить	Yeniden dene	Erneut versuchen
+ds_save	Save	Сохранить	Kaydet	Speichern
+ds_search	Search	Поиск	Ara	Suchen
+dynamic_lighting_is_provided_by_mods	Dynamic lighting is provided by mods (for example LambDynamicLights), not by vanilla options.	Динамическое освещение добавляют моды (например, LambDynamicLights), а не ванильные настройки.	Dinamik ışıklandırma vanilla seçeneklerle değil, modlarla (örneğin LambDynamicLights) sağlanır.	Dynamisches Licht kommt von Mods (zum Beispiel LambDynamicLights), nicht aus den Vanilla-Optionen.
+each_mode_is_a_real_different	Each mode starts the game in a different way. Unavailable modes show why.	Каждый режим запускает игру по-своему. У недоступных режимов указана причина.	Her mod oyunu farklı bir şekilde başlatır. Kullanılamayan modlar nedenini gösterir.	Jeder Modus startet das Spiel anders. Nicht verfügbare Modi zeigen den Grund.
+edit_profile	Edit profile	Изменить профиль	Profili düzenle	Profil bearbeiten
+element_size_1_s	Element size: %1$s%%	Размер элементов: %1$s%%	Öğe boyutu: %%%1$s	Elementgröße: %1$s %%
+eloa_launcher_contains_no_analytics_advertising	Eloa Launcher contains no analytics, advertising or crash-reporting SDKs and sends no usage data anywhere. Logs and crash reports stay on the device until you export them.	В Eloa Launcher нет SDK аналитики, рекламы или отправки отчётов о сбоях, и он никуда не отправляет данные об использовании. Журналы и отчёты о сбоях остаются на устройстве, пока вы их не экспортируете.	Eloa Launcher analiz, reklam veya çökme raporlama SDK'sı içermez ve hiçbir yere kullanım verisi göndermez. Kayıtlar ve çökme raporları siz dışa aktarana kadar cihazda kalır.	Eloa Launcher enthält keine Analyse-, Werbe- oder Absturzbericht-SDKs und sendet keine Nutzungsdaten. Protokolle und Absturzberichte bleiben auf dem Gerät, bis Sie sie exportieren.
+eloa_launcher_is_not_affiliated_with	Eloa Launcher is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang Synergies AB. You need to own the game.	Eloa Launcher не связан с Mojang или Microsoft. Minecraft — товарный знак Mojang Synergies AB. Для игры нужна купленная копия.	Eloa Launcher'ın Mojang veya Microsoft ile bağlantısı yoktur. Minecraft, Mojang Synergies AB'nin ticari markasıdır. Oyuna sahip olmanız gerekir.	Eloa Launcher steht in keiner Verbindung zu Mojang oder Microsoft. Minecraft ist eine Marke der Mojang Synergies AB. Sie müssen das Spiel besitzen.
+empty_folder	Empty folder	Пустая папка	Boş klasör	Leerer Ordner
+enable_public_client_flows_for_browser	Enable public client flows. For browser sign-in add the redirect URI eloa-launcher://auth (Mobile and desktop platform).	Включите public client flows. Для входа через браузер добавьте redirect URI eloa-launcher://auth (платформа Mobile and desktop).	Public client flows'u etkinleştirin. Tarayıcıyla giriş için eloa-launcher://auth yönlendirme URI'sini ekleyin (Mobile and desktop platformu).	Aktivieren Sie Public Client Flows. Für die Browser-Anmeldung fügen Sie die Redirect-URI eloa-launcher://auth hinzu (Plattform Mobile and desktop).
+encrypted_with_aes_gcm_the_key	Encrypted with AES-GCM; the key lives in Android Keystore and never leaves it. Passwords are never seen or stored.	Зашифрованы AES-GCM; ключ хранится в Android Keystore и не покидает его. Пароли лаунчер не видит и не хранит.	AES-GCM ile şifrelenir; anahtar Android Keystore'da durur ve oradan çıkmaz. Parolalar görülmez ve saklanmaz.	Mit AES-GCM verschlüsselt; der Schlüssel liegt im Android Keystore und verlässt ihn nie. Passwörter werden weder gesehen noch gespeichert.
+entity_shadows	Entity shadows	Тени существ	Varlık gölgeleri	Objektschatten
+environment	Environment	Окружение	Ortam	Umgebung
+err_bedrock_not_installed	Minecraft Bedrock is not installed. Install it from Google Play (official) or from your own APK in Bedrock Edition → Import.	Minecraft Bedrock не установлен. Установите его из Google Play (официально) или из собственного APK: Bedrock Edition → Импорт.	Minecraft Bedrock yüklü değil. Google Play'den (resmi) veya kendi APK dosyanızdan yükleyin: Bedrock Edition → İçe aktar.	Minecraft Bedrock ist nicht installiert. Installieren Sie es über Google Play (offiziell) oder aus Ihrer eigenen APK unter Bedrock Edition → Importieren.
+err_no_internet	No internet connection or the server is unreachable.	Нет подключения к интернету или сервер недоступен.	İnternet bağlantısı yok veya sunucuya ulaşılamıyor.	Keine Internetverbindung oder Server nicht erreichbar.
+err_no_profile	Create a Java Edition profile first (Library → Profiles → New).	Сначала создайте профиль Java Edition (Библиотека → Профили → Новый).	Önce bir Java Edition profili oluşturun (Kütüphane → Profiller → Yeni).	Erstellen Sie zuerst ein Java-Edition-Profil (Bibliothek → Profile → Neu).
+err_timeout	The server did not respond in time. Check your connection and retry.	Сервер не ответил вовремя. Проверьте подключение и повторите.	Sunucu zamanında yanıt vermedi. Bağlantınızı kontrol edip tekrar deneyin.	Der Server hat nicht rechtzeitig geantwortet. Verbindung prüfen und erneut versuchen.
+err_unsafe_path	Rejected unsafe file path.	Отклонён небезопасный путь к файлу.	Güvenli olmayan dosya yolu reddedildi.	Unsicherer Dateipfad abgelehnt.
+error_1_s	Error: %1$s	Ошибка: %1$s	Hata: %1$s	Fehler: %1$s
+everything_checked_looks_healthy	Everything checked looks healthy	Всё проверенное в порядке	Denetlenen her şey sağlıklı görünüyor	Alles Geprüfte ist in Ordnung
+export_a_profile_as_modpack	Export a profile as modpack	Экспорт профиля как модпака	Profili mod paketi olarak dışa aktar	Profil als Modpack exportieren
+export_configuration	Export configuration	Экспорт конфигурации	Yapılandırmayı dışa aktar	Konfiguration exportieren
+export_eloapack	Export .eloapack	Экспорт .eloapack	.eloapack olarak dışa aktar	.eloapack exportieren
+exported_1_s	Exported %1$s	Экспортировано: %1$s	Dışa aktarıldı: %1$s	Exportiert: %1$s
+exported_1_s_files	Exported %1$s files	Экспортировано файлов: %1$s	%1$s dosya dışa aktarıldı	%1$s Dateien exportiert
+exporting_1_s	Exporting %1$s	Экспорт %1$s	%1$s dışa aktarılıyor	%1$s wird exportiert
+extra_game_arguments	Extra game arguments	Дополнительные аргументы игры	Ek oyun argümanları	Zusätzliche Spielargumente
+extra_jvm_arguments	Extra JVM arguments	Дополнительные аргументы JVM	Ek JVM argümanları	Zusätzliche JVM-Argumente
+failed	Failed	Ошибка	Başarısız	Fehlgeschlagen
+field_of_view_1_s	Field of view: %1$s	Поле зрения: %1$s	Görüş alanı: %1$s	Sichtfeld: %1$s
+file	File	Файл	Dosya	Datei
+files_come_only_from_official_sources	Files come only from official sources and are checked against their SHA-1/SHA-256 checksums. Parallel downloads are set in Settings → Performance.	Файлы загружаются только из официальных источников и сверяются с контрольными суммами SHA-1/SHA-256. Число параллельных загрузок задаётся в Настройки → Хранилище.	Dosyalar yalnızca resmi kaynaklardan gelir ve SHA-1/SHA-256 sağlama toplamlarıyla denetlenir. Paralel indirme sayısı Ayarlar → Depolama'dan ayarlanır.	Dateien kommen nur aus offiziellen Quellen und werden mit SHA-1/SHA-256-Prüfsummen abgeglichen. Parallele Downloads stellen Sie unter Einstellungen → Speicher ein.
+files_to_download	Files to download	Файлов к загрузке	İndirilecek dosyalar	Herunterzuladende Dateien
+fine_tune_game_settings	Fine-tune game settings	Тонкая настройка игры	Oyun ayarlarında ince ayar	Spieleinstellungen anpassen
+finish_signing_in_on_microsoft_s	Finish signing in on Microsoft's page. You will be returned to the launcher automatically.	Завершите вход на странице Microsoft. Затем вы автоматически вернётесь в лаунчер.	Girişi Microsoft sayfasında tamamlayın. Ardından otomatik olarak başlatıcıya döneceksiniz.	Schließen Sie die Anmeldung auf der Microsoft-Seite ab. Danach kehren Sie automatisch zum Launcher zurück.
+finished_downloads_errors_updates_and_overheatin	Finished downloads, errors, updates and overheating	Завершённые загрузки, ошибки, обновления и перегрев	Biten indirmeler, hatalar, güncellemeler ve aşırı ısınma	Fertige Downloads, Fehler, Updates und Überhitzung
+finished_downloads_install_errors_low_storage	Finished downloads, install errors, low storage, incompatible mods, updates, damaged files and overheating warnings appear here.	Здесь появятся завершённые загрузки, ошибки установки, нехватка места, несовместимые моды, обновления, повреждённые файлы и предупреждения о перегреве.	Biten indirmeler, kurulum hataları, düşük depolama, uyumsuz modlar, güncellemeler, hasarlı dosyalar ve aşırı ısınma uyarıları burada görünür.	Hier erscheinen fertige Downloads, Installationsfehler, wenig Speicher, inkompatible Mods, Updates, beschädigte Dateien und Überhitzungswarnungen.
+folder_created	Folder created	Папка создана	Klasör oluşturuldu	Ordner erstellt
+folder_linked	Folder linked	Папка подключена	Klasör bağlandı	Ordner verknüpft
+folder_unlinked	Folder unlinked	Папка отключена	Klasör bağlantısı kaldırıldı	Ordnerverknüpfung entfernt
+format	Format	Формат	Biçim	Format
+fps_limit	FPS limit: 	Лимит FPS: 	FPS sınırı: 	FPS-Limit: 
+free_on_device	Free on device	Свободно на устройстве	Cihazda boş	Frei auf dem Gerät
+free_ram	Free RAM	Свободная ОЗУ	Boş RAM	Freier RAM
+free_storage	Free storage	Свободное место	Boş depolama	Freier Speicher
+free_storage_1_s_of_2	Free storage: %1$s of %2$s	Свободно: %1$s из %2$s	Boş: %1$s / %2$s	Frei: %1$s von %2$s
+fullscreen	Fullscreen	Полноэкранный режим	Tam ekran	Vollbild
+game	Game	Игра	Oyun	Spiel
+game_files	Game files	Файлы игры	Oyun dosyaları	Spieldateien
+game_files_and_loaders_are_downloaded	Game files and loaders are downloaded only from official sources, over HTTPS:	Файлы игры и загрузчиков скачиваются только из официальных источников по HTTPS:	Oyun dosyaları ve yükleyiciler yalnızca resmi kaynaklardan HTTPS ile indirilir:	Spieldateien und Loader werden nur aus offiziellen Quellen über HTTPS geladen:
+game_files_storage_directories_apks_java	Game files, storage, directories, APKs, Java, libraries, mods, configuration, network, memory and launch settings.	Файлы игры, хранилище, папки, APK, Java, библиотеки, моды, конфигурация, сеть, память и параметры запуска.	Oyun dosyaları, depolama, klasörler, APK'lar, Java, kütüphaneler, modlar, yapılandırma, ağ, bellek ve başlatma ayarları.	Spieldateien, Speicher, Ordner, APKs, Java, Bibliotheken, Mods, Konfiguration, Netzwerk, Arbeitsspeicher und Starteinstellungen.
+game_settings_belong_to_a_java	Game settings belong to a Java Edition profile. Create one first.	Настройки игры относятся к профилю Java Edition. Сначала создайте профиль.	Oyun ayarları bir Java Edition profiline aittir. Önce bir tane oluşturun.	Spieleinstellungen gehören zu einem Java-Edition-Profil. Erstellen Sie zuerst eines.
+gamepads_keyboards	Gamepads and keyboards	Геймпады и клавиатуры	Oyun kumandaları ve klavyeler	Gamepads und Tastaturen
+games_and_content	Games and content	Игры и контент	Oyunlar ve içerik	Spiele und Inhalte
+garbage_collector	Garbage collector	Сборщик мусора	Çöp toplayıcı	Garbage Collector
+gc_default	Default	По умолчанию	Varsayılan	Standard
+gfx_fabulous	Fabulous	Великолепная	Muhteşem	Fabelhaft
+gfx_fancy	Fancy	Детальная	Şık	Schön
+gfx_fast	Fast	Быстрая	Hızlı	Schnell
+graphics	Graphics	Графика	Grafik	Grafik
+graphics_quality	Graphics quality	Качество графики	Grafik kalitesi	Grafikqualität
+height	Height	Высота	Yükseklik	Höhe
+hide_launch_command	Hide launch command	Скрыть команду запуска	Başlatma komutunu gizle	Startbefehl ausblenden
+home_cards	Edition cards	Карточки изданий	Sürüm kartları	Editionskarten
+home_dashboard	Dashboard	Дашборд	Gösterge paneli	Dashboard
+home_minimal	Minimal	Минимальный	Minimal	Minimal
+home_screen	Home screen	Главный экран	Ana ekran	Startbildschirm
+hot	Hot	Горячо	Sıcak	Heiß
+hud_scale	HUD scale: 	Масштаб HUD: 	HUD ölçeği: 	HUD-Skalierung: 
+icon	Icon	Иконка	Simge	Symbol
+label_import	Import	Импорт	İçe aktar	Importieren
+import_a_java_runtime_built_for	Import a Java runtime built for Android or Linux on this architecture, packed as .zip. On import the launcher checks the release file and the ELF architecture of libjvm.so and records a SHA-256 of every file.	Импортируйте среду Java, собранную для Android или Linux под эту архитектуру, в архиве .zip. При импорте лаунчер проверяет файл release и ELF-архитектуру libjvm.so и записывает SHA-256 каждого файла.	Bu mimari için Android veya Linux'a derlenmiş, .zip olarak paketlenmiş bir Java ortamı içe aktarın. İçe aktarırken başlatıcı release dosyasını ve libjvm.so'nun ELF mimarisini denetler ve her dosyanın SHA-256 değerini kaydeder.	Importieren Sie eine für Android oder Linux auf dieser Architektur gebaute Java-Laufzeit als .zip. Beim Import prüft der Launcher die release-Datei und die ELF-Architektur von libjvm.so und speichert für jede Datei eine SHA-256.
+import_a_modpack	Import a modpack	Импорт модпака	Mod paketi içe aktar	Modpack importieren
+import_apk	Import APK	Импорт APK	APK içe aktar	APK importieren
+import_configuration	Import configuration	Импорт конфигурации	Yapılandırmayı içe aktar	Konfiguration importieren
+import_files_with_the_upload_button	Import files with the upload button or create a folder	Импортируйте файлы кнопкой загрузки или создайте папку	Dosyaları yükleme düğmesiyle içe aktarın veya bir klasör oluşturun	Importieren Sie Dateien mit der Upload-Taste oder legen Sie einen Ordner an
+import_finished	Import finished	Импорт завершён	İçe aktarma tamamlandı	Import abgeschlossen
+import_here	Import here	Импортировать сюда	Buraya içe aktar	Hierher importieren
+import_history	Import history	История импорта	İçe aktarma geçmişi	Importverlauf
+import_jar_files_for_1_s	Import .jar files for %1$s. Each mod is checked against the profile.	Импортируйте файлы .jar для %1$s. Каждый мод проверяется на совместимость с профилем.	%1$s için .jar dosyaları içe aktarın. Her mod profile göre denetlenir.	Importieren Sie .jar-Dateien für %1$s. Jeder Mod wird mit dem Profil abgeglichen.
+import_mcpack_mcaddon_mcworld_mctemplate_mcstruc	Import .mcpack, .mcaddon, .mcworld, .mctemplate, .mcstructure or .zip. Manifests, UUIDs, dependencies and versions are checked first.	Импортируйте .mcpack, .mcaddon, .mcworld, .mctemplate, .mcstructure или .zip. Сначала проверяются манифесты, UUID, зависимости и версии.	.mcpack, .mcaddon, .mcworld, .mctemplate, .mcstructure veya .zip içe aktarın. Önce manifestler, UUID'ler, bağımlılıklar ve sürümler denetlenir.	Importieren Sie .mcpack, .mcaddon, .mcworld, .mctemplate, .mcstructure oder .zip. Zuerst werden Manifeste, UUIDs, Abhängigkeiten und Versionen geprüft.
+import_mcworld	Import .mcworld	Импорт .mcworld	.mcworld içe aktar	.mcworld importieren
+import_minecraft_bedrock_apk_files_you	Import Minecraft Bedrock APK files you own (.apk, split .apks/.xapk). Files are verified before they are added.	Импортируйте свои APK Minecraft Bedrock (.apk, разделённые .apks/.xapk). Файлы проверяются перед добавлением.	Sahip olduğunuz Minecraft Bedrock APK dosyalarını içe aktarın (.apk, bölünmüş .apks/.xapk). Dosyalar eklenmeden önce doğrulanır.	Importieren Sie Ihre Minecraft-Bedrock-APK-Dateien (.apk, geteilte .apks/.xapk). Die Dateien werden vor dem Hinzufügen geprüft.
+import_mod	Import mod	Импорт мода	Mod içe aktar	Mod importieren
+import_or_create_a_world_first	Import or create a world first	Сначала импортируйте или создайте мир	Önce bir dünya içe aktarın veya oluşturun	Importieren oder erstellen Sie zuerst eine Welt
+import_results	Import results	Результаты импорта	İçe aktarma sonuçları	Importergebnisse
+import_runtime	Import runtime	Импорт среды	Ortam içe aktar	Laufzeit importieren
+imported	Imported	Импортирован	İçe aktarıldı	Importiert
+imported_1_s	Imported %1$s	Импортировано: %1$s	İçe aktarıldı: %1$s	Importiert: %1$s
+imported_and_rejected_files_will_appear	Imported and rejected files will appear here	Здесь появятся импортированные и отклонённые файлы	İçe aktarılan ve reddedilen dosyalar burada görünür	Importierte und abgelehnte Dateien erscheinen hier
+importing_1_s_file_s	Importing %1$s file(s)	Импорт файлов: %1$s	%1$s dosya içe aktarılıyor	%1$s Datei(en) werden importiert
+include_pre_releases	Include pre-releases	Включая пре-релизы	Ön sürümleri dahil et	Vorabversionen einbeziehen
+include_worlds_saves	Include worlds (saves)	Включить миры (saves)	Dünyaları dahil et (saves)	Welten einbeziehen (saves)
+includes_mods_config_resource_packs_shader	Includes mods, config, resource packs, shader packs and options.txt. Account data is never exported.	Включает моды, конфиги, ресурспаки, шейдеры и options.txt. Данные аккаунта никогда не экспортируются.	Modları, yapılandırmayı, kaynak paketlerini, gölgelendiricileri ve options.txt'yi içerir. Hesap verileri asla dışa aktarılmaz.	Enthält Mods, Konfiguration, Ressourcenpakete, Shaderpakete und options.txt. Kontodaten werden nie exportiert.
+incompatible	Incompatible	Несовместим	Uyumsuz	Inkompatibel
+initial_memory_1_s_mb	Initial memory: %1$s MB	Начальная память: %1$s МБ	Başlangıç belleği: %1$s MB	Anfangsspeicher: %1$s MB
+input_tester	Input tester	Проверка ввода	Giriş testi	Eingabetest
+install	Install	Установить	Yükle	Installieren
+install_1_s	Install %1$s?	Установить %1$s?	%1$s yüklensin mi?	%1$s installieren?
+install_failed	Install failed	Ошибка установки	Kurulum başarısız	Installation fehlgeschlagen
+install_the_profile_first	Install the profile first	Сначала установите профиль	Önce profili yükleyin	Installieren Sie zuerst das Profil
+installation_of_1_s_started_progress	Installation of %1$s started; progress is also shown in the notification	Установка %1$s начата; ход также показан в уведомлении	%1$s kurulumu başladı; ilerleme bildirimde de gösterilir	Installation von %1$s gestartet; der Fortschritt steht auch in der Benachrichtigung
+installation_queue	Installation queue	Очередь установки	Kurulum sırası	Installationswarteschlange
+installation_started	Installation started	Установка начата	Kurulum başladı	Installation gestartet
+installed	Installed	Установлено	Yüklü	Installiert
+installed_1_s	Installed (%1$s)	Установленные (%1$s)	Yüklü (%1$s)	Installiert (%1$s)
+installed_version	Installed version	Установленная версия	Yüklü sürüm	Installierte Version
+installing	Installing	Установка	Yükleniyor	Wird installiert
+installing_1_s	Installing: %1$s	Установка: %1$s	Yükleniyor: %1$s	Installation: %1$s
+installing_a_profile_version_or_modpack	Installing a profile, version or modpack starts a download here	Установка профиля, версии или модпака запускает загрузку здесь	Bir profil, sürüm veya mod paketi yüklemek burada bir indirme başlatır	Die Installation eines Profils, einer Version oder eines Modpacks startet hier einen Download
+installing_into_minecraft	Installing into Minecraft	Установка в Minecraft	Minecraft'a yükleniyor	Installation in Minecraft
+intact	Intact	Цел	Sağlam	Intakt
+integrity	Integrity	Целостность	Bütünlük	Integrität
+interface_density	Interface density	Плотность интерфейса	Arayüz yoğunluğu	Oberflächendichte
+interrupted	Interrupted	Прервано	Kesildi	Unterbrochen
+invalid_name	Invalid name	Недопустимое имя	Geçersiz ad	Ungültiger Name
+invert_y_axis	Invert Y axis	Инвертировать ось Y	Y eksenini ters çevir	Y-Achse umkehren
+java	Java	Java	Java	Java
+java_17	Java 17	Java 17	Java 17	Java 17
+java_1_s	Java %1$s	Java %1$s	Java %1$s	Java %1$s
+java_1_s_2_s	Java %1$s (%2$s)	Java %1$s (%2$s)	Java %1$s (%2$s)	Java %1$s (%2$s)
+java_21	Java 21	Java 21	Java 21	Java 21
+java_8	Java 8	Java 8	Java 8	Java 8
+java_and_memory	Java and memory	Java и память	Java ve bellek	Java und Speicher
+java_edition_can_only_be_launched	Java Edition can only be launched with an account that owns the game	Java Edition запускается только с аккаунтом, которому принадлежит игра	Java Edition yalnızca oyuna sahip bir hesapla başlatılabilir	Java Edition startet nur mit einem Konto, das das Spiel besitzt
+java_edition_needs_at_least_one	Java Edition needs at least one Java runtime for Android	Для Java Edition нужна хотя бы одна среда Java для Android	Java Edition için en az bir Android Java ortamı gerekir	Java Edition braucht mindestens eine Java-Laufzeit für Android
+java_heap_for_1_s_2	Java heap for %1$s: %2$s MB (safe limit %3$s MB, suggested %4$s MB)	Куча Java для %1$s: %2$s МБ (безопасный предел %3$s МБ, рекомендуется %4$s МБ)	%1$s için Java yığını: %2$s MB (güvenli sınır %3$s MB, önerilen %4$s MB)	Java-Heap für %1$s: %2$s MB (sicheres Limit %3$s MB, empfohlen %4$s MB)
+java_runtime	Java runtime	Среда Java	Java ortamı	Java-Laufzeit
+jvm_argument_not_allowed_1_s	JVM argument not allowed: %1$s	Аргумент JVM запрещён: %1$s	İzin verilmeyen JVM argümanı: %1$s	JVM-Argument nicht erlaubt: %1$s
+keep_at_most_1_s_entries	Keep at most %1$s entries	Хранить не более %1$s записей	En fazla %1$s girdi sakla	Höchstens %1$s Einträge behalten
+key_bindings_are_set_inside_minecraft	Key bindings are set inside Minecraft and stored in the same options.txt; a physical keyboard uses the Android layout selected in system settings.	Назначения клавиш задаются в самом Minecraft и хранятся в том же options.txt; физическая клавиатура использует раскладку Android из системных настроек.	Tuş atamaları Minecraft içinde yapılır ve aynı options.txt dosyasında saklanır; fiziksel klavye, sistem ayarlarında seçilen Android düzenini kullanır.	Tastenbelegungen werden in Minecraft festgelegt und in derselben options.txt gespeichert; eine Hardwaretastatur nutzt das in den Systemeinstellungen gewählte Android-Layout.
+label	Label	Подпись	Etiket	Beschriftung
+label_automatic	Automatic	Автоматически	Otomatik	Automatisch
+language	Language	Язык	Dil	Sprache
+language_system	System language	Язык системы	Sistem dili	Systemsprache
+last_check	Last check	Последняя проверка	Son denetim	Letzte Prüfung
+last_error_1_s	Last error: %1$s	Последняя ошибка: %1$s	Son hata: %1$s	Letzter Fehler: %1$s
+last_launched	Last launched	Последний запуск	Son başlatma	Zuletzt gestartet
+last_played	Last played	Последняя игра	Son oynama	Zuletzt gespielt
+last_run_1_s	Last run: %1$s	Последний запуск: %1$s	Son çalıştırma: %1$s	Letzter Lauf: %1$s
+last_verified	Last verified	Последняя проверка	Son doğrulama	Zuletzt geprüft
+latest_release_1_s_snapshot_2	Latest release %1$s · snapshot %2$s · %3$s shown	Последний релиз %1$s · снапшот %2$s · показано %3$s	Son sürüm %1$s · snapshot %2$s · %3$s gösteriliyor	Neueste Version %1$s · Snapshot %2$s · %3$s angezeigt
+launch	Launch	Запустить	Başlat	Starten
+launch_failed	Launch failed	Запуск не удался	Başlatma başarısız	Start fehlgeschlagen
+launch_mode	Launch mode	Режим запуска	Başlatma modu	Startmodus
+launch_version	Launch version	Версия запуска	Başlatma sürümü	Startversion
+launcher_data	Launcher data	Данные лаунчера	Başlatıcı verileri	Launcher-Daten
+launcher_itself	Launcher itself	Сам лаунчер	Başlatıcının kendisi	Launcher selbst
+launcher_updates_only_when_you_check	Launcher updates (only when you check or enable automatic checks): 	Обновления лаунчера (только когда вы проверяете их или включили автопроверку): 	Başlatıcı güncellemeleri (yalnızca siz denetlediğinizde veya otomatik denetimi açtığınızda): 	Launcher-Updates (nur wenn Sie prüfen oder automatische Prüfungen aktivieren): 
+layout_name	Layout name	Название раскладки	Düzen adı	Layout-Name
+layout_new_name	My layout	Моя раскладка	Düzenim	Mein Layout
+layout_not_found	Layout not found	Раскладка не найдена	Düzen bulunamadı	Layout nicht gefunden
+less_than_512_mb_is_not	Less than 512 MB is not enough to start Minecraft	Меньше 512 МБ недостаточно для запуска Minecraft	Minecraft'ı başlatmak için 512 MB'den azı yetmez	Weniger als 512 MB reichen nicht, um Minecraft zu starten
+library_1_s	Library (%1$s)	Библиотека (%1$s)	Kütüphane (%1$s)	Bibliothek (%1$s)
+library_1_s_apk_version_s	Library: %1$s APK version(s)	В библиотеке версий APK: %1$s	Kütüphane: %1$s APK sürümü	Bibliothek: %1$s APK-Version(en)
+library_metadata_exported	Library metadata exported	Метаданные библиотеки экспортированы	Kütüphane meta verileri dışa aktarıldı	Bibliotheksmetadaten exportiert
+license	License	Лицензия	Lisans	Lizenz
+link_com_mojang_folder	Link com.mojang folder	Подключить папку com.mojang	com.mojang klasörünü bağla	Ordner com.mojang verknüpfen
+loader	Loader	Загрузчик	Yükleyici	Loader
+loader_setup_pending	Loader setup pending	Загрузчик не донастроен	Yükleyici kurulumu bekliyor	Loader-Einrichtung ausstehend
+local_database_tokens_and_other_secrets	Local database; tokens and other secrets are masked before writing	Локальная база данных; токены и другие секреты маскируются перед записью	Yerel veritabanı; belirteçler ve diğer gizli bilgiler yazılmadan önce maskelenir	Lokale Datenbank; Tokens und andere Geheimnisse werden vor dem Schreiben maskiert
+log_cleared	Log cleared	Журнал очищен	Kayıt temizlendi	Protokoll geleert
+log_exported	Log exported	Журнал экспортирован	Kayıt dışa aktarıldı	Protokoll exportiert
+logging	Logging	Журналирование	Kayıt tutma	Protokollierung
+logs	Logs	Журналы	Kayıtlar	Protokolle
+look_sensitivity_1_s	Look sensitivity: %1$s%%	Чувствительность обзора: %1$s%%	Bakış hassasiyeti: %%%1$s	Blickempfindlichkeit: %1$s %%
+low	 (low)	 (мало)	 (düşük)	 (niedrig)
+low_ram_device	 (low-RAM device)	 (устройство с малым объёмом ОЗУ)	 (düşük RAM'li cihaz)	 (Gerät mit wenig RAM)
+made_for_another_version	Made for another version	Для другой версии	Başka bir sürüm için	Für eine andere Version
+made_for_this_version	Made for this version	Для этой версии	Bu sürüm için	Für diese Version
+manage_runtimes	Manage runtimes	Управление средами	Ortamları yönet	Laufzeiten verwalten
+mapping_for_1_s	Mapping for %1$s	Раскладка для %1$s	%1$s için eşleme	Belegung für %1$s
+mark_all_as_read	Mark all as read	Отметить всё прочитанным	Tümünü okundu işaretle	Alle als gelesen markieren
+master_volume_1_s	Master volume: %1$s%%	Общая громкость: %1$s%%	Ana ses: %%%1$s	Gesamtlautstärke: %1$s %%
+maximum_1_s_mb	Maximum: %1$s MB	Максимум: %1$s МБ	En fazla: %1$s MB	Maximum: %1$s MB
+maximum_memory_1_s_mb	Maximum memory: %1$s MB	Максимальная память: %1$s МБ	En fazla bellek: %1$s MB	Maximaler Speicher: %1$s MB
+memory	Memory	Память	Bellek	Speicher
+memory_used_by_the_running_game	Memory used by the running game is shown only while a runtime backend runs it; this build has none.	Память запущенной игры показывается, только когда её исполняет бэкенд; в этой сборке его нет.	Çalışan oyunun kullandığı bellek yalnızca bir çalıştırma arka ucu oyunu çalıştırırken gösterilir; bu sürümde yok.	Der Speicher des laufenden Spiels wird nur angezeigt, während ein Laufzeit-Backend es ausführt; dieser Build hat keines.
+microsoft_accounts	Microsoft accounts	Аккаунты Microsoft	Microsoft hesapları	Microsoft-Konten
+microsoft_tokens	Microsoft tokens	Токены Microsoft	Microsoft belirteçleri	Microsoft-Tokens
+min_android_api	Min Android API	Мин. API Android	En düşük Android API	Min. Android-API
+min_game_version	Min. game version	Мин. версия игры	En düşük oyun sürümü	Min. Spielversion
+minecraft	Minecraft	Minecraft	Minecraft	Minecraft
+minecraft_1_16_5_and_older	Minecraft 1.16.5 and older	Minecraft 1.16.5 и старше	Minecraft 1.16.5 ve öncesi	Minecraft 1.16.5 und älter
+minecraft_1_17_to_1_20	Minecraft 1.17 to 1.20.4	Minecraft с 1.17 по 1.20.4	Minecraft 1.17 ile 1.20.4 arası	Minecraft 1.17 bis 1.20.4
+minecraft_1_20_5_and_newer	Minecraft 1.20.5 and newer	Minecraft 1.20.5 и новее	Minecraft 1.20.5 ve sonrası	Minecraft 1.20.5 und neuer
+minecraft_1_s	Minecraft %1$s	Minecraft %1$s	Minecraft %1$s	Minecraft %1$s
+minecraft_1_s_2_s	Minecraft %1$s · %2$s	Minecraft %1$s · %2$s	Minecraft %1$s · %2$s	Minecraft %1$s · %2$s
+minecraft_bedrock_is_not_installed_on	Minecraft Bedrock is not installed on this device	Minecraft Bedrock не установлен на этом устройстве	Minecraft Bedrock bu cihazda yüklü değil	Minecraft Bedrock ist auf diesem Gerät nicht installiert
+minecraft_sign_in_requires_an_azure	Minecraft sign-in requires an Azure (Microsoft Entra) app ID approved by Mojang for the Minecraft API. No third-party ID is built in.	Для входа в Minecraft нужен ID приложения Azure (Microsoft Entra), одобренный Mojang для Minecraft API. Сторонний ID не встроен.	Minecraft girişi, Mojang'ın Minecraft API'si için onayladığı bir Azure (Microsoft Entra) uygulama kimliği gerektirir. Üçüncü taraf kimlik yerleşik değildir.	Die Minecraft-Anmeldung braucht eine von Mojang für die Minecraft-API freigegebene Azure-App-ID (Microsoft Entra). Es ist keine fremde ID eingebaut.
+minimum_1_s_mb	Minimum: %1$s MB	Минимум: %1$s МБ	En az: %1$s MB	Minimum: %1$s MB
+minimum_level	Minimum level	Минимальный уровень	En düşük düzey	Mindeststufe
+minimum_memory_exceeds_maximum	Minimum memory exceeds maximum	Минимальная память больше максимальной	En az bellek en fazla bellekten büyük	Minimaler Speicher übersteigt den maximalen
+mipmap_levels_1_s	Mipmap levels: %1$s	Уровни MIP-текстур: %1$s	Mipmap düzeyleri: %1$s	Mipmap-Stufen: %1$s
+mod_imported	Mod imported	Мод импортирован	Mod içe aktarıldı	Mod importiert
+mod_loader	Mod loader	Модлоадер	Mod yükleyici	Mod-Loader
+mod_loader_profile	Mod loader profile	Профиль модлоадера	Mod yükleyici profili	Mod-Loader-Profil
+mode_local	Local singleplayer	Локальная одиночная игра	Yerel tek oyunculu	Lokaler Einzelspieler
+mode_local_desc	Offline mode that opens one of your local worlds directly (Minecraft 1.20+).	Офлайн-режим с прямым входом в один из ваших локальных миров (Minecraft 1.20+).	Yerel dünyalarınızdan birini doğrudan açan çevrimdışı mod (Minecraft 1.20+).	Offline-Modus, der eine Ihrer lokalen Welten direkt öffnet (Minecraft 1.20+).
+mode_official	Official account	Официальный аккаунт	Resmi hesap	Offizielles Konto
+mode_official_desc	Your Microsoft account. The session is refreshed when the internet is available; a still-valid saved session is used offline.	Ваш аккаунт Microsoft. Сессия обновляется при наличии интернета; без сети используется ещё действительная сохранённая сессия.	Microsoft hesabınız. İnternet varken oturum yenilenir; çevrimdışıyken hâlâ geçerli kayıtlı oturum kullanılır.	Ihr Microsoft-Konto. Die Sitzung wird bei Internetverbindung erneuert; offline wird eine noch gültige gespeicherte Sitzung genutzt.
+mode_offline	Offline	Офлайн	Çevrimdışı	Offline
+mode_offline_desc	No network requests. Uses the account already verified as a game owner on this device. Singleplayer and LAN work; online servers will reject the session.	Без сетевых запросов. Используется аккаунт, ранее подтверждённый как владелец игры на этом устройстве. Работают одиночная игра и LAN; онлайн-серверы сессию не примут.	Ağ isteği yok. Bu cihazda oyun sahibi olarak doğrulanmış hesap kullanılır. Tek oyunculu ve LAN çalışır; çevrimiçi sunucular oturumu reddeder.	Keine Netzwerkanfragen. Verwendet das bereits als Spielbesitzer verifizierte Konto. Einzelspieler und LAN funktionieren; Online-Server lehnen die Sitzung ab.
+mode_online	Online	Онлайн	Çevrimiçi	Online
+mode_online_desc	Validates the session right before launch. Needed for multiplayer servers and Realms. Requires internet.	Проверяет сессию прямо перед запуском. Нужно для серверов и Realms. Требует интернет.	Başlatmadan hemen önce oturumu doğrular. Çok oyunculu sunucular ve Realms için gereklidir. İnternet gerekir.	Prüft die Sitzung direkt vor dem Start. Für Multiplayer-Server und Realms nötig. Erfordert Internet.
+model	Model	Модель	Model	Modell
+modes_set_view_distance_fps_cap	Modes set view distance, FPS cap, graphics, render scale and memory for the selected profile. No system setting is changed and no FPS gain is promised.	Режимы задают дальность прорисовки, лимит FPS, графику, масштаб рендера и память для выбранного профиля. Системные настройки не меняются, прирост FPS не обещается.	Modlar seçili profil için görüş mesafesini, FPS sınırını, grafikleri, işleme ölçeğini ve belleği ayarlar. Hiçbir sistem ayarı değişmez ve FPS artışı vaat edilmez.	Modi setzen Sichtweite, FPS-Limit, Grafik, Renderskalierung und Speicher für das gewählte Profil. Keine Systemeinstellung wird geändert, kein FPS-Gewinn wird versprochen.
+modified	Modified	Изменён	Değiştirilme	Geändert
+modpacks_mrpack_only_the_download_hosts	Modpacks (.mrpack): only the download hosts allowed by the Modrinth format.	Модпаки (.mrpack): только хосты загрузки, разрешённые форматом Modrinth.	Mod paketleri (.mrpack): yalnızca Modrinth biçiminin izin verdiği indirme sunucuları.	Modpacks (.mrpack): nur die vom Modrinth-Format erlaubten Download-Hosts.
+modrinth	Modrinth	Modrinth	Modrinth	Modrinth
+mods_1_s	Mods: %1$s	Моды: %1$s	Modlar: %1$s	Mods: %1$s
+mods_restored_previous_state_was_backed	Mods restored (previous state was backed up)	Моды восстановлены (предыдущее состояние сохранено)	Modlar geri yüklendi (önceki durum yedeklendi)	Mods wiederhergestellt (vorheriger Stand gesichert)
+mouse_touch_sensitivity_1_s	Mouse and touch sensitivity: %1$s%%	Чувствительность мыши и касаний: %1$s%%	Fare ve dokunma hassasiyeti: %%%1$s	Maus- und Touch-Empfindlichkeit: %1$s %%
+move	Move	Переместить	Taşı	Verschieben
+moved_1_s	Moved %1$s	Перемещено: %1$s	Taşındı: %1$s	Verschoben: %1$s
+movement_joystick	Movement joystick	Джойстик движения	Hareket joystick'i	Bewegungsjoystick
+msg_account_selected	Account selected	Аккаунт выбран	Hesap seçildi	Konto ausgewählt
+msg_allow_installs	Allow this launcher to install apps first	Сначала разрешите лаунчеру устанавливать приложения	Önce bu başlatıcının uygulama yüklemesine izin verin	Erlauben Sie diesem Launcher zuerst, Apps zu installieren
+msg_backup_all_done	All worlds backed up	Резервные копии всех миров созданы	Tüm dünyaların yedeği alındı	Alle Welten gesichert
+msg_backup_created	Backup created	Резервная копия создана	Yedek oluşturuldu	Sicherung erstellt
+msg_backup_deleted	Backup deleted	Резервная копия удалена	Yedek silindi	Sicherung gelöscht
+msg_backup_identical	An identical backup already exists	Такая же резервная копия уже есть	Aynı yedek zaten var	Eine identische Sicherung existiert bereits
+msg_bedrock_started	Minecraft Bedrock started	Minecraft Bedrock запущен	Minecraft Bedrock başlatıldı	Minecraft Bedrock gestartet
+msg_cancelled	Cancelled	Отменено	İptal edildi	Abgebrochen
+msg_client_id_saved	Client ID saved	ID приложения сохранён	İstemci kimliği kaydedildi	Client-ID gespeichert
+msg_download_cancelled	Download cancelled, %1$s of partial files removed	Загрузка отменена, удалено %1$s незавершённых файлов	İndirme iptal edildi, %1$s yarım dosya silindi	Download abgebrochen, %1$s Teildateien entfernt
+msg_download_resumed	Download resumed; finished files are not downloaded again	Загрузка возобновлена; готовые файлы не скачиваются повторно	İndirme sürdürüldü; tamamlanan dosyalar yeniden indirilmez	Download fortgesetzt; fertige Dateien werden nicht erneut geladen
+msg_exported	Exported	Экспортировано	Dışa aktarıldı	Exportiert
+msg_freed	Freed %1$s	Освобождено %1$s	%1$s boşaltıldı	%1$s freigegeben
+msg_game_settings_saved	Saved to options.txt and the profile	Сохранено в options.txt и профиль	options.txt ve profile kaydedildi	In options.txt und im Profil gespeichert
+msg_gamepad_reset	Gamepad mapping reset	Раскладка геймпада сброшена	Oyun kumandası eşlemesi sıfırlandı	Gamepad-Belegung zurückgesetzt
+msg_gamepad_saved	Gamepad mapping saved	Раскладка геймпада сохранена	Oyun kumandası eşlemesi kaydedildi	Gamepad-Belegung gespeichert
+msg_layout_active	Layout is now active	Раскладка активна	Düzen artık etkin	Layout ist jetzt aktiv
+msg_layout_deleted	Layout deleted	Раскладка удалена	Düzen silindi	Layout gelöscht
+msg_layout_imported	Layout imported	Раскладка импортирована	Düzen içe aktarıldı	Layout importiert
+msg_layout_saved	Layout saved	Раскладка сохранена	Düzen kaydedildi	Layout gespeichert
+msg_minecraft_missing	Minecraft Bedrock is not installed	Minecraft Bedrock не установлен	Minecraft Bedrock yüklü değil	Minecraft Bedrock ist nicht installiert
+msg_mode_applied	Mode applied to launcher settings	Режим применён к настройкам лаунчера	Mod başlatıcı ayarlarına uygulandı	Modus auf die Launcher-Einstellungen angewendet
+msg_mode_applied_profile	Mode applied to %1$s	Режим применён к профилю %1$s	Mod %1$s profiline uygulandı	Modus auf %1$s angewendet
+msg_restored_to	World restored to folder %1$s	Мир восстановлен в папку %1$s	Dünya %1$s klasörüne geri yüklendi	Welt im Ordner %1$s wiederhergestellt
+msg_runtime_deleted	Runtime deleted	Среда удалена	Çalışma ortamı silindi	Laufzeit gelöscht
+msg_runtime_imported	Java %1$s imported	Java %1$s импортирована	Java %1$s içe aktarıldı	Java %1$s importiert
+msg_session_refreshed	Session refreshed	Сессия обновлена	Oturum yenilendi	Sitzung erneuert
+msg_signed_in_as	Signed in as %1$s	Вход выполнен: %1$s	%1$s olarak giriş yapıldı	Angemeldet als %1$s
+msg_signed_out	Signed out, tokens deleted	Выход выполнен, токены удалены	Çıkış yapıldı, belirteçler silindi	Abgemeldet, Tokens gelöscht
+msg_signin_no_pending	No sign-in is in progress. Start it again in Accounts.	Нет активного входа. Начните заново в разделе «Аккаунты».	Devam eden oturum açma yok. Hesaplar'dan yeniden başlatın.	Keine Anmeldung aktiv. Starten Sie sie unter „Konten“ neu.
+msg_verify_failed	Integrity check failed	Проверка целостности не пройдена	Bütünlük denetimi başarısız	Integritätsprüfung fehlgeschlagen
+msg_verify_ok	Integrity check passed	Проверка целостности пройдена	Bütünlük denetimi başarılı	Integritätsprüfung bestanden
+msg_world_imported	World imported	Мир импортирован	Dünya içe aktarıldı	Welt importiert
+music_1_s	Music: %1$s%%	Музыка: %1$s%%	Müzik: %%%1$s	Musik: %1$s %%
+nav_accounts	Accounts	Аккаунты	Hesaplar	Konten
+nav_addons	Bedrock add-ons	Дополнения Bedrock	Bedrock eklentileri	Bedrock-Add-ons
+nav_bedrock	Bedrock Edition	Bedrock Edition	Bedrock Edition	Bedrock Edition
+nav_controls	Controls	Управление	Kontroller	Steuerung
+nav_diagnostics	Diagnostics	Диагностика	Tanılama	Diagnose
+nav_downloads	Downloads	Загрузки	İndirmeler	Downloads
+nav_files	File manager	Файловый менеджер	Dosya yöneticisi	Dateimanager
+nav_game_settings	Game settings	Настройки игры	Oyun ayarları	Spieleinstellungen
+nav_group_library	Library	Библиотека	Kütüphane	Bibliothek
+nav_group_main	Main	Основное	Ana	Haupt
+nav_group_tools	Tools	Инструменты	Araçlar	Werkzeuge
+nav_home	Home	Главная	Ana sayfa	Start
+nav_java	Java Edition	Java Edition	Java Edition	Java Edition
+nav_library	Library	Библиотека	Kütüphane	Bibliothek
+nav_logs	Crashes & logs	Краши и журнал	Çökmeler ve kayıtlar	Abstürze & Protokolle
+nav_modpacks	Modpacks	Модпаки	Mod paketleri	Modpacks
+nav_mods	Mods	Моды	Modlar	Mods
+nav_notifications	Notifications	Уведомления	Bildirimler	Benachrichtigungen
+nav_performance	Performance	Производительность	Performans	Leistung
+nav_privacy	Privacy	Конфиденциальность	Gizlilik	Datenschutz
+nav_profiles	Profiles	Профили	Profiller	Profile
+nav_runtimes	Java runtimes	Среды Java	Java çalışma ortamları	Java-Laufzeiten
+nav_settings	Settings	Настройки	Ayarlar	Einstellungen
+nav_shaders	Shader packs	Шейдеры	Gölgelendirici paketleri	Shaderpakete
+nav_textures	Resource packs	Ресурспаки	Kaynak paketleri	Ressourcenpakete
+nav_updates	Updates	Обновления	Güncellemeler	Updates
+nav_versions	Versions	Версии	Sürümler	Versionen
+nav_worlds	Worlds	Миры	Dünyalar	Welten
+needs_runtime	Needs runtime	Нужна среда	Ortam gerekli	Laufzeit nötig
+network	Network	Сеть	Ağ	Netzwerk
+network_connections	Network connections	Сетевые подключения	Ağ bağlantıları	Netzwerkverbindungen
+network_offline_re_check	Network: offline, check again	Сеть: нет подключения, проверить снова	Ağ: çevrimdışı, yeniden denetle	Netzwerk: offline, erneut prüfen
+network_online_re_check	Network: online, check again	Сеть: подключено, проверить снова	Ağ: çevrimiçi, yeniden denetle	Netzwerk: online, erneut prüfen
+new_folder	New folder	Новая папка	Yeni klasör	Neuer Ordner
+new_layout	New layout	Новая раскладка	Yeni düzen	Neues Layout
+new_name	New name	Новое имя	Yeni ad	Neuer Name
+new_profile	New profile	Новый профиль	Yeni profil	Neues Profil
+no_accounts	No accounts	Нет аккаунтов	Hesap yok	Keine Konten
+no_add_ons_yet	No add-ons yet	Дополнений пока нет	Henüz eklenti yok	Noch keine Add-ons
+no_bedrock_versions_yet	No Bedrock versions yet	Версий Bedrock пока нет	Henüz Bedrock sürümü yok	Noch keine Bedrock-Versionen
+no_checksum	No checksum	Нет контрольной суммы	Sağlama toplamı yok	Keine Prüfsumme
+no_downloads	No downloads	Загрузок нет	İndirme yok	Keine Downloads
+no_external_input_devices_connected	No external input devices connected	Внешние устройства ввода не подключены	Harici giriş cihazı bağlı değil	Keine externen Eingabegeräte verbunden
+no_fabric_quilt_forge_neoforge_metadata	No Fabric/Quilt/Forge/NeoForge metadata found. This jar is probably not a mod for a supported loader.	Метаданные Fabric/Quilt/Forge/NeoForge не найдены. Скорее всего, этот jar не мод для поддерживаемого загрузчика.	Fabric/Quilt/Forge/NeoForge meta verisi bulunamadı. Bu jar büyük olasılıkla desteklenen bir yükleyici için mod değil.	Keine Fabric/Quilt/Forge/NeoForge-Metadaten gefunden. Diese JAR ist wahrscheinlich kein Mod für einen unterstützten Loader.
+no_files_were_processed	No files were processed	Файлы не обработаны	Hiçbir dosya işlenmedi	Keine Dateien verarbeitet
+no_imports_yet	No imports yet	Импортов пока нет	Henüz içe aktarma yok	Noch keine Importe
+no_java_edition_profile	No Java Edition profile	Нет профиля Java Edition	Java Edition profili yok	Kein Java-Edition-Profil
+no_java_profile_yet_only_launcher	No Java profile yet; only launcher settings are changed	Профиля Java пока нет; меняются только настройки лаунчера	Henüz Java profili yok; yalnızca başlatıcı ayarları değişir	Noch kein Java-Profil; nur Launcher-Einstellungen werden geändert
+no_log_entries	No log entries	Записей нет	Kayıt girdisi yok	Keine Protokolleinträge
+no_matches	No matches	Ничего не найдено	Eşleşme yok	Keine Treffer
+no_mods	No mods	Модов нет	Mod yok	Keine Mods
+no_notifications	No notifications	Уведомлений нет	Bildirim yok	Keine Benachrichtigungen
+no_problems_found	No problems found	Проблем не найдено	Sorun bulunamadı	Keine Probleme gefunden
+no_profile	No profile	Нет профиля	Profil yok	Kein Profil
+no_profiles_yet	No profiles yet	Профилей пока нет	Henüz profil yok	Noch keine Profile
+no_results	No results	Нет результатов	Sonuç yok	Keine Ergebnisse
+no_runtime_imported_java_edition_requires	No runtime imported. Java Edition requires a Java runtime built for Android (and an execution backend).	Среда не импортирована. Для Java Edition нужна среда Java для Android (и бэкенд исполнения).	Ortam içe aktarılmadı. Java Edition, Android için bir Java ortamı (ve bir çalıştırma arka ucu) gerektirir.	Keine Laufzeit importiert. Java Edition benötigt eine Java-Laufzeit für Android (und ein Ausführungs-Backend).
+no_runtimes	No runtimes	Сред нет	Ortam yok	Keine Laufzeiten
+no_runtimes_installed_yet	No runtimes installed yet	Среды ещё не установлены	Henüz ortam yüklenmedi	Noch keine Laufzeiten installiert
+no_version_list	No version list	Нет списка версий	Sürüm listesi yok	Keine Versionsliste
+no_world_backups	No world backups	Резервных копий миров нет	Dünya yedeği yok	Keine Weltsicherungen
+no_worlds_found_in_the_chosen	No worlds found in the chosen folder	В выбранной папке миров не найдено	Seçilen klasörde dünya bulunamadı	Im gewählten Ordner wurden keine Welten gefunden
+not_installed	Not installed	Не установлен	Yüklü değil	Nicht installiert
+not_installed_on_this_device	Not installed on this device	Не установлен на этом устройстве	Bu cihazda yüklü değil	Auf diesem Gerät nicht installiert
+not_restricted	Not restricted	Без ограничений	Kısıtlı değil	Nicht eingeschränkt
+not_run_yet	Not run yet	Ещё не запускалась	Henüz çalıştırılmadı	Noch nicht ausgeführt
+not_used_by_any_profile	Not used by any profile	Не используется профилями	Hiçbir profil kullanmıyor	Von keinem Profil verwendet
+notes	Notes	Заметки	Notlar	Notizen
+nothing_here_yet	Nothing here yet	Здесь пока пусто	Burada henüz bir şey yok	Hier ist noch nichts
+nothing_installed	Nothing installed	Ничего не установлено	Yüklü bir şey yok	Nichts installiert
+nothing_launched_yet	Nothing launched yet	Запусков пока не было	Henüz başlatma yok	Noch nichts gestartet
+nothing_matches_the_current_filter	Nothing matches the current filter	Под текущий фильтр ничего не подходит	Geçerli filtreyle eşleşen bir şey yok	Nichts passt zum aktuellen Filter
+notice_damaged_title	Damaged file detected	Обнаружен повреждённый файл	Hasarlı dosya algılandı	Beschädigte Datei erkannt
+notice_damaged_world	The world backup "%1$s" failed the integrity check.	Резервная копия мира «%1$s» не прошла проверку целостности.	"%1$s" dünya yedeği bütünlük denetiminden geçemedi.	Die Weltsicherung „%1$s“ hat die Integritätsprüfung nicht bestanden.
+notice_incompatible_mod_title	Incompatible mods	Несовместимые моды	Uyumsuz modlar	Inkompatible Mods
+notice_install_done_body	Profile "%1$s" is ready.	Профиль «%1$s» готов.	"%1$s" profili hazır.	Profil „%1$s“ ist bereit.
+notice_install_done_title	Game files installed	Игровые файлы установлены	Oyun dosyaları yüklendi	Spieldateien installiert
+notice_install_failed_title	Installation failed	Ошибка установки	Kurulum başarısız	Installation fehlgeschlagen
+notice_low_storage_body	Only %1$s free. Downloads and backups may fail.	Свободно только %1$s. Загрузки и резервные копии могут не выполниться.	Yalnızca %1$s boş. İndirmeler ve yedeklemeler başarısız olabilir.	Nur %1$s frei. Downloads und Sicherungen können fehlschlagen.
+notice_low_storage_title	Not enough storage	Недостаточно места	Yetersiz depolama alanı	Nicht genügend Speicher
+notice_overheating_body	Android reports a high thermal status. Lower the FPS limit or view distance, or switch to Battery Saver mode.	Android сообщает о высоком тепловом статусе. Снизьте лимит FPS или дальность прорисовки либо включите режим «Экономия батареи».	Android yüksek sıcaklık durumu bildiriyor. FPS sınırını veya görüş mesafesini düşürün ya da Pil Tasarrufu moduna geçin.	Android meldet einen hohen Temperaturstatus. Senken Sie das FPS-Limit oder die Sichtweite oder wechseln Sie in den Akkusparmodus.
+notice_overheating_title	Device is overheating	Устройство перегревается	Cihaz aşırı ısınıyor	Gerät überhitzt
+notice_update_body	Version %1$s can be installed from Settings → Updates.	Версию %1$s можно установить в Настройки → Обновления.	%1$s sürümü Ayarlar → Güncellemeler'den yüklenebilir.	Version %1$s kann unter Einstellungen → Updates installiert werden.
+notice_update_title	Launcher update available	Доступно обновление лаунчера	Başlatıcı güncellemesi mevcut	Launcher-Update verfügbar
+off_by_default_only_on_wi	Off by default. Only on Wi-Fi with battery not low; nothing is downloaded without your action.	По умолчанию выключено. Только по Wi-Fi и при достаточном заряде; без вашего действия ничего не скачивается.	Varsayılan olarak kapalı. Yalnızca Wi-Fi'da ve pil düşük değilken; sizin işleminiz olmadan hiçbir şey indirilmez.	Standardmäßig aus. Nur im WLAN und bei ausreichendem Akku; ohne Ihr Zutun wird nichts heruntergeladen.
+official_sign_in_only_your_password	Official sign-in only. Your password is entered on Microsoft's page, never in the launcher. Tokens are encrypted with a hardware-backed key.	Только официальный вход. Пароль вводится на странице Microsoft, а не в лаунчере. Токены шифруются аппаратным ключом.	Yalnızca resmi giriş. Parolanız başlatıcıya değil, Microsoft'un sayfasına girilir. Belirteçler donanım destekli bir anahtarla şifrelenir.	Nur offizielle Anmeldung. Ihr Passwort geben Sie auf der Microsoft-Seite ein, nie im Launcher. Tokens werden mit einem hardwaregestützten Schlüssel verschlüsselt.
+offline_showing_cached_list_1_s	Offline, showing the cached list (%1$s)	Нет сети, показан сохранённый список (%1$s)	Çevrimdışı, önbellekteki liste gösteriliyor (%1$s)	Offline, gespeicherte Liste wird angezeigt (%1$s)
+old_beta_alpha	Old (beta/alpha)	Старые (бета/альфа)	Eski (beta/alfa)	Alt (Beta/Alpha)
+on	On	Вкл.	Açık	An
+opacity_1_s	Opacity: %1$s%%	Прозрачность: %1$s%%	Opaklık: %%%1$s	Deckkraft: %1$s %%
+opacity_of_all_controls_1_s	Opacity of all controls: %1$s%%	Прозрачность всех элементов: %1$s%%	Tüm kontrollerin opaklığı: %%%1$s	Deckkraft aller Steuerelemente: %1$s %%
+open_app_settings	Open app settings	Открыть настройки приложения	Uygulama ayarlarını aç	App-Einstellungen öffnen
+open_in_minecraft	Open in Minecraft	Открыть в Minecraft	Minecraft'ta aç	In Minecraft öffnen
+open_in_minecraft_hands_the_file	“Open in Minecraft” hands the file to the game, which imports it itself (recommended). Alternatively link a games/com.mojang folder you can access (for example when the game uses external storage) to copy packs and worlds directly.	«Открыть в Minecraft» передаёт файл игре, и она импортирует его сама (рекомендуется). Можно также подключить доступную вам папку games/com.mojang (например, если игра использует внешнюю память) и копировать паки и миры напрямую.	"Minecraft'ta aç" dosyayı oyuna verir ve oyun onu kendisi içe aktarır (önerilen). Alternatif olarak erişebildiğiniz bir games/com.mojang klasörünü (örneğin oyun harici depolama kullanıyorsa) bağlayıp paketleri ve dünyaları doğrudan kopyalayabilirsiniz.	„In Minecraft öffnen“ übergibt die Datei an das Spiel, das sie selbst importiert (empfohlen). Alternativ verknüpfen Sie einen zugänglichen Ordner games/com.mojang (etwa wenn das Spiel externen Speicher nutzt), um Pakete und Welten direkt zu kopieren.
+open_setting	Open setting	Открыть настройку	Ayarı aç	Einstellung öffnen
+open_source_components_androidx_jetpack_compose	Open-source components: AndroidX, Jetpack Compose, Material 3, Room, DataStore, WorkManager, Hilt and Dagger, kotlinx.coroutines, kotlinx.serialization, OkHttp and apksig, all under the Apache License 2.0. The full list is in LICENSES.md.	Компоненты с открытым кодом: AndroidX, Jetpack Compose, Material 3, Room, DataStore, WorkManager, Hilt и Dagger, kotlinx.coroutines, kotlinx.serialization, OkHttp и apksig — все под лицензией Apache 2.0. Полный список в LICENSES.md.	Açık kaynak bileşenler: AndroidX, Jetpack Compose, Material 3, Room, DataStore, WorkManager, Hilt ve Dagger, kotlinx.coroutines, kotlinx.serialization, OkHttp ve apksig; tümü Apache Lisansı 2.0 altında. Tam liste LICENSES.md dosyasında.	Open-Source-Komponenten: AndroidX, Jetpack Compose, Material 3, Room, DataStore, WorkManager, Hilt und Dagger, kotlinx.coroutines, kotlinx.serialization, OkHttp und apksig, alle unter der Apache License 2.0. Die vollständige Liste steht in LICENSES.md.
+open_with	Open with	Открыть с помощью	Birlikte aç	Öffnen mit
+opengl_es	OpenGL ES	OpenGL ES	OpenGL ES	OpenGL ES
+opengl_translation_layers_evaluated_for_this	OpenGL translation layers evaluated for this GPU and the profile's Minecraft version.	Слои трансляции OpenGL, оценённые для этого GPU и версии Minecraft профиля.	Bu GPU ve profilin Minecraft sürümü için değerlendirilen OpenGL çeviri katmanları.	OpenGL-Übersetzungsschichten, bewertet für diese GPU und die Minecraft-Version des Profils.
+overheating_warnings	Overheating warnings	Предупреждения о перегреве	Aşırı ısınma uyarıları	Überhitzungswarnungen
+overview	Overview	Обзор	Genel bakış	Übersicht
+ownership_verified_added_1_s	Ownership verified · added %1$s	Владение подтверждено · добавлен %1$s	Sahiplik doğrulandı · eklenme %1$s	Besitz bestätigt · hinzugefügt %1$s
+label_package	Package	Пакет	Paket	Paket
+parallel_downloads_1_s	Parallel downloads: %1$s	Параллельных загрузок: %1$s	Paralel indirmeler: %1$s	Parallele Downloads: %1$s
+particles	Particles	Частицы	Parçacıklar	Partikel
+particles_all	All	Все	Tümü	Alle
+particles_decreased	Decreased	Меньше	Azaltılmış	Verringert
+particles_minimal	Minimal	Минимум	Minimum	Minimal
+paste_here	Paste here	Вставить сюда	Buraya yapıştır	Hier einfügen
+pause	Pause	Пауза	Duraklat	Pausieren
+paused	Paused	Приостановлено	Duraklatıldı	Pausiert
+performance_mode	Performance mode	Режим производительности	Performans modu	Leistungsmodus
+performance_modes_and_renderers	Performance modes and renderers	Режимы производительности и рендереры	Performans modları ve işleyiciler	Leistungsmodi und Renderer
+permission_required	Permission required	Нужно разрешение	İzin gerekli	Berechtigung erforderlich
+pf_low_ram	Allocated memory exceeds the RAM that is free right now.	Выделенная память превышает свободную сейчас ОЗУ.	Ayrılan bellek şu anda boş olan RAM'i aşıyor.	Der zugewiesene Speicher übersteigt den aktuell freien RAM.
+pf_low_ram_fix	Lower the allocation or close other apps.	Уменьшите выделение или закройте другие приложения.	Ayırmayı düşürün veya diğer uygulamaları kapatın.	Zuweisung verringern oder andere Apps schließen.
+pf_missing_files	Some required game files are missing.	Отсутствуют некоторые необходимые файлы игры.	Gerekli bazı oyun dosyaları eksik.	Einige benötigte Spieldateien fehlen.
+pf_missing_files_fix	Run "Verify files" / "Repair" for this profile.	Запустите «Проверить файлы» / «Восстановить» для профиля.	Bu profil için "Dosyaları doğrula" / "Onar"ı çalıştırın.	Führen Sie für dieses Profil „Dateien prüfen“ / „Reparieren“ aus.
+pf_no_backend	This build contains no Java Edition execution backend (Android JVM + LWJGL + OpenGL translation).	В этой сборке нет бэкенда исполнения Java Edition (JVM для Android + LWJGL + трансляция OpenGL).	Bu sürümde Java Edition çalıştırma arka ucu yok (Android JVM + LWJGL + OpenGL çevirisi).	Dieser Build enthält kein Java-Edition-Ausführungs-Backend (Android-JVM + LWJGL + OpenGL-Übersetzung).
+pf_no_backend_fix	The profile is fully prepared. Launching requires the runtime backend component (see documentation).	Профиль полностью подготовлен. Для запуска нужен компонент бэкенда исполнения (см. документацию).	Profil tamamen hazır. Başlatmak için çalıştırma arka uç bileşeni gerekir (belgelere bakın).	Das Profil ist vollständig vorbereitet. Zum Starten wird die Backend-Komponente benötigt (siehe Dokumentation).
+pf_no_game_dir	The game folder does not exist.	Папка игры не существует.	Oyun klasörü mevcut değil.	Der Spielordner existiert nicht.
+pf_no_game_dir_fix	Repair the profile.	Восстановите профиль.	Profili onarın.	Reparieren Sie das Profil.
+pf_no_renderer	No compatible OpenGL translation layer for this GPU and Minecraft version.	Нет совместимого слоя трансляции OpenGL для этого GPU и версии Minecraft.	Bu GPU ve Minecraft sürümü için uyumlu OpenGL çeviri katmanı yok.	Keine kompatible OpenGL-Übersetzungsschicht für diese GPU und Minecraft-Version.
+pf_no_renderer_fix	See Performance → Renderers.	См. Производительность → Рендереры.	Performans → İşleyiciler'e bakın.	Siehe Leistung → Renderer.
+pf_no_runtime	No suitable Java runtime for Android is installed.	Не установлена подходящая среда Java для Android.	Uygun bir Android Java çalışma ortamı yüklü değil.	Keine passende Java-Laufzeit für Android installiert.
+pf_no_runtime_fix	Import a runtime in Library → Java runtimes.	Импортируйте среду в Библиотека → Среды Java.	Kütüphane → Java çalışma ortamları'ndan bir ortam içe aktarın.	Importieren Sie eine Laufzeit unter Bibliothek → Java-Laufzeiten.
+pf_no_world	Local singleplayer needs an existing world in this profile.	Для локальной одиночной игры нужен существующий мир в профиле.	Yerel tek oyunculu için bu profilde mevcut bir dünya gerekir.	Lokaler Einzelspieler benötigt eine vorhandene Welt in diesem Profil.
+pf_no_world_fix	Create or import a world first (Worlds → Java).	Сначала создайте или импортируйте мир (Миры → Java).	Önce bir dünya oluşturun veya içe aktarın (Dünyalar → Java).	Erstellen oder importieren Sie zuerst eine Welt (Welten → Java).
+pf_not_installed	Game files for this profile are not installed yet.	Игровые файлы этого профиля ещё не установлены.	Bu profilin oyun dosyaları henüz yüklenmedi.	Die Spieldateien dieses Profils sind noch nicht installiert.
+pf_not_installed_fix	Tap "Install" for the profile (Java Edition screen).	Нажмите «Установить» для профиля (экран Java Edition).	Profil için "Yükle"ye dokunun (Java Edition ekranı).	Tippen Sie beim Profil auf „Installieren“ (Java-Edition-Bildschirm).
+pf_old_runtime	The selected Java runtime is too old for this Minecraft version.	Выбранная среда Java слишком старая для этой версии Minecraft.	Seçilen Java ortamı bu Minecraft sürümü için çok eski.	Die gewählte Java-Laufzeit ist für diese Minecraft-Version zu alt.
+pf_processors	The mod loader still needs installer steps that run on a Java runtime.	Модлоадеру ещё нужны шаги установщика, выполняемые в среде Java.	Mod yükleyicisinin hâlâ bir Java ortamında çalışan kurulum adımlarına ihtiyacı var.	Der Mod-Loader benötigt noch Installationsschritte, die auf einer Java-Laufzeit laufen.
+pf_processors_fix	Install a Java runtime and the execution backend, then repair the profile.	Установите среду Java и бэкенд исполнения, затем восстановите профиль.	Bir Java ortamı ve çalıştırma arka ucu yükleyin, ardından profili onarın.	Installieren Sie eine Java-Laufzeit und das Ausführungs-Backend und reparieren Sie dann das Profil.
+pf_version_mismatch	A different version of the game is installed on the device.	На устройстве установлена другая версия игры.	Cihazda oyunun farklı bir sürümü yüklü.	Auf dem Gerät ist eine andere Spielversion installiert.
+play	Play	Играть	Oyna	Spielen
+play_installed	Play installed	Играть в установленную	Yüklü olanı oyna	Installierte spielen
+play_time_statistics_are_not_available	Play time statistics are not available: the launcher cannot measure time spent inside the game.	Статистика игрового времени недоступна: лаунчер не может измерить время внутри игры.	Oyun süresi istatistikleri yok: başlatıcı oyun içinde geçen süreyi ölçemez.	Spielzeitstatistiken sind nicht verfügbar: Der Launcher kann die Zeit im Spiel nicht messen.
+positions_are_stored_relative_to_the	Positions are stored relative to the screen, so a layout fits any resolution and aspect ratio.	Позиции хранятся относительно экрана, поэтому раскладка подходит к любому разрешению и соотношению сторон.	Konumlar ekrana göre saklanır, bu yüzden düzen her çözünürlüğe ve en-boy oranına uyar.	Positionen werden relativ zum Bildschirm gespeichert, daher passt ein Layout zu jeder Auflösung und jedem Seitenverhältnis.
+preparing	Preparing	Подготовка	Hazırlanıyor	Wird vorbereitet
+preset_balanced	Balanced	Сбалансированный	Dengeli	Ausgewogen
+preset_balanced_desc	Good image quality with a 60 FPS cap and moderate view distance.	Хорошее качество изображения, лимит 60 FPS и умеренная дальность прорисовки.	60 FPS sınırı ve orta görüş mesafesiyle iyi görüntü kalitesi.	Gute Bildqualität mit 60-FPS-Limit und moderater Sichtweite.
+preset_battery	Battery Saver	Экономия батареи	Pil Tasarrufu	Akkusparen
+preset_battery_desc	Caps FPS at 30 and lowers view distance and render scale to save energy and reduce heat.	Ограничивает FPS до 30, снижает дальность прорисовки и масштаб рендера для экономии энергии и меньшего нагрева.	Enerji tasarrufu ve daha az ısınma için FPS'yi 30 ile sınırlar, görüş mesafesini ve işleme ölçeğini düşürür.	Begrenzt FPS auf 30 und senkt Sichtweite und Renderskalierung, um Energie zu sparen und Wärme zu reduzieren.
+preset_custom	Custom	Пользовательский	Özel	Benutzerdefiniert
+preset_custom_desc	Your own values; nothing is changed automatically.	Ваши собственные значения; ничего не меняется автоматически.	Kendi değerleriniz; hiçbir şey otomatik değiştirilmez.	Ihre eigenen Werte; nichts wird automatisch geändert.
+preset_extreme	Extreme Performance	Максимальная производительность	Aşırı Performans	Maximale Leistung
+preset_extreme_desc	Minimal graphics load for weak devices: view distance 4, minimal particles, 60% render scale.	Минимальная графическая нагрузка для слабых устройств: дальность 4, минимум частиц, масштаб рендера 60%.	Zayıf cihazlar için minimum grafik yükü: görüş mesafesi 4, minimum parçacık, %60 işleme ölçeği.	Minimale Grafiklast für schwache Geräte: Sichtweite 4, minimale Partikel, 60 % Renderskalierung.
+preset_performance	Performance	Производительность	Performans	Leistung
+preset_performance_desc	Prioritises frame rate: fast graphics, no clouds/shadows, slightly reduced render scale.	Приоритет частоты кадров: быстрая графика, без облаков и теней, слегка сниженный масштаб рендера.	Kare hızına öncelik: hızlı grafik, bulut/gölge yok, biraz düşük işleme ölçeği.	Priorisiert die Bildrate: schnelle Grafik, keine Wolken/Schatten, leicht reduzierte Renderskalierung.
+press_buttons_or_move_sticks_events	Press buttons or move sticks; events are shown below	Нажимайте кнопки или двигайте стики; события появятся ниже	Düğmelere basın veya çubukları oynatın; olaylar aşağıda gösterilir	Drücken Sie Tasten oder bewegen Sie Sticks; Ereignisse erscheinen unten
+preview_in_landscape_1_s_1	Preview in landscape (%1$s:1). Drag controls to move them; tap to edit.	Предпросмотр в альбомной ориентации (%1$s:1). Перетаскивайте элементы, касание открывает настройки.	Yatay önizleme (%1$s:1). Kontrolleri taşımak için sürükleyin; düzenlemek için dokunun.	Vorschau im Querformat (%1$s:1). Ziehen zum Verschieben, Tippen zum Bearbeiten.
+private_app_storage_versions_libraries_profiles	Private app storage (versions, libraries, profiles, backups)	Внутренняя память приложения (версии, библиотеки, профили, резервные копии)	Özel uygulama depolaması (sürümler, kütüphaneler, profiller, yedekler)	Privater App-Speicher (Versionen, Bibliotheken, Profile, Sicherungen)
+problem	Problem	Проблема	Sorun	Problem
+problems	Problems	Проблемы	Sorunlar	Probleme
+profile_1_s_created_files_are	Profile “%1$s” created; files are being installed	Профиль «%1$s» создан; файлы устанавливаются	"%1$s" profili oluşturuldu; dosyalar yükleniyor	Profil „%1$s“ erstellt; Dateien werden installiert
+profile_and_its_game_folder_deleted	Profile and its game folder deleted	Профиль и его папка игры удалены	Profil ve oyun klasörü silindi	Profil und Spielordner gelöscht
+profile_cloned	Profile cloned	Профиль клонирован	Profil kopyalandı	Profil geklont
+profile_created_installing_minecraft_1_s	Profile created; installing Minecraft %1$s	Профиль создан; устанавливается Minecraft %1$s	Profil oluşturuldu; Minecraft %1$s yükleniyor	Profil erstellt; Minecraft %1$s wird installiert
+profile_deleted_game_folder_kept	Profile deleted (game folder kept)	Профиль удалён (папка игры сохранена)	Profil silindi (oyun klasörü korundu)	Profil gelöscht (Spielordner behalten)
+profile_imported_install_it_to_download	Profile imported; install it to download the game files	Профиль импортирован; установите его, чтобы скачать файлы игры	Profil içe aktarıldı; oyun dosyalarını indirmek için yükleyin	Profil importiert; installieren Sie es, um die Spieldateien zu laden
+profile_saved	Profile saved	Профиль сохранён	Profil kaydedildi	Profil gespeichert
+profile_selected	Profile selected	Профиль выбран	Profil seçildi	Profil ausgewählt
+profiles_keep_their_own_version_mod	Profiles keep their own version, mod loader, mods, settings and game folder.	У каждого профиля своя версия, модлоадер, моды, настройки и папка игры.	Profiller kendi sürümlerini, mod yükleyicilerini, modlarını, ayarlarını ve oyun klasörlerini tutar.	Profile haben eigene Version, Mod-Loader, Mods, Einstellungen und Spielordner.
+progress_backing_up	Backing up %1$s	Резервное копирование: %1$s	%1$s yedekleniyor	%1$s wird gesichert
+progress_backing_up_all	Backing up all worlds	Резервное копирование всех миров	Tüm dünyalar yedekleniyor	Alle Welten werden gesichert
+progress_downloading_update	Downloading update	Загрузка обновления	Güncelleme indiriliyor	Update wird heruntergeladen
+progress_exporting	Exporting	Экспорт	Dışa aktarılıyor	Wird exportiert
+progress_importing	Importing	Импорт	İçe aktarılıyor	Wird importiert
+progress_restoring	Restoring world	Восстановление мира	Dünya geri yükleniyor	Welt wird wiederhergestellt
+progress_verifying	Checking integrity	Проверка целостности	Bütünlük denetleniyor	Integrität wird geprüft
+queued	Queued	В очереди	Sırada	In Warteschlange
+quick_launch	Quick launch	Быстрый запуск	Hızlı başlatma	Schnellstart
+re_check	Check again	Проверить снова	Yeniden denetle	Erneut prüfen
+re_measure	Measure again	Измерить снова	Yeniden ölç	Erneut messen
+read_only_through_the_android_file	Read only through the Android file picker; originals are never changed or deleted without confirmation.	Читаются только через системный выбор файлов; оригиналы не изменяются и не удаляются без подтверждения.	Yalnızca Android dosya seçici ile okunur; orijinaller onay olmadan değiştirilmez veya silinmez.	Nur über die Android-Dateiauswahl gelesen; Originale werden ohne Bestätigung nie geändert oder gelöscht.
+reading_modpack	Reading modpack	Чтение модпака	Mod paketi okunuyor	Modpack wird gelesen
+ready	Ready	Готов	Hazır	Bereit
+recently_launched	Recently launched	Недавние запуски	Son başlatılanlar	Zuletzt gestartet
+recommendations_cap_fps_at_30_60	Lower the load: cap FPS at 30–60, reduce the view distance and render scale, or switch to Battery Saver.	Снизьте нагрузку: ограничьте FPS до 30–60, уменьшите дальность прорисовки и масштаб рендера или включите «Экономию батареи».	Yükü azaltın: FPS'yi 30–60 ile sınırlayın, görüş mesafesini ve işleme ölçeğini düşürün ya da Pil Tasarrufu'na geçin.	Last senken: FPS auf 30–60 begrenzen, Sichtweite und Renderskalierung verringern oder auf Akkusparen wechseln.
+recommended	Recommended	Рекомендуется	Önerilen	Empfohlen
+refresh	Refresh	Обновить	Yenile	Aktualisieren
+rejected	Rejected	Отклонён	Reddedildi	Abgelehnt
+release_1_s_has_no_installable	Release %1$s has no installable APK	В релизе %1$s нет APK для установки	%1$s sürümünde yüklenebilir APK yok	Release %1$s enthält keine installierbare APK
+release_page	Release page	Страница релиза	Sürüm sayfası	Release-Seite
+releases	Releases	Релизы	Sürümler	Releases
+remove	Remove	Убрать	Kaldır	Entfernen
+remove_1_s	Remove %1$s?	Убрать %1$s?	%1$s kaldırılsın mı?	%1$s entfernen?
+remove_temporary_files_older_than_1	Remove temporary files older than %1$s h	Удалять временные файлы старше %1$s ч	%1$s saatten eski geçici dosyaları kaldır	Temporäre Dateien älter als %1$s h entfernen
+remove_this_control	Remove this control	Удалить этот элемент	Bu kontrolü kaldır	Dieses Steuerelement entfernen
+removed_from_library_files_kept	Removed from library (files kept)	Убрано из библиотеки (файлы сохранены)	Kütüphaneden kaldırıldı (dosyalar korundu)	Aus der Bibliothek entfernt (Dateien behalten)
+removed_with_files	Removed with files	Убрано вместе с файлами	Dosyalarla birlikte kaldırıldı	Mit Dateien entfernt
+removes_all_launcher_data_accounts_and	Removes all launcher data: accounts and tokens, profiles, downloaded game files, backups, settings and logs. Files you exported elsewhere are not touched.	Удаляет все данные лаунчера: аккаунты и токены, профили, скачанные файлы игры, резервные копии, настройки и журналы. Файлы, экспортированные в другие места, не затрагиваются.	Tüm başlatıcı verilerini kaldırır: hesaplar ve belirteçler, profiller, indirilen oyun dosyaları, yedekler, ayarlar ve kayıtlar. Başka yere aktardığınız dosyalara dokunulmaz.	Entfernt alle Launcher-Daten: Konten und Tokens, Profile, geladene Spieldateien, Sicherungen, Einstellungen und Protokolle. Anderswo exportierte Dateien bleiben unberührt.
+rename_backup	Rename backup	Переименовать копию	Yedeği yeniden adlandır	Sicherung umbenennen
+renamed	Renamed	Переименовано	Yeniden adlandırıldı	Umbenannt
+render_distance_1_s_chunks	Render distance: %1$s chunks	Дальность прорисовки: %1$s чанков	İşleme mesafesi: %1$s yığın	Sichtweite: %1$s Chunks
+renderers	Renderers	Рендереры	İşleyiciler	Renderer
+repair	Repair	Восстановить	Onar	Reparieren
+repair_files	Repair files	Восстановить файлы	Dosyaları onar	Dateien reparieren
+reset	Reset	Сбросить	Sıfırla	Zurücksetzen
+resolution_scale_1_s	Resolution scale: %1$s%%	Масштаб разрешения: %1$s%%	Çözünürlük ölçeği: %%%1$s	Auflösungsskalierung: %1$s %%
+restore	Restore	Восстановить	Geri yükle	Wiederherstellen
+restore_1_s	Restore (%1$s)	Восстановить (%1$s)	Geri yükle (%1$s)	Wiederherstellen (%1$s)
+restore_1_s_2	Restore %1$s?	Восстановить %1$s?	%1$s geri yüklensin mi?	%1$s wiederherstellen?
+restore_1_s_3	Restore "%1$s"?	Восстановить «%1$s»?	"%1$s" geri yüklensin mi?	„%1$s“ wiederherstellen?
+restore_mods	Restore mods	Восстановить моды	Modları geri yükle	Mods wiederherstellen
+restricted_by_the_system	Restricted by the system	Ограничено системой	Sistem tarafından kısıtlandı	Vom System eingeschränkt
+resume	Resume	Продолжить	Sürdür	Fortsetzen
+rn_adreno_turnip	Works best with the Mesa Turnip driver on Adreno 6xx/7xx.	Лучше всего работает с драйвером Mesa Turnip на Adreno 6xx/7xx.	En iyi Adreno 6xx/7xx üzerinde Mesa Turnip sürücüsüyle çalışır.	Funktioniert am besten mit dem Mesa-Turnip-Treiber auf Adreno 6xx/7xx.
+rn_buggy_gles	Helps on devices with buggy OpenGL ES drivers.	Помогает на устройствах с ошибочными драйверами OpenGL ES.	Hatalı OpenGL ES sürücülerine sahip cihazlarda yardımcı olur.	Hilft auf Geräten mit fehlerhaften OpenGL-ES-Treibern.
+rn_legacy_partial	Designed for 1.17+; older versions may work only partially.	Рассчитан на 1.17+; старые версии могут работать частично.	1.17+ için tasarlandı; eski sürümler kısmen çalışabilir.	Für 1.17+ ausgelegt; ältere Versionen funktionieren evtl. nur teilweise.
+rn_mali_vulkan	Mali Vulkan drivers often have rendering bugs.	Драйверы Vulkan для Mali часто содержат ошибки отрисовки.	Mali Vulkan sürücülerinde sık sık çizim hataları olur.	Mali-Vulkan-Treiber haben häufig Darstellungsfehler.
+rn_mc_too_new	Minecraft 1.17+ needs OpenGL 3.2; this layer only provides OpenGL 2.1.	Minecraft 1.17+ требует OpenGL 3.2; этот слой даёт только OpenGL 2.1.	Minecraft 1.17+ OpenGL 3.2 gerektirir; bu katman yalnızca OpenGL 2.1 sağlar.	Minecraft 1.17+ benötigt OpenGL 3.2; diese Schicht bietet nur OpenGL 2.1.
+rn_needs_gles2	Needs OpenGL ES 2.0.	Требуется OpenGL ES 2.0.	OpenGL ES 2.0 gerekir.	Benötigt OpenGL ES 2.0.
+rn_needs_gles3	Needs OpenGL ES 3.0 or newer.	Требуется OpenGL ES 3.0 или новее.	OpenGL ES 3.0 veya üstü gerekir.	Benötigt OpenGL ES 3.0 oder neuer.
+rn_needs_vulkan	Needs Vulkan 1.1 or newer.	Требуется Vulkan 1.1 или новее.	Vulkan 1.1 veya üstü gerekir.	Benötigt Vulkan 1.1 oder neuer.
+rn_no_shaders	Shader packs are experimental or unsupported.	Шейдерпаки экспериментальны или не поддерживаются.	Gölgelendirici paketleri deneysel veya desteklenmiyor.	Shaderpakete sind experimentell oder nicht unterstützt.
+rn_no_sodium	Sodium/Iris are not supported.	Sodium/Iris не поддерживаются.	Sodium/Iris desteklenmiyor.	Sodium/Iris werden nicht unterstützt.
+rn_not_installed	Library not installed in this build.	Библиотека не установлена в этой сборке.	Kütüphane bu sürümde yüklü değil.	Bibliothek in diesem Build nicht installiert.
+rn_powervr	Limited testing on PowerVR GPUs.	Ограниченно проверено на GPU PowerVR.	PowerVR GPU'larda sınırlı test edildi.	Auf PowerVR-GPUs nur eingeschränkt getestet.
+rn_slower	Usually slower than layers using OpenGL ES directly.	Обычно медленнее слоёв, работающих напрямую через OpenGL ES.	Genellikle doğrudan OpenGL ES kullanan katmanlardan yavaştır.	Meist langsamer als Schichten, die OpenGL ES direkt nutzen.
+run	Run	Запустить	Çalıştır	Ausführen
+run_again	Run again	Запустить снова	Yeniden çalıştır	Erneut ausführen
+running_diagnostics	Running diagnostics	Идёт диагностика	Tanılama çalışıyor	Diagnose läuft
+s_1_open_1_s	1. Open %1$s	1. Откройте %1$s	1. %1$s adresini açın	1. Öffnen Sie %1$s
+s_1_s_2_s_3_s	%1$s×%2$s @ %3$s Hz	%1$s×%2$s @ %3$s Гц	%1$s×%2$s @ %3$s Hz	%1$s×%2$s @ %3$s Hz
+s_1_s_2_s_mb	%1$s / %2$s MB	%1$s / %2$s МБ	%1$s / %2$s MB	%1$s / %2$s MB
+s_1_s_2_s_mb_2	%1$s–%2$s MB	%1$s–%2$s МБ	%1$s–%2$s MB	%1$s–%2$s MB
+s_1_s_2_s_mc_3	%1$s → %2$s · MC %3$s · %4$s	%1$s → %2$s · MC %3$s · %4$s	%1$s → %2$s · MC %3$s · %4$s	%1$s → %2$s · MC %3$s · %4$s
+s_1_s_2_s_missing_3	%1$s: %2$s missing, %3$s damaged; repair the profile that uses it	%1$s: отсутствует %2$s, повреждено %3$s; восстановите профиль, который её использует	%1$s: %2$s eksik, %3$s hasarlı; onu kullanan profili onarın	%1$s: %2$s fehlen, %3$s beschädigt; reparieren Sie das Profil, das sie nutzt
+s_1_s_2_s_will_be	"%1$s" (%2$s) will be deleted from the launcher. Worlds in Minecraft are not affected.	«%1$s» (%2$s) будет удалена из лаунчера. Миры в Minecraft не затрагиваются.	"%1$s" (%2$s) başlatıcıdan silinecek. Minecraft'taki dünyalar etkilenmez.	„%1$s“ (%2$s) wird aus dem Launcher gelöscht. Welten in Minecraft sind nicht betroffen.
+s_1_s_all_2_s_files	%1$s: all %2$s files OK	%1$s: все файлы (%2$s) в порядке	%1$s: %2$s dosyanın tümü sağlam	%1$s: alle %2$s Dateien in Ordnung
+s_1_s_api_2_s	%1$s (API %2$s)	%1$s (API %2$s)	%1$s (API %2$s)	%1$s (API %2$s)
+s_1_s_checks_2_s_finding	%1$s checks · %2$s finding(s) · %3$s ms · %4$s	Проверок: %1$s · находок: %2$s · %3$s мс · %4$s	%1$s denetim · %2$s bulgu · %3$s ms · %4$s	%1$s Prüfungen · %2$s Befund(e) · %3$s ms · %4$s
+s_1_s_controls_2_s	%1$s controls · %2$s	Элементов: %1$s · %2$s	%1$s kontrol · %2$s	%1$s Steuerelemente · %2$s
+s_1_s_is_not_available_for	%1$s is not available for %2$s	%1$s недоступен для %2$s	%1$s, %2$s için mevcut değil	%1$s ist für %2$s nicht verfügbar
+s_1_s_item_s	%1$s item(s)	Элементов: %1$s	%1$s öğe	%1$s Element(e)
+s_1_s_limit_2_s_mb	%1$s (limit %2$s MB)	%1$s (лимит %2$s МБ)	%1$s (sınır %2$s MB)	%1$s (Limit %2$s MB)
+s_1_s_mb_view_2_s	%1$s MB · view %2$s · %3$s FPS · %4$s%%	%1$s МБ · дальность %2$s · %3$s FPS · %4$s%%	%1$s MB · görüş %2$s · %3$s FPS · %%%4$s	%1$s MB · Sicht %2$s · %3$s FPS · %4$s %%
+s_1_s_mhz	%1$s MHz	%1$s МГц	%1$s MHz	%1$s MHz
+s_1_s_missing_and_2_s	%1$s missing and %2$s damaged file(s). Use Repair to fix them.	Отсутствует файлов: %1$s, повреждено: %2$s. Исправьте кнопкой «Восстановить».	%1$s eksik ve %2$s hasarlı dosya. Düzeltmek için Onar'ı kullanın.	%1$s fehlende und %2$s beschädigte Datei(en). Mit „Reparieren“ beheben.
+s_1_s_more	+%1$s more	ещё %1$s	+%1$s daha	+%1$s weitere
+s_1_s_of_2_s_mods	%1$s of %2$s mods · %3$s enabled	Модов: %1$s из %2$s · включено %3$s	%1$s / %2$s mod · %3$s etkin	%1$s von %2$s Mods · %3$s aktiviert
+s_1_s_will_be_deleted_exported	"%1$s" will be deleted. Exported copies are not affected.	«%1$s» будет удалена. Экспортированные копии не затрагиваются.	"%1$s" silinecek. Dışa aktarılmış kopyalar etkilenmez.	„%1$s“ wird gelöscht. Exportierte Kopien sind nicht betroffen.
+s_1_s_will_be_freed_profiles	%1$s will be freed. Profiles that use it will pick another runtime automatically.	Освободится %1$s. Профили, использующие её, автоматически выберут другую среду.	%1$s boşalacak. Onu kullanan profiller otomatik olarak başka bir ortam seçer.	%1$s werden frei. Profile, die sie nutzen, wählen automatisch eine andere Laufzeit.
+s_2_enter_this_code	2. Enter this code:	2. Введите этот код:	2. Bu kodu girin:	2. Geben Sie diesen Code ein:
+save_id	Save ID	Сохранить ID	Kimliği kaydet	ID speichern
+save_install	Save and install	Сохранить и установить	Kaydet ve yükle	Speichern und installieren
+saved_backup_kept_as_1_s	Saved (backup kept as .%1$s.bak)	Сохранено (копия: .%1$s.bak)	Kaydedildi (yedek .%1$s.bak olarak saklandı)	Gespeichert (Sicherung als .%1$s.bak)
+saved_installing_game_files	Saved; installing game files	Сохранено; устанавливаются файлы игры	Kaydedildi; oyun dosyaları yükleniyor	Gespeichert; Spieldateien werden installiert
+screen_transitions_and_loading_shimmer	Screen transitions and loading shimmer	Переходы между экранами и мерцание загрузки	Ekran geçişleri ve yükleme parıltısı	Bildschirmübergänge und Lade-Schimmer
+search_1_s	Search %1$s	Поиск: %1$s	Ara: %1$s	Suchen: %1$s
+search_add_ons	Search add-ons	Поиск дополнений	Eklenti ara	Add-ons suchen
+search_backups	Search backups	Поиск копий	Yedek ara	Sicherungen suchen
+search_component_event_or_error_type	Search component, event or error type	Поиск по компоненту, событию или типу ошибки	Bileşen, olay veya hata türü ara	Komponente, Ereignis oder Fehlertyp suchen
+search_in_1_s	Search in %1$s	Поиск в %1$s	%1$s içinde ara	In %1$s suchen
+search_mods	Search mods	Поиск модов	Mod ara	Mods suchen
+search_versions	Search versions	Поиск версий	Sürüm ara	Versionen suchen
+select	Select	Выбрать	Seç	Auswählen
+selected	Selected	Выбрано	Seçili	Ausgewählt
+selected_for_launch	Selected for launch	Выбрано для запуска	Başlatma için seçildi	Für den Start ausgewählt
+sending_to_android_installer	Sending to Android installer	Передача установщику Android	Android yükleyicisine gönderiliyor	Wird an den Android-Installer übergeben
+session_valid_until_1_s	Session valid until %1$s	Сессия действует до %1$s	Oturum %1$s tarihine kadar geçerli	Sitzung gültig bis %1$s
+settings_only	Settings only	Только настройки	Yalnızca ayarlar	Nur Einstellungen
+sha_256	\nSHA-256: 	\nSHA-256: 	\nSHA-256: 	\nSHA-256: 
+shader_packs_need_a_shader_mod	Shader packs need a shader mod (Iris for Fabric/Quilt, Oculus for Forge, or OptiFine). None is enabled in this profile.	Шейдерпакам нужен шейдерный мод (Iris для Fabric/Quilt, Oculus для Forge или OptiFine). В этом профиле такого мода нет.	Gölgelendirici paketleri bir gölgelendirici modu gerektirir (Fabric/Quilt için Iris, Forge için Oculus veya OptiFine). Bu profilde hiçbiri etkin değil.	Shaderpakete brauchen einen Shader-Mod (Iris für Fabric/Quilt, Oculus für Forge oder OptiFine). In diesem Profil ist keiner aktiviert.
+show_prepared_launch_command	Show prepared launch command	Показать подготовленную команду запуска	Hazırlanan başlatma komutunu göster	Vorbereiteten Startbefehl anzeigen
+show_snapshots	Show snapshots	Показывать снапшоты	Snapshot'ları göster	Snapshots anzeigen
+sign_in_browser	Sign in with browser	Войти через браузер	Tarayıcıyla giriş yap	Mit Browser anmelden
+sign_in_failed	Sign-in failed	Вход не выполнен	Giriş başarısız	Anmeldung fehlgeschlagen
+sign_in_login_microsoftonline_com_user	Sign-in: login.microsoftonline.com, user.auth.xboxlive.com, xsts.auth.xboxlive.com, api.minecraftservices.com	Вход: login.microsoftonline.com, user.auth.xboxlive.com, xsts.auth.xboxlive.com, api.minecraftservices.com	Giriş: login.microsoftonline.com, user.auth.xboxlive.com, xsts.auth.xboxlive.com, api.minecraftservices.com	Anmeldung: login.microsoftonline.com, user.auth.xboxlive.com, xsts.auth.xboxlive.com, api.minecraftservices.com
+sign_in_with_code	Sign in with code	Войти по коду	Kodla giriş yap	Mit Code anmelden
+sign_in_with_microsoft	Sign in with Microsoft	Вход через Microsoft	Microsoft ile giriş yap	Mit Microsoft anmelden
+sign_out	Sign out	Выйти	Çıkış yap	Abmelden
+sign_out_2	Sign out?	Выйти из аккаунта?	Çıkış yapılsın mı?	Abmelden?
+signature_ok	Signature OK	Подпись в порядке	İmza geçerli	Signatur gültig
+simulation_distance_1_s_chunks	Simulation distance: %1$s chunks	Дальность симуляции: %1$s чанков	Simülasyon mesafesi: %1$s yığın	Simulationsdistanz: %1$s Chunks
+size_1_s_dp	Size: %1$s dp	Размер: %1$s dp	Boyut: %1$s dp	Größe: %1$s dp
+size_of_all_controls_1_s	Size of all controls: %1$s%%	Размер всех элементов: %1$s%%	Tüm kontrollerin boyutu: %%%1$s	Größe aller Steuerelemente: %1$s %%
+smooth_lighting	Smooth lighting	Мягкое освещение	Yumuşak ışıklandırma	Weiche Beleuchtung
+snapshots	Snapshots	Снапшоты	Snapshot'lar	Snapshots
+soc	SoC	SoC	SoC	SoC
+solution	Solution	Решение	Çözüm	Lösung
+sort	Sort: 	Сортировка: 	Sırala: 	Sortierung: 
+sort_date	Newest	Сначала новые	En yeni	Neueste
+sort_name	Name	Имя	Ad	Name
+sort_size	Size	Размер	Boyut	Größe
+source	Source	Источник	Kaynak	Quelle
+source_folder	From Minecraft folder	Из папки Minecraft	Minecraft klasöründen	Aus dem Minecraft-Ordner
+source_import	Imported file	Импортированный файл	İçe aktarılan dosya	Importierte Datei
+started	Started	Запущен	Başlatıldı	Gestartet
+starting	Starting	Запуск	Başlatılıyor	Startet
+status	Status: 	Статус: 	Durum: 	Status: 
+stick_dead_zone_1_s	Stick dead zone: %1$s%%	Мёртвая зона стика: %1$s%%	Çubuk ölü bölgesi: %%%1$s	Stick-Totzone: %1$s %%
+storage	Storage	Хранилище	Depolama	Speicher
+storage_and_cache	Storage and cache	Хранилище и кэш	Depolama ve önbellek	Speicher und Cache
+stored_on_this_device	Stored on this device	Хранится на этом устройстве	Bu cihazda saklananlar	Auf diesem Gerät gespeichert
+supported_modrinth_packs_mrpack_and_packs	Supported: Modrinth packs (.mrpack) and packs exported by this launcher (.eloapack). Mod files of Modrinth packs are downloaded only from the hosts allowed by the Modrinth format and verified by SHA-1. Nothing is executed during import.	Поддерживаются паки Modrinth (.mrpack) и паки, экспортированные этим лаунчером (.eloapack). Файлы модов из паков Modrinth скачиваются только с хостов, разрешённых форматом Modrinth, и проверяются по SHA-1. При импорте ничего не исполняется.	Desteklenenler: Modrinth paketleri (.mrpack) ve bu başlatıcının dışa aktardığı paketler (.eloapack). Modrinth paketlerindeki mod dosyaları yalnızca Modrinth biçiminin izin verdiği sunuculardan indirilir ve SHA-1 ile doğrulanır. İçe aktarma sırasında hiçbir şey çalıştırılmaz.	Unterstützt: Modrinth-Pakete (.mrpack) und von diesem Launcher exportierte Pakete (.eloapack). Mod-Dateien aus Modrinth-Paketen werden nur von den im Modrinth-Format erlaubten Hosts geladen und per SHA-1 geprüft. Beim Import wird nichts ausgeführt.
+system_notifications	System notifications	Системные уведомления	Sistem bildirimleri	Systembenachrichtigungen
+tap_run_to_check_the_launcher	Tap Run to check the launcher, game files and device	Нажмите «Запустить», чтобы проверить лаунчер, файлы игры и устройство	Başlatıcıyı, oyun dosyalarını ve cihazı denetlemek için Çalıştır'a dokunun	Tippen Sie auf „Ausführen“, um Launcher, Spieldateien und Gerät zu prüfen
+target_api	Target API	Целевой API	Hedef API	Ziel-API
+telemetry	Telemetry	Телеметрия	Telemetri	Telemetrie
+th_critical	Critical	Критический	Kritik	Kritisch
+th_emergency	Emergency	Аварийный	Acil	Notfall
+th_light	Light	Лёгкий нагрев	Hafif	Leicht
+th_moderate	Moderate	Умеренный нагрев	Orta	Mäßig
+th_none	Normal	Норма	Normal	Normal
+th_severe	Severe	Сильный нагрев	Ciddi	Stark
+th_shutdown	Shutdown imminent	Скорое отключение	Kapanmak üzere	Abschaltung droht
+th_unsupported	Not reported by this device	Не сообщается устройством	Bu cihaz bildirmiyor	Von diesem Gerät nicht gemeldet
+the_add_on_file_will_be	The add-on file will be removed from the launcher library. Copies already imported into Minecraft are not affected.	Файл дополнения будет удалён из библиотеки лаунчера. Копии, уже импортированные в Minecraft, не затрагиваются.	Eklenti dosyası başlatıcı kütüphanesinden kaldırılacak. Minecraft'a zaten aktarılmış kopyalar etkilenmez.	Die Add-on-Datei wird aus der Launcher-Bibliothek entfernt. Bereits in Minecraft importierte Kopien sind nicht betroffen.
+the_backup_is_verified_first_if	The backup is verified first. If a world with the same folder exists in the granted Minecraft folder, it is backed up automatically and then replaced. Close Minecraft before restoring.	Сначала проверяется копия. Если мир с той же папкой уже есть в разрешённой папке Minecraft, он сначала копируется, затем заменяется. Перед восстановлением закройте Minecraft.	Önce yedek doğrulanır. İzin verilen Minecraft klasöründe aynı klasöre sahip bir dünya varsa önce yedeklenir, sonra değiştirilir. Geri yüklemeden önce Minecraft'ı kapatın.	Zuerst wird die Sicherung geprüft. Gibt es im freigegebenen Minecraft-Ordner eine Welt mit demselben Ordner, wird sie vorher gesichert und dann ersetzt. Schließen Sie Minecraft vor der Wiederherstellung.
+the_entry_will_be_removed_from	The entry will be removed from the launcher library. The game installed on the device is not affected.	Запись будет убрана из библиотеки лаунчера. Установленная на устройстве игра не затрагивается.	Girdi başlatıcı kütüphanesinden kaldırılacak. Cihazda yüklü oyun etkilenmez.	Der Eintrag wird aus der Launcher-Bibliothek entfernt. Das installierte Spiel ist nicht betroffen.
+the_file_will_be_permanently_deleted	The file will be permanently deleted from this profile	Файл будет безвозвратно удалён из этого профиля	Dosya bu profilden kalıcı olarak silinecek	Die Datei wird dauerhaft aus diesem Profil gelöscht
+the_file_will_be_permanently_deleted_2	The file will be permanently deleted	Файл будет безвозвратно удалён	Dosya kalıcı olarak silinecek	Die Datei wird dauerhaft gelöscht
+the_folder_and_everything_inside_it	The folder and everything inside it will be permanently deleted	Папка и всё её содержимое будут безвозвратно удалены	Klasör ve içindeki her şey kalıcı olarak silinecek	Der Ordner und sein gesamter Inhalt werden dauerhaft gelöscht
+the_jar_file_will_be_removed	The jar file will be removed from this profile. Create a backup first if you may need it.	Файл jar будет удалён из профиля. Если он может понадобиться, сначала сделайте копию.	Jar dosyası bu profilden kaldırılacak. Gerekebilirse önce yedek alın.	Die JAR-Datei wird aus diesem Profil entfernt. Legen Sie vorher eine Sicherung an, falls Sie sie brauchen.
+the_launcher_only_reads_android_s	The launcher only reads Android's thermal status; it never changes system temperature limits.	Лаунчер только читает тепловой статус Android и никогда не меняет системные температурные пределы.	Başlatıcı yalnızca Android'in sıcaklık durumunu okur; sistem sıcaklık sınırlarını asla değiştirmez.	Der Launcher liest nur den Temperaturstatus von Android und ändert nie System-Temperaturgrenzen.
+the_notification_history_will_be_deleted	The notification history will be deleted	История уведомлений будет удалена	Bildirim geçmişi silinecek	Der Benachrichtigungsverlauf wird gelöscht
+the_profile_will_be_removed_shared	The profile will be removed. Shared game versions stay installed.	Профиль будет удалён. Общие версии игры остаются установленными.	Profil kaldırılacak. Paylaşılan oyun sürümleri yüklü kalır.	Das Profil wird entfernt. Gemeinsam genutzte Spielversionen bleiben installiert.
+the_required_version_is_read_from	The required version is read from each version's metadata. Automatic selection prefers that exact version, then the closest newer one.	Нужная версия берётся из метаданных каждой версии игры. Автовыбор предпочитает именно её, затем ближайшую более новую.	Gerekli sürüm her sürümün meta verisinden okunur. Otomatik seçim önce tam o sürümü, sonra en yakın yenisini tercih eder.	Die benötigte Version stammt aus den Metadaten jeder Version. Die automatische Wahl bevorzugt genau diese, dann die nächstneuere.
+the_stored_tokens_for_this_account	The stored tokens for this account will be deleted. Game files and profiles are not affected.	Сохранённые токены этого аккаунта будут удалены. Файлы игры и профили не затрагиваются.	Bu hesabın saklanan belirteçleri silinecek. Oyun dosyaları ve profiller etkilenmez.	Die gespeicherten Tokens dieses Kontos werden gelöscht. Spieldateien und Profile sind nicht betroffen.
+the_version_files_not_libraries_assets	The version files (not libraries/assets shared with others) will be deleted. Profiles are not affected.	Файлы версии будут удалены (кроме общих библиотек и ассетов). Профили не затрагиваются.	Sürüm dosyaları silinecek (paylaşılan kütüphaneler ve varlıklar hariç). Profiller etkilenmez.	Die Versionsdateien werden gelöscht (gemeinsame Bibliotheken und Assets nicht). Profile sind nicht betroffen.
+the_world_and_all_its_progress	The world and all its progress will be permanently deleted. Export it first if you want a backup.	Мир и весь прогресс в нём будут безвозвратно удалены. Если нужна копия, сначала экспортируйте его.	Dünya ve tüm ilerlemesi kalıcı olarak silinecek. Yedek istiyorsanız önce dışa aktarın.	Die Welt und ihr gesamter Fortschritt werden dauerhaft gelöscht. Exportieren Sie sie vorher, wenn Sie eine Sicherung möchten.
+theme	Theme	Тема	Tema	Design
+theme_dark	Dark	Тёмная	Koyu	Dunkel
+theme_light	Light	Светлая	Açık	Hell
+theme_system	System	Как в системе	Sistem	System
+thermal	Thermal	Нагрев	Sıcaklık	Temperatur
+thermal_headroom	Thermal headroom	Тепловой запас	Termal pay	Thermische Reserve
+this_cannot_be_undone_the_app	This cannot be undone. The app will close afterwards.	Это нельзя отменить. После этого приложение закроется.	Bu geri alınamaz. Uygulama ardından kapanır.	Das kann nicht rückgängig gemacht werden. Die App wird danach geschlossen.
+this_version_needs_java_1_s	 (this version needs Java %1$s)	 (этой версии нужна Java %1$s)	 (bu sürüm Java %1$s gerektirir)	 (diese Version benötigt Java %1$s)
+title_control_editor	Layout editor	Редактор раскладки	Düzen düzenleyici	Layout-Editor
+title_profile_editor	Profile	Профиль	Profil	Profil
+toggle_stays_pressed	Toggle (stays pressed)	Фиксация (остаётся нажатой)	Geçiş (basılı kalır)	Umschalten (bleibt gedrückt)
+too_little_memory_to_start_minecraft	Too little memory to start Minecraft	Слишком мало памяти для запуска Minecraft	Minecraft'ı başlatmak için bellek çok az	Zu wenig Speicher, um Minecraft zu starten
+too_long	Too long	Слишком длинно	Çok uzun	Zu lang
+total_ram	Total RAM	Всего ОЗУ	Toplam RAM	RAM gesamt
+touch_controls_and_gamepads	Touch controls and gamepads	Сенсорное управление и геймпады	Dokunmatik kontroller ve oyun kumandaları	Touch-Steuerung und Gamepads
+touch_layouts	Touch layouts	Сенсорные раскладки	Dokunmatik düzenler	Touch-Layouts
+type	Type	Тип	Tür	Typ
+unlink	Unlink	Отключить	Bağlantıyı kaldır	Verknüpfung lösen
+up	Up	Вверх	Yukarı	Nach oben
+use	Use	Использовать	Kullan	Verwenden
+use_battery_saver	Use Battery Saver	Включить экономию батареи	Pil Tasarrufu'nu kullan	Akkusparen verwenden
+used	Used	Занято	Kullanılan	Belegt
+used_by_1_s	Used by: %1$s	Используется: %1$s	Kullanan: %1$s	Verwendet von: %1$s
+values_are_written_to_the_profile	Values are written to the profile's options.txt, which Minecraft reads at start-up. Other options in the file are kept.	Значения записываются в options.txt профиля, который Minecraft читает при запуске. Остальные параметры в файле сохраняются.	Değerler, Minecraft'ın açılışta okuduğu profilin options.txt dosyasına yazılır. Dosyadaki diğer seçenekler korunur.	Die Werte werden in die options.txt des Profils geschrieben, die Minecraft beim Start liest. Andere Optionen in der Datei bleiben erhalten.
+vanilla	Vanilla	Vanilla	Vanilla	Vanilla
+verified	Verified	Проверено	Doğrulandı	Geprüft
+verify	Verify	Проверить	Doğrula	Prüfen
+verify_files	Verify files	Проверить файлы	Dosyaları doğrula	Dateien prüfen
+verifying	Verifying…	Проверка…	Doğrulanıyor…	Wird geprüft…
+verifying_files	Verifying files	Проверка файлов	Dosyalar doğrulanıyor	Dateien werden geprüft
+version	Version	Версия	Sürüm	Version
+version_1_s	Version %1$s	Версия %1$s	Sürüm %1$s	Version %1$s
+version_list_unavailable_offline_connect_to	Version list unavailable (offline?). Connect to the internet.	Список версий недоступен (нет сети?). Подключитесь к интернету.	Sürüm listesi kullanılamıyor (çevrimdışı mı?). İnternete bağlanın.	Versionsliste nicht verfügbar (offline?). Verbinden Sie sich mit dem Internet.
+versions_are_installed_when_you_install	Versions are installed when you install a profile	Версии устанавливаются при установке профиля	Sürümler bir profil yüklediğinizde yüklenir	Versionen werden beim Installieren eines Profils installiert
+vsync	VSync	VSync	VSync	VSync
+vulkan	Vulkan	Vulkan	Vulkan	Vulkan
+waiting_for_confirmation	Waiting for confirmation…	Ожидание подтверждения…	Onay bekleniyor…	Warte auf Bestätigung…
+waiting_for_input	Waiting for input…	Ожидание ввода…	Giriş bekleniyor…	Warte auf Eingabe…
+waiting_for_you_to_finish_in	Waiting for you to finish in the browser…	Ожидаем завершения входа в браузере…	Tarayıcıda bitirmeniz bekleniyor…	Warte, bis Sie im Browser fertig sind…
+waiting_to_start	Waiting to start	Ожидание запуска	Başlaması bekleniyor	Warte auf Start
+warm	Warm	Тепло	Ilık	Warm
+warn_me_when_the_device_overheats	Warn me when the device overheats	Предупреждать о перегреве устройства	Cihaz aşırı ısındığında beni uyar	Bei Überhitzung warnen
+width	Width	Ширина	Genişlik	Breite
+width_1_s	Width: %1$s%%	Ширина: %1$s%%	Genişlik: %%%1$s	Breite: %1$s %%
+window_height	Window height	Высота окна	Pencere yüksekliği	Fensterhöhe
+window_size_must_be_both_empty	Window size must be both empty or between 320×240 and 7680×4320	Размер окна: оба поля пустые или от 320×240 до 7680×4320	Pencere boyutu ya iki alan da boş ya da 320×240 ile 7680×4320 arasında olmalı	Fenstergröße: beide Felder leer oder zwischen 320×240 und 7680×4320
+window_width	Window width	Ширина окна	Pencere genişliği	Fensterbreite
+with_files	With files	С файлами	Dosyalarla	Mit Dateien
+within_the_safe_range	Within the safe range	В безопасных пределах	Güvenli aralıkta	Im sicheren Bereich
+worlds_on_this_device	Worlds on this device	Миры на этом устройстве	Bu cihazdaki dünyalar	Welten auf diesem Gerät
+wp_checksum	Checksum does not match the backup record.	Контрольная сумма не совпадает с записью резервной копии.	Sağlama toplamı yedek kaydıyla eşleşmiyor.	Prüfsumme stimmt nicht mit dem Sicherungseintrag überein.
+wp_corrupt	Archive is corrupted (CRC/format error).	Архив повреждён (ошибка CRC/формата).	Arşiv bozuk (CRC/biçim hatası).	Archiv beschädigt (CRC-/Formatfehler).
+wp_level_unreadable	level.dat cannot be read.	Не удаётся прочитать level.dat.	level.dat okunamıyor.	level.dat kann nicht gelesen werden.
+wp_no_db	World has no db/ folder (empty or damaged).	У мира нет папки db/ (пустой или повреждённый).	Dünyanın db/ klasörü yok (boş veya hasarlı).	Die Welt hat keinen db/-Ordner (leer oder beschädigt).
+wp_no_level	level.dat is missing — not a Bedrock world.	Отсутствует level.dat — это не мир Bedrock.	level.dat eksik — Bedrock dünyası değil.	level.dat fehlt – keine Bedrock-Welt.
+wp_unsafe	Archive contains unsafe file paths.	Архив содержит небезопасные пути к файлам.	Arşiv güvenli olmayan dosya yolları içeriyor.	Archiv enthält unsichere Dateipfade.
+you_are_offline_signing_in_needs	You are offline. Signing in needs the internet; Offline mode still works for an account added earlier.	Нет сети. Для входа нужен интернет; режим «Офлайн» работает для ранее добавленного аккаунта.	Çevrimdışısınız. Giriş için internet gerekir; Çevrimdışı mod önceden eklenen bir hesapla çalışır.	Sie sind offline. Die Anmeldung braucht Internet; der Offline-Modus funktioniert mit einem früher hinzugefügten Konto.
+you_have_the_latest_version_1	You have the latest version (%1$s)	У вас последняя версия (%1$s)	En son sürüme sahipsiniz (%1$s)	Sie haben die neueste Version (%1$s)
+your_files	Your files	Ваши файлы	Dosyalarınız	Ihre Dateien
+root_java_data	Java game data	Данные Java Edition	Java oyun verileri	Java-Spieldaten
+root_instances	Profiles (game folders)	Профили (папки игры)	Profiller (oyun klasörleri)	Profile (Spielordner)
+root_bedrock	Bedrock library	Библиотека Bedrock	Bedrock kütüphanesi	Bedrock-Bibliothek
+root_exports	Exports	Экспорт	Dışa aktarılanlar	Exporte
+root_backups	Backups	Резервные копии	Yedekler	Sicherungen
+loader_version_1_s	Loader version: %1$s	Версия загрузчика: %1$s	Yükleyici sürümü: %1$s	Loader-Version: %1$s
+latest_stable_at_install	latest stable at install time	последняя стабильная на момент установки	kurulum anındaki son kararlı sürüm	neueste stabile zum Installationszeitpunkt
+latest_stable	(latest stable)	(последняя стабильная)	(son kararlı)	(neueste stabile)
+world_1_s	World: %1$s	Мир: %1$s	Dünya: %1$s	Welt: %1$s
+no_worlds	no worlds	нет миров	dünya yok	keine Welten
+tap_plus_to_import_1_s	Tap + to import (%1$s)	Нажмите +, чтобы импортировать (%1$s)	İçe aktarmak için + simgesine dokunun (%1$s)	Tippen Sie auf +, um zu importieren (%1$s)
+clip_move_1_s	Move: %1$s	Перемещение: %1$s	Taşı: %1$s	Verschieben: %1$s
+clip_copy_1_s	Copy: %1$s	Копирование: %1$s	Kopyala: %1$s	Kopieren: %1$s
+msg_cut_1_s	Cut %1$s; open the destination and tap Paste	Вырезано: %1$s; откройте нужную папку и нажмите «Вставить»	%1$s kesildi; hedefi açıp Yapıştır'a dokunun	%1$s ausgeschnitten; Ziel öffnen und „Einfügen“ tippen
+msg_copied_1_s	Copied %1$s; open the destination and tap Paste	Скопировано: %1$s; откройте нужную папку и нажмите «Вставить»	%1$s kopyalandı; hedefi açıp Yapıştır'a dokunun	%1$s kopiert; Ziel öffnen und „Einfügen“ tippen
+version_code_1_s_2_s	%1$s (code %2$s)	%1$s (код %2$s)	%1$s (kod %2$s)	%1$s (Code %2$s)

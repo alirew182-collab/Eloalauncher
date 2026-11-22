@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.javaui
 
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,7 +51,7 @@ import dev.eloa.launcher.nav.Destination
 @Composable
 fun JavaScreen(padding: PaddingValues, onNavigate: (Destination) -> Unit, vm: JavaViewModel = hiltViewModel()) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
-    val tabs = listOf("Overview", "Worlds", "Datapacks", "Configs")
+    val tabs = listOf(stringResource(R.string.overview), stringResource(R.string.nav_worlds), stringResource(R.string.datapacks), stringResource(R.string.configs))
     Column(Modifier.padding(padding)) {
         PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
             tabs.forEachIndexed { i, t -> Tab(tab == i, { tab = i }, text = { Text(t) }, modifier = Modifier.testTag("java_tab_$i")) }
@@ -74,49 +76,49 @@ private fun Overview(vm: JavaViewModel, onNavigate: (Destination) -> Unit) {
     Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         val p = selection.selected
         if (p == null) {
-            EmptyState(Icons.Outlined.Coffee, "No Java Edition profile", "Profiles keep their own version, mod loader, mods, settings and game folder.",
-                actionLabel = "Create profile", onAction = { onNavigate(Destination.PROFILES) })
+            EmptyState(Icons.Outlined.Coffee, stringResource(R.string.no_java_edition_profile), stringResource(R.string.profiles_keep_their_own_version_mod),
+                actionLabel = stringResource(R.string.create_profile), onAction = { onNavigate(Destination.PROFILES) })
             return@Column
         }
         ProfileSelectorBar(selection, vm::select)
         ProgressPanel(progress, vm::cancelInstall)
         LauncherCard(Modifier.fillMaxWidth()) {
             Row {
-                Text("Game files", Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.game_files), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
                 when (p.state) {
-                    InstallState.INSTALLED -> StatusChip("Installed", StatusLevel.OK)
-                    InstallState.NEEDS_PROCESSORS -> StatusChip("Loader setup pending", StatusLevel.WARNING)
-                    InstallState.FAILED -> StatusChip("Failed", StatusLevel.ERROR)
-                    InstallState.INSTALLING, InstallState.QUEUED -> StatusChip("Installing", StatusLevel.INFO)
-                    InstallState.NOT_INSTALLED -> StatusChip("Not installed", StatusLevel.WARNING)
+                    InstallState.INSTALLED -> StatusChip(stringResource(R.string.installed), StatusLevel.OK)
+                    InstallState.NEEDS_PROCESSORS -> StatusChip(stringResource(R.string.loader_setup_pending), StatusLevel.WARNING)
+                    InstallState.FAILED -> StatusChip(stringResource(R.string.failed), StatusLevel.ERROR)
+                    InstallState.INSTALLING, InstallState.QUEUED -> StatusChip(stringResource(R.string.installing), StatusLevel.INFO)
+                    InstallState.NOT_INSTALLED -> StatusChip(stringResource(R.string.not_installed), StatusLevel.WARNING)
                 }
             }
             Spacer(Modifier.height(8.dp))
-            LabeledValue("Minecraft", p.minecraftVersion)
-            LabeledValue("Mod loader", "${p.loader.lowercase().replaceFirstChar { it.uppercase() }} ${p.loaderVersion ?: if (p.loader == "VANILLA") "" else "(latest stable)"}")
-            LabeledValue("Launch version", p.launchVersionId ?: "—")
-            LabeledValue("Memory", "${p.minMemoryMb}–${p.maxMemoryMb} MB")
-            LabeledValue("Last played", formatDate(p.lastPlayedAt))
-            p.lastError?.let { Text("Last error: $it", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
+            LabeledValue(stringResource(R.string.minecraft), p.minecraftVersion)
+            LabeledValue(stringResource(R.string.mod_loader), p.loader.lowercase().replaceFirstChar { it.uppercase() } + " " + (p.loaderVersion ?: if (p.loader == "VANILLA") "" else stringResource(R.string.latest_stable)))
+            LabeledValue(stringResource(R.string.launch_version), p.launchVersionId ?: "—")
+            LabeledValue(stringResource(R.string.memory), stringResource(R.string.s_1_s_2_s_mb_2, p.minMemoryMb, p.maxMemoryMb))
+            LabeledValue(stringResource(R.string.last_played), formatDate(p.lastPlayedAt))
+            p.lastError?.let { Text(stringResource(R.string.last_error_1_s, it), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 val installed = p.state == InstallState.INSTALLED || p.state == InstallState.NEEDS_PROCESSORS
-                Button(onClick = vm::install, enabled = progress == null, modifier = Modifier.weight(1f).testTag("java_install")) { Text(if (installed) "Repair" else "Install") }
-                FilledTonalButton(onClick = vm::verify, enabled = installed && !busy && progress == null, modifier = Modifier.weight(1f).testTag("java_verify")) { Text("Verify files") }
+                Button(onClick = vm::install, enabled = progress == null, modifier = Modifier.weight(1f).testTag("java_install")) { Text(if (installed) stringResource(R.string.repair) else stringResource(R.string.install)) }
+                FilledTonalButton(onClick = vm::verify, enabled = installed && !busy && progress == null, modifier = Modifier.weight(1f).testTag("java_verify")) { Text(stringResource(R.string.verify_files)) }
             }
         }
-        LaunchButton(if (busy) "CHECKING…" else "PLAY", vm::launch, Modifier.fillMaxWidth(), enabled = !busy && progress == null, icon = Icons.Outlined.PlayArrow)
+        LaunchButton(if (busy) stringResource(R.string.checking) else stringResource(R.string.play), vm::launch, Modifier.fillMaxWidth(), enabled = !busy && progress == null, icon = Icons.Outlined.PlayArrow)
         LauncherCard(Modifier.fillMaxWidth()) {
-            Text("Java runtime", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.java_runtime), style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(6.dp))
-            if (runtimes.isEmpty()) Text("No runtime imported. Java Edition requires a Java runtime built for Android (and an execution backend).", style = MaterialTheme.typography.bodySmall)
-            runtimes.forEach { LabeledValue("Java ${it.majorVersion}", "${it.fullVersion} · ${it.arch}") }
+            if (runtimes.isEmpty()) Text(stringResource(R.string.no_runtime_imported_java_edition_requires), style = MaterialTheme.typography.bodySmall)
+            runtimes.forEach { LabeledValue(stringResource(R.string.java_1_s, it.majorVersion), "${it.fullVersion} · ${it.arch}") }
             Spacer(Modifier.height(8.dp))
-            OutlinedButton(onClick = { onNavigate(Destination.SETTINGS) }) { Text("Manage runtimes") }
+            OutlinedButton(onClick = { onNavigate(Destination.RUNTIMES) }) { Text(stringResource(R.string.manage_runtimes)) }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = { onNavigate(Destination.MODS) }, modifier = Modifier.weight(1f)) { Text("Mods") }
-            OutlinedButton(onClick = { onNavigate(Destination.PROFILES) }, modifier = Modifier.weight(1f)) { Text("Edit profile") }
+            OutlinedButton(onClick = { onNavigate(Destination.MODS) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.nav_mods)) }
+            OutlinedButton(onClick = { onNavigate(Destination.PROFILES) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.edit_profile)) }
         }
     }
 }

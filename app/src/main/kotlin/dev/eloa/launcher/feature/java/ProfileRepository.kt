@@ -39,9 +39,12 @@ data class ProfileConfig(
     val width: Int? = null,
     val height: Int? = null,
     val graphicsPreset: String = "BALANCED",
+    val runtimeName: String? = null,
+    val renderer: String = "AUTO",
+    val resolutionScale: Float = 1f,
 )
 
-fun JavaProfileEntity.toConfig() = ProfileConfig(1, name, description, iconKey, coverKey, minecraftVersion, loader, loaderVersion, minMemoryMb, maxMemoryMb, jvmArgs, gameArgs, width, height, graphicsPreset)
+fun JavaProfileEntity.toConfig() = ProfileConfig(1, name, description, iconKey, coverKey, minecraftVersion, loader, loaderVersion, minMemoryMb, maxMemoryMb, jvmArgs, gameArgs, width, height, graphicsPreset, runtimeName, renderer, resolutionScale)
 val JavaProfileEntity.loaderType: ModLoaderType get() = runCatching { ModLoaderType.valueOf(loader) }.getOrDefault(ModLoaderType.VANILLA)
 val JavaProfileEntity.state: InstallState get() = runCatching { InstallState.valueOf(installState) }.getOrDefault(InstallState.NOT_INSTALLED)
 
@@ -81,6 +84,7 @@ class ProfileRepository @Inject constructor(
             loader = config.loader, loaderVersion = config.loaderVersion, gameDirName = uniqueDir(config.name),
             minMemoryMb = config.minMemoryMb, maxMemoryMb = config.maxMemoryMb, jvmArgs = config.jvmArgs, gameArgs = config.gameArgs,
             width = config.width, height = config.height, graphicsPreset = config.graphicsPreset, createdAt = System.currentTimeMillis(),
+            runtimeName = config.runtimeName, renderer = config.renderer, resolutionScale = config.resolutionScale.coerceIn(0.25f, 1f),
         )
         storage.instance(e.gameDirName).ensure()
         dao.upsert(e)
@@ -99,6 +103,7 @@ class ProfileRepository @Inject constructor(
             minecraftVersion = config.minecraftVersion, loader = config.loader, loaderVersion = config.loaderVersion,
             minMemoryMb = config.minMemoryMb, maxMemoryMb = config.maxMemoryMb, jvmArgs = config.jvmArgs, gameArgs = config.gameArgs,
             width = config.width, height = config.height, graphicsPreset = config.graphicsPreset,
+            runtimeName = config.runtimeName, renderer = config.renderer, resolutionScale = config.resolutionScale.coerceIn(0.25f, 1f),
             installState = if (changedGame) InstallState.NOT_INSTALLED.name else old.installState,
             launchVersionId = if (changedGame) null else old.launchVersionId,
         ))
@@ -133,6 +138,21 @@ class ProfileRepository @Inject constructor(
             dao.upsert(it.copy(launchVersionId = launchVersionId, pendingProcessors = pendingProcessors, lastError = null,
                 installState = (if (pendingProcessors > 0) InstallState.NEEDS_PROCESSORS else InstallState.INSTALLED).name))
         }
+    }
+
+    /** Launch-time options edited on the game settings page (validated). */
+    suspend fun updateLaunchOptions(id: String, transform: (JavaProfileEntity) -> JavaProfileEntity) {
+        val old = dao.byId(id) ?: throw IOException("Profile not found")
+        val n = transform(old)
+        require(n.maxMemoryMb >= 256 && n.minMemoryMb in 128..n.maxMemoryMb) { "Invalid memory settings" }
+        dev.eloa.launcher.domain.java.launch.LaunchPlanBuilder.validateExtraJvmArgs(n.jvmArgs.split(' ').filter { it.isNotBlank() }).firstOrNull()?.let {
+            throw IllegalArgumentException("JVM argument not allowed: $it")
+        }
+        dao.upsert(old.copy(
+            minMemoryMb = n.minMemoryMb, maxMemoryMb = n.maxMemoryMb, jvmArgs = n.jvmArgs.trim(), gameArgs = n.gameArgs.trim(),
+            width = n.width, height = n.height, runtimeName = n.runtimeName, renderer = n.renderer,
+            resolutionScale = n.resolutionScale.coerceIn(0.25f, 1f), graphicsPreset = n.graphicsPreset,
+        ))
     }
 
     suspend fun setMemory(id: String, maxMb: Int) { dao.byId(id)?.let { dao.upsert(it.copy(maxMemoryMb = maxMb, minMemoryMb = minOf(it.minMemoryMb, maxMb))) } }

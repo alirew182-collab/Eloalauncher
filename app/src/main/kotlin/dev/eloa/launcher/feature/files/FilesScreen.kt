@@ -1,5 +1,8 @@
 package dev.eloa.launcher.feature.files
 
+import dev.eloa.launcher.feature.common.str
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -71,34 +74,34 @@ fun FilesScreen(padding: PaddingValues, vm: FilesViewModel = hiltViewModel()) {
         item { ChipRow(FileRoot.entries, ui.root, { it.label }, vm::setRoot) }
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { vm.up() }, enabled = ui.path.isNotEmpty()) { Icon(Icons.AutoMirrored.Outlined.ArrowBack, "Up") }
+                IconButton(onClick = { vm.up() }, enabled = ui.path.isNotEmpty()) { Icon(Icons.AutoMirrored.Outlined.ArrowBack, stringResource(R.string.up)) }
                 Text("/" + ui.path, Modifier.weight(1f), style = MonoStyle, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                IconButton(onClick = { newFolder = true }, modifier = Modifier.testTag("files_new_folder")) { Icon(Icons.Outlined.CreateNewFolder, "New folder") }
-                IconButton(onClick = { importer.launch(arrayOf("*/*")) }) { Icon(Icons.Outlined.UploadFile, "Import here") }
+                IconButton(onClick = { newFolder = true }, modifier = Modifier.testTag("files_new_folder")) { Icon(Icons.Outlined.CreateNewFolder, stringResource(R.string.new_folder)) }
+                IconButton(onClick = { importer.launch(arrayOf("*/*")) }) { Icon(Icons.Outlined.UploadFile, stringResource(R.string.import_here)) }
             }
         }
         ui.clipboard?.let { c ->
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("${if (c.move) "Move" else "Copy"}: ${c.name}", Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
-                    FilledTonalButton(onClick = vm::paste, modifier = Modifier.testTag("files_paste")) { Text("Paste here") }
-                    TextButton(onClick = vm::clearClipboard) { Text("Cancel") }
+                    Text(stringResource(if (c.move) R.string.clip_move_1_s else R.string.clip_copy_1_s, c.name), Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                    FilledTonalButton(onClick = vm::paste, modifier = Modifier.testTag("files_paste")) { Text(stringResource(R.string.paste_here)) }
+                    TextButton(onClick = vm::clearClipboard) { Text(stringResource(dev.eloa.launcher.core.designsystem.R.string.ds_cancel)) }
                 }
             }
         }
-        item { SearchField(ui.query, vm::search, placeholder = "Search in ${ui.root.label}") }
-        item { ChipRow(FileSort.entries, ui.sort, { "Sort: " + it.name.lowercase() }, vm::setSort) }
+        item { SearchField(ui.query, vm::search, placeholder = stringResource(R.string.search_in_1_s, ui.root.label)) }
+        item { ChipRow(FileSort.entries, ui.sort, { str(R.string.sort) + it.name.lowercase() }, vm::setSort) }
         ui.error?.let { item { ErrorBanner(it, onRetry = { vm.load() }) } }
         val list = ui.searchResults ?: ui.entries
         if (ui.loading && ui.searchResults == null) item { SkeletonList(6) }
-        else if (list.isEmpty()) item { EmptyState(Icons.Outlined.FolderOpen, if (ui.searchResults != null) "No results" else "Empty folder", "Import files with the upload button or create a folder.") }
+        else if (list.isEmpty()) item { EmptyState(Icons.Outlined.FolderOpen, if (ui.searchResults != null) stringResource(R.string.no_results) else stringResource(R.string.empty_folder), stringResource(R.string.import_files_with_the_upload_button)) }
         else items(list, key = { it.relativePath }) { e -> FileRow(e, vm, onExport = { exportEntry = e; exporter.launch(if (e.isDirectory) "${e.name}.zip" else e.name) }, onRename = { renameEntry = e }, onDelete = { deleteEntry = e }) }
     }
-    if (newFolder) TextInputDialog("New folder", "Name", "", { vm.createFolder(it); newFolder = false }, { newFolder = false },
-        validate = { if (!PathSafety.isValidFileName(it)) "Invalid name" else null }, confirmLabel = "Create")
-    renameEntry?.let { e -> TextInputDialog("Rename", "New name", e.name, { vm.rename(e, it); renameEntry = null }, { renameEntry = null }, validate = { if (!PathSafety.isValidFileName(it)) "Invalid name" else null }) }
-    deleteEntry?.let { e -> ConfirmDialog("Delete ${e.name}?", if (e.isDirectory) "The folder and everything inside it will be permanently deleted." else "The file will be permanently deleted.", "Delete", { vm.delete(e); deleteEntry = null }, { deleteEntry = null }, destructive = true) }
-    ui.info?.let { AlertDialog(onDismissRequest = vm::dismissInfo, title = { Text("Integrity") }, text = { Text(it, style = MonoStyle) }, confirmButton = { TextButton(onClick = vm::dismissInfo) { Text("OK") } }) }
+    if (newFolder) TextInputDialog(stringResource(R.string.new_folder), stringResource(R.string.sort_name), "", { vm.createFolder(it); newFolder = false }, { newFolder = false },
+        validate = { if (!PathSafety.isValidFileName(it)) str(R.string.invalid_name) else null }, confirmLabel = str(R.string.create))
+    renameEntry?.let { e -> TextInputDialog(str(R.string.action_rename), str(R.string.new_name), e.name, { vm.rename(e, it); renameEntry = null }, { renameEntry = null }, validate = { if (!PathSafety.isValidFileName(it)) str(R.string.invalid_name) else null }) }
+    deleteEntry?.let { e -> ConfirmDialog(stringResource(R.string.delete_1_s, e.name), if (e.isDirectory) stringResource(R.string.the_folder_and_everything_inside_it) else stringResource(R.string.the_file_will_be_permanently_deleted_2), stringResource(R.string.action_delete), { vm.delete(e); deleteEntry = null }, { deleteEntry = null }, destructive = true) }
+    ui.info?.let { AlertDialog(onDismissRequest = vm::dismissInfo, title = { Text(stringResource(R.string.integrity)) }, text = { Text(it, style = MonoStyle) }, confirmButton = { TextButton(onClick = vm::dismissInfo) { Text("OK") } }) }
 }
 
 @Composable
@@ -110,21 +113,21 @@ private fun FileRow(e: FileEntry, vm: FilesViewModel, onExport: () -> Unit, onRe
         Column(Modifier.weight(1f)) {
             Text(e.name, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text(buildString {
-                if (e.isDirectory) append("${e.childCount} item(s)") else append(FileOps.formatSize(e.size))
+                if (e.isDirectory) append(stringResource(R.string.s_1_s_item_s, e.childCount)) else append(FileOps.formatSize(e.size))
                 if (e.isDirectory && e.size >= 0) append(" · ${FileOps.formatSize(e.size)}")
                 append(" · ${formatDate(e.lastModified)}")
             }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Box {
-            IconButton(onClick = { menu = true }, modifier = Modifier.testTag("file_menu")) { Icon(Icons.Outlined.MoreVert, "Actions") }
+            IconButton(onClick = { menu = true }, modifier = Modifier.testTag("file_menu")) { Icon(Icons.Outlined.MoreVert, stringResource(R.string.actions)) }
             DropdownMenu(menu, { menu = false }) {
-                DropdownMenuItem({ Text("Rename") }, { menu = false; onRename() })
-                DropdownMenuItem({ Text("Copy") }, { menu = false; vm.copy(e, false) })
-                DropdownMenuItem({ Text("Move") }, { menu = false; vm.copy(e, true) })
-                DropdownMenuItem({ Text("Export") }, { menu = false; onExport() })
-                DropdownMenuItem({ Text("Back up") }, { menu = false; vm.backup(e) })
-                if (!e.isDirectory) DropdownMenuItem({ Text("Check integrity") }, { menu = false; vm.integrity(e) })
-                DropdownMenuItem({ Text("Delete", color = MaterialTheme.colorScheme.error) }, { menu = false; onDelete() }, modifier = Modifier.testTag("file_delete"))
+                DropdownMenuItem({ Text(stringResource(R.string.action_rename)) }, { menu = false; onRename() })
+                DropdownMenuItem({ Text(stringResource(R.string.copy)) }, { menu = false; vm.copy(e, false) })
+                DropdownMenuItem({ Text(stringResource(R.string.move)) }, { menu = false; vm.copy(e, true) })
+                DropdownMenuItem({ Text(stringResource(R.string.action_export)) }, { menu = false; onExport() })
+                DropdownMenuItem({ Text(stringResource(R.string.back_up)) }, { menu = false; vm.backup(e) })
+                if (!e.isDirectory) DropdownMenuItem({ Text(stringResource(R.string.check_integrity)) }, { menu = false; vm.integrity(e) })
+                DropdownMenuItem({ Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error) }, { menu = false; onDelete() }, modifier = Modifier.testTag("file_delete"))
             }
         }
     }

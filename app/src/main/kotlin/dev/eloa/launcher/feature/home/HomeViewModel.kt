@@ -3,18 +3,25 @@ package dev.eloa.launcher.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.eloa.launcher.R
 import dev.eloa.launcher.core.data.db.AccountEntity
-import dev.eloa.launcher.core.data.db.AddonEntity
 import dev.eloa.launcher.core.data.db.BedrockVersionEntity
 import dev.eloa.launcher.core.data.db.JavaProfileEntity
 import dev.eloa.launcher.core.data.db.LaunchHistoryEntity
 import dev.eloa.launcher.core.data.device.DeviceInfoProvider
 import dev.eloa.launcher.core.data.settings.Edition
+import dev.eloa.launcher.core.data.settings.HomeLayout
 import dev.eloa.launcher.core.data.settings.SettingsRepository
 import dev.eloa.launcher.core.data.storage.LauncherStorage
-import dev.eloa.launcher.feature.addons.AddonRepository
+import dev.eloa.launcher.domain.bedrock.apk.KnownPackages
+import dev.eloa.launcher.domain.java.launch.LaunchMode
+import dev.eloa.launcher.domain.java.launch.LaunchModes
+import dev.eloa.launcher.domain.java.launch.ModeAvailability
+import dev.eloa.launcher.domain.java.launch.ModeContext
 import dev.eloa.launcher.feature.bedrock.BedrockRepository
 import dev.eloa.launcher.feature.bedrock.PackageInstallerGateway
+import dev.eloa.launcher.feature.common.NetworkStatus
+import dev.eloa.launcher.feature.common.UserMessages
 import dev.eloa.launcher.feature.java.AccountRepository
 import dev.eloa.launcher.feature.java.ProfileRepository
 import dev.eloa.launcher.feature.launch.LaunchCoordinator
@@ -29,22 +36,28 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
-data class SystemStatus(val availRamMb: Long, val totalRamMb: Long, val freeStorage: Long, val totalStorage: Long, val launcherBytes: Long)
+data class SystemStatus(val availRamMb: Long, val totalRamMb: Long, val freeStorage: Long, val totalStorage: Long, val launcherBytes: Long, val online: Boolean)
+
+data class BedrockStatus(val installedVersion: String?, val launchable: Boolean)
 
 data class HomeState(
     val loading: Boolean = true,
+    val layout: HomeLayout = HomeLayout.CARDS,
     val edition: Edition = Edition.JAVA,
     val bedrockVersions: List<BedrockVersionEntity> = emptyList(),
-    val selectedBedrock: BedrockVersionEntity? = null,
-    val installedBedrockVersion: String? = null,
+    val bedrock: BedrockStatus = BedrockStatus(null, false),
     val profiles: List<JavaProfileEntity> = emptyList(),
     val selectedProfile: JavaProfileEntity? = null,
     val account: AccountEntity? = null,
     val recent: List<LaunchHistoryEntity> = emptyList(),
-    val recentAddons: List<AddonEntity> = emptyList(),
     val system: SystemStatus? = null,
+    val mode: LaunchMode = LaunchMode.OFFICIAL_ACCOUNT,
+    val modes: List<ModeAvailability> = emptyList(),
+    val launchCount: Int = 0,
 )
 
 @HiltViewModel
@@ -53,66 +66,78 @@ class HomeViewModel @Inject constructor(
     bedrock: BedrockRepository,
     profiles: ProfileRepository,
     accounts: AccountRepository,
-    addons: AddonRepository,
     private val launcher: LaunchCoordinator,
     private val installer: PackageInstallerGateway,
     private val device: DeviceInfoProvider,
     private val storage: LauncherStorage,
+    private val network: NetworkStatus,
+    private val messages: UserMessages,
 ) : ViewModel() {
     private val system = flow {
         while (true) {
             val (avail, total) = device.memorySnapshot()
             val st = storage.stats()
-            emit(SystemStatus(avail / 1_048_576, total / 1_048_576, st.freeBytes, st.totalBytes, st.launcherBytes))
+            emit(SystemStatus(avail / 1_048_576, total / 1_048_576, st.freeBytes, st.totalBytes, st.launcherBytes, network.isOnline()))
             delay(10_000)
         }
     }.flowOn(Dispatchers.IO)
 
-    private val installedBedrock = flow {
-        emit(installer.installedPackage(dev.eloa.launcher.domain.bedrock.apk.KnownPackages.MINECRAFT_BEDROCK)?.versionName)
+    private val bedrockStatus = flow {
+        while (true) {
+            emit(BedrockStatus(installer.installedPackage(KnownPackages.MINECRAFT_BEDROCK)?.versionName, installer.launchIntent(KnownPackages.MINECRAFT_BEDROCK) != null))
+            delay(15_000)
+        }
     }.flowOn(Dispatchers.IO)
 
     val state: StateFlow<HomeState> = combine(
         settings.settings, bedrock.versions, profiles.profiles, accounts.accounts,
-        combine(launcher.recent(6), addons.recent(5), system, installedBedrock) { r, a, s, i -> listOf(r, a, s, i) },
-    ) { s, versions, profs, accs, extra ->
-        @Suppress("UNCHECKED_CAST")
+        combine(launcher.recent(8), system, bedrockStatus) { r, s, b -> Triple(r, s, b) },
+    ) { s, versions, profs, accs, (recent, sys, bstat) ->
+        val selected = profs.firstOrNull { it.id == s.selectedProfileId } ?: profs.firstOrNull()
+        val active = accs.firstOrNull { it.active }
+        val worlds = selected?.let { p -> File(storage.instance(p.gameDirName).gameDir, "saves").list()?.toList() }.orEmpty()
+        val ctx = ModeContext(active?.let { dev.eloa.launcher.domain.java.launch.AccountSnapshot(it.username, it.minecraftTokenExpiresAt) },
+            sys.online, System.currentTimeMillis(), selected?.minecraftVersion, worlds)
         HomeState(
-            loading = false,
-            edition = s.selectedEdition,
-            bedrockVersions = versions,
-            selectedBedrock = versions.firstOrNull { it.id == s.selectedBedrockId } ?: versions.firstOrNull(),
-            installedBedrockVersion = extra[3] as String?,
-            profiles = profs,
-            selectedProfile = profs.firstOrNull { it.id == s.selectedProfileId } ?: profs.firstOrNull(),
-            account = accs.firstOrNull { it.active },
-            recent = extra[0] as List<LaunchHistoryEntity>,
-            recentAddons = extra[1] as List<AddonEntity>,
-            system = extra[2] as SystemStatus,
+            loading = false, layout = s.homeLayout, edition = s.selectedEdition, bedrockVersions = versions, bedrock = bstat,
+            profiles = profs, selectedProfile = selected, account = active, recent = recent, system = sys,
+            mode = runCatching { LaunchMode.valueOf(s.launchMode) }.getOrDefault(LaunchMode.OFFICIAL_ACCOUNT),
+            modes = LaunchModes.evaluateAll(ctx), launchCount = recent.size,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
 
-    private val _launching = MutableStateFlow(false)
-    val launching: StateFlow<Boolean> = _launching
+    private val _launching = MutableStateFlow<Edition?>(null)
+    val launching: StateFlow<Edition?> = _launching
     private val _outcome = MutableStateFlow<LaunchOutcome?>(null)
     val outcome: StateFlow<LaunchOutcome?> = _outcome
 
-    fun selectEdition(e: Edition) = viewModelScope.launch { settings.update { it.copy(selectedEdition = e) } }
-    fun selectBedrock(id: Long) = viewModelScope.launch { settings.update { it.copy(selectedBedrockId = id, selectedEdition = Edition.BEDROCK) } }
     fun selectProfile(id: String) = viewModelScope.launch { settings.update { it.copy(selectedProfileId = id, selectedEdition = Edition.JAVA) } }
+    fun selectMode(m: LaunchMode) = viewModelScope.launch { settings.update { it.copy(launchMode = m.name) } }
 
-    fun launch() {
-        if (_launching.value) return
+    fun launchJava(profileId: String? = null) {
+        if (_launching.value != null) return
         val s = state.value
-        _launching.value = true
+        val target = profileId ?: s.selectedProfile?.id
+        _launching.value = Edition.JAVA
         viewModelScope.launch {
             try {
-                _outcome.value = when (s.edition) {
-                    Edition.BEDROCK -> s.selectedBedrock?.let { launcher.launchBedrock(it.id) }
-                        ?: if (launcher.launchInstalledBedrock()) LaunchOutcome.Started else LaunchOutcome.Failed("Import a Minecraft Bedrock APK first (Bedrock Edition → Import).")
-                    Edition.JAVA -> s.selectedProfile?.let { launcher.prepareJava(it.id) } ?: LaunchOutcome.Failed("Create a Java Edition profile first (Profiles → New).")
-                }
-            } finally { _launching.value = false }
+                settings.update { it.copy(selectedEdition = Edition.JAVA) }
+                _outcome.value = target?.let { launcher.prepareJava(it) } ?: LaunchOutcome.Failed("", R.string.err_no_profile)
+            } finally { _launching.value = null }
+        }
+    }
+
+    /** Starts the installed Minecraft Bedrock through its own launcher activity. */
+    fun launchBedrock() {
+        if (_launching.value != null) return
+        _launching.value = Edition.BEDROCK
+        viewModelScope.launch {
+            try {
+                settings.update { it.copy(selectedEdition = Edition.BEDROCK) }
+                val ok = withContext(Dispatchers.Main) { launcher.launchInstalledBedrock() }
+                if (!ok) _outcome.value = LaunchOutcome.Failed("", R.string.err_bedrock_not_installed)
+                else messages.info(R.string.msg_bedrock_started)
+            } finally { _launching.value = null }
         }
     }
 

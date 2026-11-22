@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -13,7 +14,22 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-enum class PerformancePreset { ULTRA_LOW, LOW, BALANCED, HIGH, ULTRA, CUSTOM }
+enum class PerformancePreset {
+    BATTERY_SAVER, BALANCED, PERFORMANCE, EXTREME_PERFORMANCE, CUSTOM;
+
+    companion object {
+        /** Reads stored values including names used by launcher 1.0. */
+        fun parse(s: String?): PerformancePreset? = when (s) {
+            null -> null
+            "ULTRA_LOW" -> EXTREME_PERFORMANCE
+            "LOW" -> BATTERY_SAVER
+            "HIGH", "ULTRA" -> PERFORMANCE
+            else -> entries.firstOrNull { it.name == s }
+        }
+    }
+}
+enum class UiDensity { COMPACT, DEFAULT, COMFORTABLE }
+enum class HomeLayout { CARDS, DASHBOARD, MINIMAL }
 enum class Edition { BEDROCK, JAVA }
 
 data class LauncherSettings(
@@ -39,6 +55,20 @@ data class LauncherSettings(
     val maxLogEntries: Int = 5000,
     val onboardingDone: Boolean = false,
     val lastCleanupAt: Long = 0,
+    /** BCP-47 tag, empty = follow the system. */
+    val language: String = "",
+    /** LaunchMode name. */
+    val launchMode: String = "OFFICIAL_ACCOUNT",
+    val uiDensity: UiDensity = UiDensity.DEFAULT,
+    /** Text/element scale 0.85..1.3. */
+    val uiScale: Float = 1f,
+    val homeLayout: HomeLayout = HomeLayout.CARDS,
+    val autoUpdateCheck: Boolean = false,
+    val includePrereleases: Boolean = false,
+    val lastUpdateCheckAt: Long = 0,
+    val activeControlLayout: String = "Classic",
+    val thermalWarnings: Boolean = true,
+    val systemNotifications: Boolean = true,
 )
 
 class SettingsRepository(private val store: DataStore<Preferences>) {
@@ -65,6 +95,17 @@ class SettingsRepository(private val store: DataStore<Preferences>) {
         val maxLogs = intPreferencesKey("max_logs")
         val onboarding = booleanPreferencesKey("onboarding")
         val lastCleanup = longPreferencesKey("last_cleanup")
+        val language = stringPreferencesKey("language")
+        val launchMode = stringPreferencesKey("launch_mode")
+        val density = stringPreferencesKey("ui_density")
+        val uiScale = floatPreferencesKey("ui_scale")
+        val homeLayout = stringPreferencesKey("home_layout")
+        val autoUpdate = booleanPreferencesKey("auto_update_check")
+        val prerelease = booleanPreferencesKey("update_prerelease")
+        val lastUpdate = longPreferencesKey("last_update_check")
+        val controls = stringPreferencesKey("control_layout")
+        val thermal = booleanPreferencesKey("thermal_warnings")
+        val sysNotif = booleanPreferencesKey("system_notifications")
     }
 
     val settings: Flow<LauncherSettings> = store.data
@@ -78,7 +119,7 @@ class SettingsRepository(private val store: DataStore<Preferences>) {
                 accent = p[K.accent] ?: d.accent,
                 enableBlur = p[K.blur] ?: d.enableBlur,
                 reduceMotion = p[K.reduceMotion] ?: d.reduceMotion,
-                performancePreset = p[K.preset]?.let { runCatching { PerformancePreset.valueOf(it) }.getOrNull() } ?: d.performancePreset,
+                performancePreset = PerformancePreset.parse(p[K.preset]) ?: d.performancePreset,
                 presetChosenByUser = p[K.presetChosen] ?: false,
                 defaultMaxMemoryMb = p[K.maxMem] ?: d.defaultMaxMemoryMb,
                 maxConcurrentDownloads = (p[K.concurrency] ?: d.maxConcurrentDownloads).coerceIn(1, 16),
@@ -96,6 +137,17 @@ class SettingsRepository(private val store: DataStore<Preferences>) {
                 maxLogEntries = p[K.maxLogs] ?: 5000,
                 onboardingDone = p[K.onboarding] ?: false,
                 lastCleanupAt = p[K.lastCleanup] ?: 0,
+                language = p[K.language] ?: "",
+                launchMode = p[K.launchMode] ?: d.launchMode,
+                uiDensity = p[K.density]?.let { runCatching { UiDensity.valueOf(it) }.getOrNull() } ?: d.uiDensity,
+                uiScale = (p[K.uiScale] ?: 1f).coerceIn(0.85f, 1.3f),
+                homeLayout = p[K.homeLayout]?.let { runCatching { HomeLayout.valueOf(it) }.getOrNull() } ?: d.homeLayout,
+                autoUpdateCheck = p[K.autoUpdate] ?: false,
+                includePrereleases = p[K.prerelease] ?: false,
+                lastUpdateCheckAt = p[K.lastUpdate] ?: 0,
+                activeControlLayout = p[K.controls] ?: d.activeControlLayout,
+                thermalWarnings = p[K.thermal] ?: true,
+                systemNotifications = p[K.sysNotif] ?: true,
             )
     }
 
@@ -117,6 +169,10 @@ class SettingsRepository(private val store: DataStore<Preferences>) {
             p[K.mojangUri] = n.mojangFolderUri; p[K.minLog] = n.minLogLevel
             p[K.maxLogs] = n.maxLogEntries.coerceIn(500, 100_000)
             p[K.onboarding] = n.onboardingDone; p[K.lastCleanup] = n.lastCleanupAt
+            p[K.language] = n.language; p[K.launchMode] = n.launchMode; p[K.density] = n.uiDensity.name
+            p[K.uiScale] = n.uiScale.coerceIn(0.85f, 1.3f); p[K.homeLayout] = n.homeLayout.name
+            p[K.autoUpdate] = n.autoUpdateCheck; p[K.prerelease] = n.includePrereleases; p[K.lastUpdate] = n.lastUpdateCheckAt
+            p[K.controls] = n.activeControlLayout.take(60); p[K.thermal] = n.thermalWarnings; p[K.sysNotif] = n.systemNotifications
         }
     }
 }

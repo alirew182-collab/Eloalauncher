@@ -1,5 +1,8 @@
 package dev.eloa.launcher.feature.versions
 
+import dev.eloa.launcher.feature.common.str
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -43,11 +46,11 @@ import dev.eloa.launcher.core.designsystem.component.StatusLevel
 import dev.eloa.launcher.domain.java.meta.VersionChannel
 import dev.eloa.launcher.domain.java.meta.VersionManifest
 
-private enum class ChannelFilter(val label: String, val channels: Set<VersionChannel>) {
-    RELEASE("Releases", setOf(VersionChannel.RELEASE)),
-    SNAPSHOT("Snapshots", setOf(VersionChannel.SNAPSHOT)),
-    OLD("Old (beta/alpha)", setOf(VersionChannel.OLD_BETA, VersionChannel.OLD_ALPHA)),
-    ALL("All", VersionChannel.entries.toSet()),
+private enum class ChannelFilter(@param:androidx.annotation.StringRes val label: Int, val channels: Set<VersionChannel>) {
+    RELEASE(R.string.releases, setOf(VersionChannel.RELEASE)),
+    SNAPSHOT(R.string.snapshots, setOf(VersionChannel.SNAPSHOT)),
+    OLD(R.string.old_beta_alpha, setOf(VersionChannel.OLD_BETA, VersionChannel.OLD_ALPHA)),
+    ALL(R.string.particles_all, VersionChannel.entries.toSet()),
 }
 
 @Composable
@@ -62,20 +65,20 @@ fun VersionsScreen(padding: PaddingValues, vm: VersionsViewModel = hiltViewModel
     var delete by remember { mutableStateOf<InstalledVersion?>(null) }
     Column(Modifier.padding(padding)) {
         PrimaryTabRow(selectedTabIndex = tab) {
-            Tab(tab == 0, { tab = 0 }, text = { Text("Available") })
-            Tab(tab == 1, { tab = 1 }, text = { Text("Installed (${installed.size})") })
+            Tab(tab == 0, { tab = 0 }, text = { Text(stringResource(R.string.available)) })
+            Tab(tab == 1, { tab = 1 }, text = { Text(stringResource(R.string.installed_1_s, installed.size)) })
         }
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.testTag("versions")) {
             if (tab == 0) {
-                m.error?.let { e -> item { ErrorBanner(if (m.fromCache) "Offline — showing cached list ($e)" else "Cannot load versions: $e", onRetry = { vm.refresh() }) } }
-                item { SearchField(query, { query = it }, placeholder = "Search versions") }
-                item { ChipRow(ChannelFilter.entries, filter, { it.label }, { filter = it }) }
+                m.error?.let { e -> item { ErrorBanner(if (m.fromCache) stringResource(R.string.offline_showing_cached_list_1_s, e) else stringResource(R.string.cannot_load_versions_1_s, e), onRetry = { vm.refresh() }) } }
+                item { SearchField(query, { query = it }, placeholder = stringResource(R.string.search_versions)) }
+                item { ChipRow(ChannelFilter.entries, filter, { str(it.label) }, { filter = it }) }
                 val manifest = m.manifest
                 if (manifest == null) {
-                    item { if (m.loading || m.error == null) SkeletonList(6) else EmptyState(Icons.Outlined.CloudOff, "No version list", "Connect to the internet and retry.", actionLabel = "Retry", onAction = { vm.refresh() }) }
+                    item { if (m.loading || m.error == null) SkeletonList(6) else EmptyState(Icons.Outlined.CloudOff, stringResource(R.string.no_version_list), stringResource(R.string.connect_to_the_internet_and_retry), actionLabel = stringResource(dev.eloa.launcher.core.designsystem.R.string.ds_retry), onAction = { vm.refresh() }) }
                 } else {
                     val list = manifest.versions.filter { it.channel in filter.channels && (query.isBlank() || it.id.contains(query, true)) }
-                    item { Text("Latest release ${manifest.latest.release} · snapshot ${manifest.latest.snapshot} · ${list.size} shown", style = MaterialTheme.typography.labelMedium) }
+                    item { Text(stringResource(R.string.latest_release_1_s_snapshot_2, manifest.latest.release, manifest.latest.snapshot, list.size), style = MaterialTheme.typography.labelMedium) }
                     items(list, key = { it.id }) { v ->
                         LauncherCard(Modifier.fillMaxWidth()) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -83,28 +86,28 @@ fun VersionsScreen(padding: PaddingValues, vm: VersionsViewModel = hiltViewModel
                                     Text(v.id, style = MaterialTheme.typography.titleSmall)
                                     Text("${v.type} · ${v.releaseTime.take(10)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
-                                if (installed.any { it.id == v.id }) StatusChip("Installed", StatusLevel.OK)
-                                TextButton(onClick = { confirm = v }) { Text("New profile") }
+                                if (installed.any { it.id == v.id }) StatusChip(stringResource(R.string.installed), StatusLevel.OK)
+                                TextButton(onClick = { confirm = v }) { Text(stringResource(R.string.new_profile)) }
                             }
                         }
                     }
                 }
             } else {
-                if (installed.isEmpty()) item { EmptyState(Icons.Outlined.Layers, "Nothing installed", "Versions are installed when you install a profile.") }
+                if (installed.isEmpty()) item { EmptyState(Icons.Outlined.Layers, stringResource(R.string.nothing_installed), stringResource(R.string.versions_are_installed_when_you_install)) }
                 items(installed, key = { it.id }) { v ->
                     LauncherCard(Modifier.fillMaxWidth()) {
                         Text(v.id, style = MaterialTheme.typography.titleSmall)
-                        Text(if (v.isLoaderProfile) "Mod loader profile" else "Vanilla", style = MaterialTheme.typography.bodySmall)
-                        Text(if (v.usedBy.isEmpty()) "Not used by any profile" else "Used by: ${v.usedBy.joinToString()}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(if (v.isLoaderProfile) stringResource(R.string.mod_loader_profile) else stringResource(R.string.vanilla), style = MaterialTheme.typography.bodySmall)
+                        Text(if (v.usedBy.isEmpty()) stringResource(R.string.not_used_by_any_profile) else stringResource(R.string.used_by_1_s, v.usedBy.joinToString()), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FilledTonalButton(onClick = { vm.verify(v.id) }, enabled = verifying == null) { Text(if (verifying == v.id) "Verifying…" else "Verify") }
-                            OutlinedButton(onClick = { delete = v }, enabled = v.usedBy.isEmpty()) { Text("Delete") }
+                            FilledTonalButton(onClick = { vm.verify(v.id) }, enabled = verifying == null) { Text(if (verifying == v.id) stringResource(R.string.verifying) else stringResource(R.string.verify)) }
+                            OutlinedButton(onClick = { delete = v }, enabled = v.usedBy.isEmpty()) { Text(stringResource(R.string.action_delete)) }
                         }
                     }
                 }
             }
         }
     }
-    confirm?.let { v -> ConfirmDialog("Minecraft ${v.id}", "Create a new vanilla profile with Minecraft ${v.id} and download its files from Mojang? You can add a mod loader in the profile editor.", "Create & install", { vm.createProfile(v.id); confirm = null }, { confirm = null }) }
-    delete?.let { v -> ConfirmDialog("Delete ${v.id}?", "The version files (not libraries/assets shared with others) will be deleted. Profiles are not affected.", "Delete", { vm.delete(v); delete = null }, { delete = null }, destructive = true) }
+    confirm?.let { v -> ConfirmDialog(stringResource(R.string.minecraft_1_s, v.id), stringResource(R.string.create_a_new_vanilla_profile_with, v.id), stringResource(R.string.create_install), { vm.createProfile(v.id); confirm = null }, { confirm = null }) }
+    delete?.let { v -> ConfirmDialog(stringResource(R.string.delete_1_s, v.id), stringResource(R.string.the_version_files_not_libraries_assets), stringResource(R.string.action_delete), { vm.delete(v); delete = null }, { delete = null }, destructive = true) }
 }

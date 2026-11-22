@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.files
 
+import dev.eloa.launcher.feature.common.str
+import dev.eloa.launcher.R
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -63,21 +65,21 @@ class FilesViewModel @Inject constructor(private val repo: FileManagerRepository
         runCatching { block() }.onSuccess { msg?.let(messages::info); load() }.onFailure { messages.error(it.userMessage()) }
     }
 
-    fun createFolder(name: String) = act("Folder created") { repo.createFolder(_ui.value.root, _ui.value.path, name) }
-    fun rename(e: FileEntry, name: String) = act("Renamed") { repo.rename(_ui.value.root, e.relativePath, name) }
-    fun delete(e: FileEntry) = act("Deleted ${e.name}") { repo.delete(_ui.value.root, e.relativePath) }
-    fun copy(e: FileEntry, move: Boolean) { _ui.value = _ui.value.copy(clipboard = Clipboard(_ui.value.root, e.relativePath, e.name, move)); messages.info("${if (move) "Cut" else "Copied"} ${e.name} — open the destination and tap Paste") }
+    fun createFolder(name: String) = act(str(R.string.folder_created)) { repo.createFolder(_ui.value.root, _ui.value.path, name) }
+    fun rename(e: FileEntry, name: String) = act(str(R.string.renamed)) { repo.rename(_ui.value.root, e.relativePath, name) }
+    fun delete(e: FileEntry) = act(str(R.string.deleted_1_s, e.name)) { repo.delete(_ui.value.root, e.relativePath) }
+    fun copy(e: FileEntry, move: Boolean) { _ui.value = _ui.value.copy(clipboard = Clipboard(_ui.value.root, e.relativePath, e.name, move)); messages.info(if (move) R.string.msg_cut_1_s else R.string.msg_copied_1_s, e.name) }
     fun clearClipboard() { _ui.value = _ui.value.copy(clipboard = null) }
     fun paste() {
         val c = _ui.value.clipboard ?: return
-        act(if (c.move) "Moved ${c.name}" else "Copied ${c.name}") { repo.copyOrMove(c.root, c.rel, _ui.value.root, _ui.value.path, c.move); _ui.value = _ui.value.copy(clipboard = null) }
+        act(if (c.move) str(R.string.moved_1_s, c.name) else str(R.string.copied_1_s, c.name)) { repo.copyOrMove(c.root, c.rel, _ui.value.root, _ui.value.path, c.move); _ui.value = _ui.value.copy(clipboard = null) }
     }
-    fun import(uris: List<Uri>) = uris.forEach { u -> act("Imported") { repo.import(_ui.value.root, _ui.value.path, u) } }
-    fun export(e: FileEntry, uri: Uri) = act("Exported ${e.name}") { repo.export(_ui.value.root, e.relativePath, uri) }
-    fun backup(e: FileEntry) = act(null) { messages.info("Backup saved to Backups/${repo.backup(_ui.value.root, e.relativePath)}") }
+    fun import(uris: List<Uri>) = uris.forEach { u -> act(str(R.string.imported)) { repo.import(_ui.value.root, _ui.value.path, u) } }
+    fun export(e: FileEntry, uri: Uri) = act(str(R.string.exported_1_s, e.name)) { repo.export(_ui.value.root, e.relativePath, uri) }
+    fun backup(e: FileEntry) = act(null) { messages.info(R.string.backup_saved_to_backups_1_s, repo.backup(_ui.value.root, e.relativePath)) }
     fun integrity(e: FileEntry) = viewModelScope.launch {
-        _ui.value = _ui.value.copy(info = "Checking ${e.name}…")
-        _ui.value = _ui.value.copy(info = runCatching { repo.checkArchive(_ui.value.root, e.relativePath) + "\nSHA-256: " + repo.sha256(_ui.value.root, e.relativePath) }.getOrElse { it.userMessage() })
+        _ui.value = _ui.value.copy(info = str(R.string.checking_1_s_2, e.name))
+        _ui.value = _ui.value.copy(info = runCatching { repo.checkArchive(_ui.value.root, e.relativePath) + str(R.string.sha_256) + repo.sha256(_ui.value.root, e.relativePath) }.getOrElse { it.userMessage() })
     }
     fun dismissInfo() { _ui.value = _ui.value.copy(info = null) }
 }

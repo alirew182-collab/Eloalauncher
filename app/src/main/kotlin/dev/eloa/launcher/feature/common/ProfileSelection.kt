@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.common
 
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,11 +49,11 @@ fun ProfileSelectorBar(selection: ProfileSelection, onSelect: (String) -> Unit, 
         selection.selected?.let { ProfileAvatar(it.iconKey, it.coverKey, 40.dp) }
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
-            Text(selection.selected?.name ?: "No profile", style = MaterialTheme.typography.titleMedium)
+            Text(selection.selected?.name ?: stringResource(R.string.no_profile), style = MaterialTheme.typography.titleMedium)
             selection.selected?.let { Text("${it.minecraftVersion} · ${it.loader}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
         }
         Box {
-            OutlinedButton(onClick = { open = true }, enabled = selection.profiles.size > 1, modifier = Modifier.testTag("profile_selector")) { Text("Profile"); Icon(Icons.Outlined.ArrowDropDown, null) }
+            OutlinedButton(onClick = { open = true }, enabled = selection.profiles.size > 1, modifier = Modifier.testTag("profile_selector")) { Text(stringResource(R.string.title_profile_editor)); Icon(Icons.Outlined.ArrowDropDown, null) }
             SimpleMenu(open, { open = false }, selection.profiles, { "${it.name} (${it.minecraftVersion})" }) { onSelect(it.id) }
         }
     }

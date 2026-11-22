@@ -1,5 +1,8 @@
 package dev.eloa.launcher.feature.diagnostics
 
+import dev.eloa.launcher.feature.common.str
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -60,8 +63,8 @@ class DiagnosticsViewModel @Inject constructor(private val engine: DiagnosticsEn
         if (job?.isActive == true) return
         job = viewModelScope.launch {
             try {
-                _progress.value = ProgressInfo("Running diagnostics", null, null)
-                _report.value = engine.run { _progress.value = ProgressInfo("Running diagnostics", null, "Checking: $it") }
+                _progress.value = ProgressInfo(str(R.string.running_diagnostics), null, null)
+                _report.value = engine.run { _progress.value = ProgressInfo(str(R.string.running_diagnostics), null, str(R.string.checking_1_s, it)) }
             } catch (e: Exception) { messages.error(e.userMessage()) } finally { _progress.value = null }
         }
     }
@@ -84,20 +87,20 @@ fun DiagnosticsScreen(padding: PaddingValues, vm: DiagnosticsViewModel = hiltVie
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text("Diagnostic centre", style = MaterialTheme.typography.titleLarge)
-                    Text("Game files, storage, directories, APKs, Java, libraries, mods, configuration, network, memory and launch settings.", style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.diagnostic_centre), style = MaterialTheme.typography.titleLarge)
+                    Text(stringResource(R.string.game_files_storage_directories_apks_java), style = MaterialTheme.typography.bodySmall)
                 }
-                Button(onClick = vm::run, enabled = progress == null, modifier = Modifier.testTag("run_diagnostics")) { Text(if (report == null) "Run" else "Run again") }
+                Button(onClick = vm::run, enabled = progress == null, modifier = Modifier.testTag("run_diagnostics")) { Text(if (report == null) stringResource(R.string.run) else stringResource(R.string.run_again)) }
             }
         }
         item { ProgressPanel(progress, vm::cancel) }
         val r = report
-        if (r == null && progress == null) item { EmptyState(Icons.Outlined.Analytics, "Not run yet", "Tap Run to check the launcher, game files and device.") }
+        if (r == null && progress == null) item { EmptyState(Icons.Outlined.Analytics, stringResource(R.string.not_run_yet), stringResource(R.string.tap_run_to_check_the_launcher)) }
         if (r != null) {
             item {
-                Text("${r.checksRun} checks · ${r.issues.size} finding(s) · ${r.durationMs} ms · ${formatDate(r.timestamp)}", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.s_1_s_checks_2_s_finding, r.checksRun, r.issues.size, r.durationMs, formatDate(r.timestamp)), style = MaterialTheme.typography.labelMedium)
             }
-            if (r.issues.isEmpty()) item { EmptyState(Icons.Outlined.CheckCircle, "No problems found", "Everything checked looks healthy.") }
+            if (r.issues.isEmpty()) item { EmptyState(Icons.Outlined.CheckCircle, stringResource(R.string.no_problems_found), stringResource(R.string.everything_checked_looks_healthy)) }
             items(r.issues, key = { it.id }) { i ->
                 LauncherCard(Modifier.fillMaxWidth().testTag("diag_issue")) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -105,9 +108,9 @@ fun DiagnosticsScreen(padding: PaddingValues, vm: DiagnosticsViewModel = hiltVie
                         StatusChip(i.severity.name.lowercase(), i.severity.level())
                     }
                     Spacer(Modifier.height(6.dp))
-                    LabeledValue("Component", i.component)
-                    LabeledValue("Cause", i.cause)
-                    LabeledValue("Solution", i.solution)
+                    LabeledValue(stringResource(R.string.component), i.component)
+                    LabeledValue(stringResource(R.string.cause), i.cause)
+                    LabeledValue(stringResource(R.string.solution), i.solution)
                     i.fix?.let { f ->
                         Spacer(Modifier.height(6.dp))
                         FilledTonalButton(onClick = { if (f.requiresConfirmation) confirm = f else vm.fix(f) }, modifier = Modifier.testTag("diag_fix")) {
@@ -118,5 +121,5 @@ fun DiagnosticsScreen(padding: PaddingValues, vm: DiagnosticsViewModel = hiltVie
             }
         }
     }
-    confirm?.let { f -> ConfirmDialog("Apply fix?", f.confirmText ?: f.label, "Apply", { vm.fix(f); confirm = null }, { confirm = null }) }
+    confirm?.let { f -> ConfirmDialog(stringResource(R.string.apply_fix), f.confirmText ?: f.label, stringResource(R.string.apply), { vm.fix(f); confirm = null }, { confirm = null }) }
 }

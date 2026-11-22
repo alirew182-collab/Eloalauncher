@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.versions
 
+import dev.eloa.launcher.feature.common.str
+import dev.eloa.launcher.R
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -57,11 +59,11 @@ class VersionsViewModel @Inject constructor(
     fun createProfile(versionId: String) = viewModelScope.launch {
         try {
             val s = settings.current()
-            val p = profiles.create(ProfileConfig(name = "Minecraft $versionId", minecraftVersion = versionId, loader = ModLoaderType.VANILLA.name,
+            val p = profiles.create(ProfileConfig(name = str(R.string.minecraft_1_s, versionId), minecraftVersion = versionId, loader = ModLoaderType.VANILLA.name,
                 maxMemoryMb = s.defaultMaxMemoryMb, minMemoryMb = minOf(512, s.defaultMaxMemoryMb)))
             settings.update { it.copy(selectedProfileId = p.id) }
             InstallWorker.enqueue(context, p.id)
-            messages.info("Profile created; installing Minecraft $versionId")
+            messages.info(R.string.profile_created_installing_minecraft_1_s, versionId)
         } catch (e: Exception) { messages.error(e.userMessage()) }
     }
 
@@ -69,11 +71,11 @@ class VersionsViewModel @Inject constructor(
         _verifying.value = id
         try {
             val r = java.verify(id)
-            if (r.ok) messages.info("$id: all ${r.checked} files OK") else messages.error("$id: ${r.missing.size} missing, ${r.corrupted.size} damaged — repair the profile that uses it.")
+            if (r.ok) messages.info(R.string.s_1_s_all_2_s_files, id, r.checked) else messages.error(R.string.s_1_s_2_s_missing_3, id, r.missing.size, r.corrupted.size)
         } catch (e: Exception) { messages.error(e.userMessage()) } finally { _verifying.value = null }
     }
 
     fun delete(v: InstalledVersion) = viewModelScope.launch {
-        runCatching { java.deleteVersion(v.id, v.usedBy) }.onSuccess { messages.info("Deleted ${v.id}"); loadInstalled() }.onFailure { messages.error(it.userMessage()) }
+        runCatching { java.deleteVersion(v.id, v.usedBy) }.onSuccess { messages.info(R.string.deleted_1_s, v.id); loadInstalled() }.onFailure { messages.error(it.userMessage()) }
     }
 }

@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.profiles
 
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -72,33 +74,33 @@ fun ProfilesScreen(padding: PaddingValues, onEdit: (String?) -> Unit, vm: Profil
 
     Box(Modifier.fillMaxSize().padding(padding)) {
         LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.testTag("profiles")) {
-            item { Row { OutlinedButton(onClick = { importer.launch(arrayOf("application/json", "*/*")) }) { Text("Import configuration") } } }
+            item { Row { OutlinedButton(onClick = { importer.launch(arrayOf("application/json", "*/*")) }) { Text(stringResource(R.string.import_configuration)) } } }
             val list = profiles
             when {
                 list == null -> item { SkeletonList(3) }
-                list.isEmpty() -> item { EmptyState(Icons.Outlined.People, "No profiles yet", "Create profiles like “Vanilla”, “Fabric Performance” or “RPG Modpack” — each with its own version, loader, mods and settings.", actionLabel = "New profile", onAction = { onEdit(null) }) }
+                list.isEmpty() -> item { EmptyState(Icons.Outlined.People, stringResource(R.string.no_profiles_yet), stringResource(R.string.create_profiles_like_vanilla_fabric_performance), actionLabel = stringResource(R.string.new_profile), onAction = { onEdit(null) }) }
                 else -> items(list, key = { it.id }) { p -> ProfileCard(p, p.id == selected || (selected.isEmpty() && p == list.first()), vm, onEdit, { exportId = p.id; exporter.launch("${p.name}.json") }, { cloning = p }, { deleting = p }) }
             }
         }
-        ExtendedFloatingActionButton(onClick = { onEdit(null) }, icon = { Icon(Icons.Outlined.Add, null) }, text = { Text("New profile") },
+        ExtendedFloatingActionButton(onClick = { onEdit(null) }, icon = { Icon(Icons.Outlined.Add, null) }, text = { Text(stringResource(R.string.new_profile)) },
             modifier = Modifier.align(Alignment.BottomEnd).padding(20.dp).testTag("new_profile"))
     }
     deleting?.let { p ->
         var files by remember { mutableStateOf(false) }
         AlertDialog(
             modifier = Modifier.testTag("confirm_dialog"),
-            onDismissRequest = { deleting = null }, title = { Text("Delete “${p.name}”?") },
-            text = { Column { Text("The profile will be removed. Shared game versions stay installed."); Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(files, { files = it }); Text("Also delete its game folder (mods, worlds, configs)") } } },
-            confirmButton = { Button(onClick = { vm.delete(p.id, files); deleting = null }, modifier = Modifier.testTag("confirm_button")) { Text("Delete") } },
-            dismissButton = { TextButton(onClick = { deleting = null }) { Text("Cancel") } },
+            onDismissRequest = { deleting = null }, title = { Text(stringResource(R.string.delete_1_s_2, p.name)) },
+            text = { Column { Text(stringResource(R.string.the_profile_will_be_removed_shared)); Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(files, { files = it }); Text(stringResource(R.string.also_delete_its_game_folder_mods)) } } },
+            confirmButton = { Button(onClick = { vm.delete(p.id, files); deleting = null }, modifier = Modifier.testTag("confirm_button")) { Text(stringResource(R.string.action_delete)) } },
+            dismissButton = { TextButton(onClick = { deleting = null }) { Text(stringResource(dev.eloa.launcher.core.designsystem.R.string.ds_cancel)) } },
         )
     }
     cloning?.let { p ->
         AlertDialog(
-            onDismissRequest = { cloning = null }, title = { Text("Clone “${p.name}”") },
-            text = { Text("Copy only the settings, or the settings together with the game folder (mods, configs, worlds)?") },
-            confirmButton = { Button(onClick = { vm.clone(p.id, true); cloning = null }) { Text("With files") } },
-            dismissButton = { TextButton(onClick = { vm.clone(p.id, false); cloning = null }) { Text("Settings only") } },
+            onDismissRequest = { cloning = null }, title = { Text(stringResource(R.string.clone_1_s, p.name)) },
+            text = { Text(stringResource(R.string.copy_only_the_settings_or_the)) },
+            confirmButton = { Button(onClick = { vm.clone(p.id, true); cloning = null }) { Text(stringResource(R.string.with_files)) } },
+            dismissButton = { TextButton(onClick = { vm.clone(p.id, false); cloning = null }) { Text(stringResource(R.string.settings_only)) } },
         )
     }
 }
@@ -115,28 +117,28 @@ private fun ProfileCard(p: JavaProfileEntity, selected: Boolean, vm: ProfilesVie
                 Text(p.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text("${p.minecraftVersion} · ${p.loader.lowercase().replaceFirstChar { it.uppercase() }} ${p.loaderVersion ?: ""} · ${p.maxMemoryMb} MB", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (p.description.isNotBlank()) Text(p.description, style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                Text("Created ${formatDate(p.createdAt)} · last played ${formatDate(p.lastPlayedAt)}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.created_1_s_last_played_2, formatDate(p.createdAt), formatDate(p.lastPlayedAt)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(6.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    if (selected) StatusChip("Selected", StatusLevel.INFO)
+                    if (selected) StatusChip(stringResource(R.string.selected), StatusLevel.INFO)
                     when (p.state) {
-                        InstallState.INSTALLED -> StatusChip("Ready", StatusLevel.OK)
-                        InstallState.FAILED -> StatusChip("Install failed", StatusLevel.ERROR)
-                        InstallState.INSTALLING, InstallState.QUEUED -> StatusChip("Installing", StatusLevel.INFO)
-                        InstallState.NEEDS_PROCESSORS -> StatusChip("Needs runtime", StatusLevel.WARNING)
-                        InstallState.NOT_INSTALLED -> StatusChip("Not installed", StatusLevel.WARNING)
+                        InstallState.INSTALLED -> StatusChip(stringResource(R.string.ready), StatusLevel.OK)
+                        InstallState.FAILED -> StatusChip(stringResource(R.string.install_failed), StatusLevel.ERROR)
+                        InstallState.INSTALLING, InstallState.QUEUED -> StatusChip(stringResource(R.string.installing), StatusLevel.INFO)
+                        InstallState.NEEDS_PROCESSORS -> StatusChip(stringResource(R.string.needs_runtime), StatusLevel.WARNING)
+                        InstallState.NOT_INSTALLED -> StatusChip(stringResource(R.string.not_installed), StatusLevel.WARNING)
                     }
                 }
             }
             Box {
-                IconButton(onClick = { menu = true }, modifier = Modifier.testTag("profile_menu")) { Icon(Icons.Outlined.MoreVert, "Actions") }
+                IconButton(onClick = { menu = true }, modifier = Modifier.testTag("profile_menu")) { Icon(Icons.Outlined.MoreVert, stringResource(R.string.actions)) }
                 DropdownMenu(menu, { menu = false }) {
-                    DropdownMenuItem({ Text("Select") }, { menu = false; vm.select(p.id) })
-                    DropdownMenuItem({ Text("Edit") }, { menu = false; onEdit(p.id) })
-                    DropdownMenuItem({ Text(if (p.state == InstallState.INSTALLED) "Repair files" else "Install") }, { menu = false; vm.install(p.id) })
-                    DropdownMenuItem({ Text("Clone") }, { menu = false; onClone() })
-                    DropdownMenuItem({ Text("Export configuration") }, { menu = false; onExport() })
-                    DropdownMenuItem({ Text("Delete", color = MaterialTheme.colorScheme.error) }, { menu = false; onDelete() }, modifier = Modifier.testTag("profile_delete"))
+                    DropdownMenuItem({ Text(stringResource(R.string.select)) }, { menu = false; vm.select(p.id) })
+                    DropdownMenuItem({ Text(stringResource(R.string.action_edit)) }, { menu = false; onEdit(p.id) })
+                    DropdownMenuItem({ Text(if (p.state == InstallState.INSTALLED) stringResource(R.string.repair_files) else stringResource(R.string.install)) }, { menu = false; vm.install(p.id) })
+                    DropdownMenuItem({ Text(stringResource(R.string.clone)) }, { menu = false; onClone() })
+                    DropdownMenuItem({ Text(stringResource(R.string.export_configuration)) }, { menu = false; onExport() })
+                    DropdownMenuItem({ Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error) }, { menu = false; onDelete() }, modifier = Modifier.testTag("profile_delete"))
                 }
             }
         }

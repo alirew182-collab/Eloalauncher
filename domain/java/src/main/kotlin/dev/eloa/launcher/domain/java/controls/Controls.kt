@@ -70,12 +70,12 @@ object ControlLayouts {
             b("move", "", "KEY_W", 0.14f, 0.72f, 150f, ControlKind.JOYSTICK),
             b("jump", "⤒", "KEY_SPACE", 0.90f, 0.72f, 64f),
             b("sneak", "⇩", "KEY_LEFT_SHIFT", 0.80f, 0.86f, 56f, toggle = true),
-            b("attack", "⚔", "MOUSE_LEFT", 0.90f, 0.50f, 60f),
-            b("use", "✋", "MOUSE_RIGHT", 0.80f, 0.60f, 60f),
+            b("attack", "L", "MOUSE_LEFT", 0.90f, 0.50f, 60f),
+            b("use", "R", "MOUSE_RIGHT", 0.80f, 0.60f, 60f),
             b("inv", "E", "KEY_E", 0.95f, 0.10f, 44f),
             b("chat", "T", "KEY_T", 0.05f, 0.10f, 44f),
             b("esc", "☰", "KEY_ESCAPE", 0.50f, 0.06f, 44f),
-            b("kbd", "⌨", "SPECIAL_KEYBOARD", 0.12f, 0.10f, 44f),
+            b("kbd", "Kb", "SPECIAL_KEYBOARD", 0.12f, 0.10f, 44f),
             b("drop", "Q", "KEY_Q", 0.88f, 0.10f, 44f),
             b("persp", "F5", "KEY_F5", 0.81f, 0.10f, 44f),
         ))
@@ -88,8 +88,8 @@ object ControlLayouts {
         ), scale = 0.85f)
         ControlPreset.PVP -> ControlLayout("PVP", p.name, listOf(
             b("move", "", "KEY_W", 0.13f, 0.72f, 140f, ControlKind.JOYSTICK),
-            b("attack", "⚔", "MOUSE_LEFT", 0.88f, 0.48f, 72f),
-            b("use", "🛡", "MOUSE_RIGHT", 0.76f, 0.62f, 60f),
+            b("attack", "L", "MOUSE_LEFT", 0.88f, 0.48f, 72f),
+            b("use", "R", "MOUSE_RIGHT", 0.76f, 0.62f, 60f),
             b("jump", "⤒", "KEY_SPACE", 0.91f, 0.76f, 64f),
             b("sprint", "»", "KEY_LEFT_CONTROL", 0.78f, 0.84f, 52f, toggle = true),
             b("sneak", "⇩", "KEY_LEFT_SHIFT", 0.66f, 0.88f, 48f, toggle = true),
@@ -106,7 +106,7 @@ object ControlLayouts {
             b("a", "A", "KEY_SPACE", 0.88f, 0.78f, 56f), b("b", "B", "KEY_LEFT_SHIFT", 0.95f, 0.64f, 56f, toggle = true),
             b("x", "X", "KEY_E", 0.81f, 0.64f, 56f), b("y", "Y", "KEY_Q", 0.88f, 0.50f, 56f),
             b("lt", "LT", "MOUSE_RIGHT", 0.08f, 0.15f, 52f, w = 1.6f), b("rt", "RT", "MOUSE_LEFT", 0.92f, 0.15f, 52f, w = 1.6f),
-            b("start", "☰", "KEY_ESCAPE", 0.56f, 0.10f, 40f), b("select", "⌨", "SPECIAL_KEYBOARD", 0.44f, 0.10f, 40f),
+            b("start", "☰", "KEY_ESCAPE", 0.56f, 0.10f, 40f), b("select", "Kb", "SPECIAL_KEYBOARD", 0.44f, 0.10f, 40f),
         ))
         ControlPreset.CUSTOM -> ControlLayout("Custom", p.name, listOf(b("move", "", "KEY_W", 0.14f, 0.72f, 140f, ControlKind.JOYSTICK)))
     }

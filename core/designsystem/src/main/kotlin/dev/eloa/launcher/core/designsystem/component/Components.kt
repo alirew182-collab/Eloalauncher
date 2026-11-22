@@ -67,6 +67,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.core.designsystem.R
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -96,20 +98,21 @@ fun statusIcon(level: StatusLevel): ImageVector = when (level) {
     StatusLevel.ERROR -> Icons.Outlined.ErrorOutline
 }
 
+/**
+ * Status as a small square "block" plus text. The square is the launcher's signature detail and is
+ * used only for state, never for decoration.
+ */
 @Composable
 fun StatusChip(text: String, level: StatusLevel, modifier: Modifier = Modifier) {
     val c = statusColor(level)
-    Row(
-        modifier.clip(RoundedCornerShape(50)).background(c.copy(alpha = 0.14f)).padding(horizontal = 10.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(statusIcon(level), null, tint = c, modifier = Modifier.size(14.dp))
-        Spacer(Modifier.width(6.dp))
-        Text(text, style = MaterialTheme.typography.labelMedium, color = c, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    Row(modifier.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        Box(Modifier.size(8.dp).clip(RoundedCornerShape(2.dp)).background(c).semantics { contentDescription = level.name })
+        Spacer(Modifier.width(8.dp))
+        Text(text, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 
-/** Elevated card with a subtle gradient; used across the launcher. */
+/** Flat surface step with a hairline border; depth comes from the surface ramp, not gradients or glow. */
 @Composable
 fun LauncherCard(
     modifier: Modifier = Modifier,
@@ -118,10 +121,10 @@ fun LauncherCard(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val x = LocalLauncherExtras.current
-    val shape = RoundedCornerShape(20.dp)
+    val shape = RoundedCornerShape(16.dp)
     val inner = @Composable {
         Column(
-            Modifier.background(Brush.verticalGradient(x.cardGradient)).border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f), shape).padding(contentPadding),
+            Modifier.background(MaterialTheme.colorScheme.surfaceContainer).border(1.dp, x.hairline, shape).padding(contentPadding),
             content = content,
         )
     }
@@ -168,8 +171,8 @@ fun ErrorBanner(message: String, modifier: Modifier = Modifier, onRetry: (() -> 
             Icon(Icons.Outlined.ErrorOutline, null, tint = c)
             Spacer(Modifier.width(12.dp))
             Text(message, Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-            if (onRetry != null) TextButton(onClick = onRetry) { Text("Retry") }
-            if (onDismiss != null) IconButton(onClick = onDismiss) { Icon(Icons.Outlined.Close, "Dismiss") }
+            if (onRetry != null) TextButton(onClick = onRetry) { Text(stringResource(R.string.ds_retry)) }
+            if (onDismiss != null) IconButton(onClick = onDismiss) { Icon(Icons.Outlined.Close, stringResource(R.string.ds_dismiss)) }
         }
     }
 }
@@ -192,7 +195,8 @@ fun SkeletonBox(modifier: Modifier = Modifier, height: Dp = 16.dp) {
 
 @Composable
 fun SkeletonList(rows: Int = 5, modifier: Modifier = Modifier) {
-    Column(modifier.fillMaxWidth().testTag("skeleton").semantics { contentDescription = "Loading" }, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    val loading = stringResource(R.string.ds_loading)
+    Column(modifier.fillMaxWidth().testTag("skeleton").semantics { contentDescription = loading }, verticalArrangement = Arrangement.spacedBy(12.dp)) {
         repeat(rows) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SkeletonBox(Modifier.size(48.dp), 48.dp)
@@ -214,7 +218,7 @@ fun ConfirmDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
     destructive: Boolean = false,
-    dismissLabel: String = "Cancel",
+    dismissLabel: String = stringResource(R.string.ds_cancel),
 ) {
     AlertDialog(
         modifier = Modifier.testTag("confirm_dialog"),
@@ -239,12 +243,13 @@ fun TextInputDialog(
     initial: String,
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit,
-    validate: (String) -> String? = { if (it.isBlank()) "Must not be empty" else null },
-    confirmLabel: String = "Save",
+    validate: ((String) -> String?)? = null,
+    confirmLabel: String = stringResource(R.string.ds_save),
     numeric: Boolean = false,
 ) {
     var text by rememberSaveable { mutableStateOf(initial) }
-    val error = validate(text)
+    val emptyMsg = stringResource(R.string.ds_must_not_be_empty)
+    val error = validate?.invoke(text) ?: if (validate == null && text.isBlank()) emptyMsg else null
     AlertDialog(
         modifier = Modifier.testTag("input_dialog"),
         onDismissRequest = onDismiss,
@@ -258,16 +263,16 @@ fun TextInputDialog(
             )
         },
         confirmButton = { Button(onClick = { onConfirm(text.trim()) }, enabled = error == null, modifier = Modifier.testTag("input_confirm")) { Text(confirmLabel) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.ds_cancel)) } },
     )
 }
 
 @Composable
-fun SearchField(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier, placeholder: String = "Search") {
+fun SearchField(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier, placeholder: String = stringResource(R.string.ds_search)) {
     OutlinedTextField(
         value = query, onValueChange = onQueryChange, singleLine = true,
         leadingIcon = { Icon(Icons.Outlined.Search, null) },
-        trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { onQueryChange("") }) { Icon(Icons.Outlined.Close, "Clear search") } },
+        trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { onQueryChange("") }) { Icon(Icons.Outlined.Close, stringResource(R.string.ds_clear_search)) } },
         placeholder = { Text(placeholder) }, shape = RoundedCornerShape(16.dp),
         modifier = modifier.fillMaxWidth().testTag("search_field"),
     )
@@ -301,17 +306,15 @@ fun MetricTile(label: String, value: String, icon: ImageVector, modifier: Modifi
 /** Big gradient call-to-action used for "PLAY". */
 @Composable
 fun LaunchButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, icon: ImageVector? = null) {
-    val p = MaterialTheme.colorScheme.primary
-    val brush = Brush.horizontalGradient(listOf(p, androidx.compose.ui.graphics.lerp(p, MaterialTheme.colorScheme.tertiary, 0.6f)))
     Box(
-        modifier.heightIn(min = 56.dp).clip(RoundedCornerShape(18.dp))
-            .background(if (enabled) brush else Brush.linearGradient(listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.surfaceVariant)))
+        modifier.heightIn(min = 52.dp).clip(RoundedCornerShape(12.dp))
+            .background(if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant)
             .clickable(enabled = enabled, onClick = onClick).padding(horizontal = 28.dp, vertical = 14.dp).testTag("launch_button"),
         contentAlignment = Alignment.Center,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (icon != null) { Icon(icon, null, tint = MaterialTheme.colorScheme.onPrimary); Spacer(Modifier.width(10.dp)) }
-            Text(text, style = MaterialTheme.typography.titleMedium, color = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Black)
+            Text(text, style = MaterialTheme.typography.titleMedium, color = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.SemiBold)
         }
     }
 }
@@ -325,7 +328,7 @@ fun ProgressPanel(info: ProgressInfo?, onCancel: () -> Unit, modifier: Modifier 
         LauncherCard(modifier.fillMaxWidth().testTag("progress_panel")) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(info.title, Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
-                if (info.cancellable) OutlinedButton(onClick = onCancel) { Text("Cancel") }
+                if (info.cancellable) OutlinedButton(onClick = onCancel) { Text(stringResource(R.string.ds_cancel)) }
             }
             Spacer(Modifier.height(10.dp))
             if (info.fraction == null) LinearProgressIndicator(Modifier.fillMaxWidth())

@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.logs
 
+import androidx.compose.ui.res.stringResource
+import dev.eloa.launcher.R
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -85,16 +87,16 @@ class LogsViewModel @Inject constructor(private val dao: LogDao, private val sto
         runCatching {
             val f = File(storage.importTemp, "eloa-log.txt").apply { parentFile?.mkdirs(); writeText(exportText()) }
             try { storage.exportTo(f, uri) } finally { f.delete() }
-        }.onSuccess { messages.info("Log exported") }.onFailure { messages.error(it.userMessage()) }
+        }.onSuccess { messages.info(R.string.log_exported) }.onFailure { messages.error(it.userMessage()) }
     }
 
     fun copy(context: Context, text: String) {
         (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(ClipData.newPlainText("log", text.take(200_000)))
-        messages.info("Copied to clipboard")
+        messages.info(R.string.copied_to_clipboard)
     }
 
     fun copyAll(context: Context) = viewModelScope.launch { copy(context, exportText()) }
-    fun clear() = viewModelScope.launch { dao.clear(); messages.info("Log cleared") }
+    fun clear() = viewModelScope.launch { dao.clear(); messages.info(R.string.log_cleared) }
 }
 
 private fun levelOf(l: String) = when (l) { "ERROR", "CRITICAL" -> StatusLevel.ERROR; "WARNING" -> StatusLevel.WARNING; "INFO" -> StatusLevel.INFO; else -> StatusLevel.OK }
@@ -111,19 +113,19 @@ fun LogsScreen(padding: PaddingValues, vm: LogsViewModel = hiltViewModel()) {
     LazyColumn(Modifier.padding(padding).testTag("logs"), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { exporter.launch("eloa-log.txt") }) { Text("Export") }
-                OutlinedButton(onClick = { vm.copyAll(context) }) { Text("Copy all") }
-                OutlinedButton(onClick = { clear = true }, modifier = Modifier.testTag("logs_clear")) { Text("Clear") }
+                OutlinedButton(onClick = { exporter.launch("eloa-log.txt") }) { Text(stringResource(R.string.action_export)) }
+                OutlinedButton(onClick = { vm.copyAll(context) }) { Text(stringResource(R.string.copy_all)) }
+                OutlinedButton(onClick = { clear = true }, modifier = Modifier.testTag("logs_clear")) { Text(stringResource(R.string.clear)) }
             }
         }
-        item { SearchField(query, { vm.query.value = it }, placeholder = "Search component, event or error type") }
+        item { SearchField(query, { vm.query.value = it }, placeholder = stringResource(R.string.search_component_event_or_error_type)) }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 ALL_LEVELS.forEach { l -> FilterChip(l in levels, { vm.toggle(l) }, label = { Text(l.take(4)) }, modifier = Modifier.testTag("level_$l")) }
             }
         }
         val list = logs
-        if (list != null && list.isEmpty()) item { EmptyState(Icons.Outlined.BugReport, "No log entries", "Nothing matches the current filter.") }
+        if (list != null && list.isEmpty()) item { EmptyState(Icons.Outlined.BugReport, stringResource(R.string.no_log_entries), stringResource(R.string.nothing_matches_the_current_filter)) }
         items(list.orEmpty(), key = { it.id }) { e ->
             LauncherCard(Modifier.fillMaxWidth().clickable { expanded = if (expanded == e.id) null else e.id }.testTag("log_entry"), contentPadding = PaddingValues(12.dp)) {
                 Row {
@@ -135,10 +137,10 @@ fun LogsScreen(padding: PaddingValues, vm: LogsViewModel = hiltViewModel()) {
                 if (expanded == e.id) {
                     e.context?.let { Text(it, style = MonoStyle) }
                     e.stackTrace?.let { Text(it.take(6000), style = MonoStyle) }
-                    Column { TextButton(onClick = { vm.copy(context, DbLogger.format(e)) }) { Text("Copy entry") } }
+                    Column { TextButton(onClick = { vm.copy(context, DbLogger.format(e)) }) { Text(stringResource(R.string.copy_entry)) } }
                 }
             }
         }
     }
-    if (clear) ConfirmDialog("Clear the log?", "All log entries will be deleted. Export them first if you need them for a bug report.", "Clear", { vm.clear(); clear = false }, { clear = false }, destructive = true)
+    if (clear) ConfirmDialog(stringResource(R.string.clear_the_log), stringResource(R.string.all_log_entries_will_be_deleted), stringResource(R.string.clear), { vm.clear(); clear = false }, { clear = false }, destructive = true)
 }

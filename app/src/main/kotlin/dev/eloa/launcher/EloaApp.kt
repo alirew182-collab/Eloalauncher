@@ -13,6 +13,9 @@ import dev.eloa.launcher.core.data.logging.DbLogger
 import dev.eloa.launcher.core.data.settings.SettingsRepository
 import dev.eloa.launcher.core.data.di.AppScope
 import dev.eloa.launcher.feature.common.CleanupWorker
+import dev.eloa.launcher.feature.notifications.NotificationCenter
+import dev.eloa.launcher.feature.performance.ThermalMonitor
+import dev.eloa.launcher.feature.updates.UpdateRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,12 +27,17 @@ class EloaApp : Application(), Configuration.Provider {
     @Inject lateinit var dbLogger: DbLogger
     @Inject lateinit var settings: SettingsRepository
     @Inject @AppScope lateinit var appScope: CoroutineScope
+    @Inject lateinit var thermal: ThermalMonitor
+    @Inject lateinit var updates: UpdateRepository
 
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder().setWorkerFactory(workerFactory).setMinimumLoggingLevel(android.util.Log.WARN).build()
 
+    override fun attachBaseContext(base: android.content.Context) = super.attachBaseContext(dev.eloa.launcher.feature.common.Locales.wrap(base))
+
     override fun onCreate() {
         super.onCreate()
+        dev.eloa.launcher.feature.common.Strings.init(this)
         installCrashLogger()
         createChannels()
         appScope.launch {
@@ -39,6 +47,8 @@ class EloaApp : Application(), Configuration.Provider {
             }
         }
         appScope.launch { CleanupWorker.schedule(this@EloaApp, settings.current()) }
+        appScope.launch { runCatching { updates.scheduleOrCancel() } }
+        thermal.start()
         logger.i("App", "Launcher started", mapOf("version" to BuildConfig.VERSION_NAME, "sdk" to android.os.Build.VERSION.SDK_INT.toString()))
     }
 
@@ -63,6 +73,7 @@ class EloaApp : Application(), Configuration.Provider {
         nm.createNotificationChannel(NotificationChannel(CHANNEL_DOWNLOADS, getString(R.string.channel_downloads), NotificationManager.IMPORTANCE_LOW).apply {
             description = getString(R.string.channel_downloads_desc)
         })
+        NotificationCenter.createChannel(this)
     }
 
     companion object { const val CHANNEL_DOWNLOADS = "downloads" }

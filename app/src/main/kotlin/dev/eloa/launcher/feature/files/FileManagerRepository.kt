@@ -20,7 +20,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.coroutineContext
 
-enum class FileRoot(val label: String) { JAVA_DATA("Java game data"), INSTANCES("Profiles (game folders)"), BEDROCK("Bedrock library"), EXPORTS("Exports"), BACKUPS("Backups") }
+enum class FileRoot(@param:androidx.annotation.StringRes val labelRes: Int) {
+    JAVA_DATA(dev.eloa.launcher.R.string.root_java_data), INSTANCES(dev.eloa.launcher.R.string.root_instances), BEDROCK(dev.eloa.launcher.R.string.root_bedrock),
+    EXPORTS(dev.eloa.launcher.R.string.root_exports), BACKUPS(dev.eloa.launcher.R.string.root_backups);
+    val label: String get() = dev.eloa.launcher.feature.common.str(labelRes)
+}
 enum class FileSort { NAME, SIZE, DATE }
 
 data class FileEntry(val name: String, val relativePath: String, val isDirectory: Boolean, val size: Long, val lastModified: Long, val childCount: Int)
