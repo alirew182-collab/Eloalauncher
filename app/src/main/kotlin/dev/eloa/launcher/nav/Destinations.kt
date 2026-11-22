@@ -6,6 +6,7 @@ import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Analytics
 import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.material.icons.outlined.Checkroom
 import androidx.compose.material.icons.outlined.Coffee
 import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material.icons.outlined.Extension
@@ -49,6 +50,7 @@ enum class Destination(val route: String, @StringRes val label: Int, val icon: I
     TEXTURES("textures", R.string.nav_textures, Icons.Outlined.Texture, 1),
     SHADERS("shaders", R.string.nav_shaders, Icons.Outlined.AutoAwesome, 1),
     ADDONS("addons", R.string.nav_addons, Icons.Outlined.Widgets, 1),
+    SKINS("skins", R.string.nav_skins, Icons.Outlined.Checkroom, 1),
     RUNTIMES("runtimes", R.string.nav_runtimes, Icons.Outlined.Memory, 1),
     DOWNLOADS("downloads", R.string.nav_downloads, Icons.Outlined.CloudDownload, 1),
     FILES("files", R.string.nav_files, Icons.Outlined.Folder, 1),
@@ -67,5 +69,6 @@ enum class Destination(val route: String, @StringRes val label: Int, val icon: I
         val primary get() = entries.filter { it.group == 0 }
         const val PROFILE_EDIT = "profile_edit"
         const val CONTROL_EDIT = "control_edit"
+        const val SKIN_EDIT = "skin_edit"
     }
 }

@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.java
 
+import dev.eloa.launcher.R
+import dev.eloa.launcher.feature.common.str
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -77,7 +79,7 @@ class ModpackRepository @Inject constructor(
             InstallWorker.enqueue(context, p.id, keep.absolutePath)
             p.id
         } else {
-            val cfg = SafeZip.open(packFile).use { z -> profiles.decode(z.readText(MANIFEST)!!) }
+            val cfg = SafeZip.open(packFile).use { z -> profiles.decode(z.readText(MANIFEST) ?: throw java.io.IOException(str(R.string.err_not_eloapack))) }
             val p = profiles.create(cfg)
             val game = storage.instance(p.gameDirName).gameDir
             val allowed = exportFolders + "saves"

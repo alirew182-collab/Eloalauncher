@@ -58,6 +58,7 @@ fun PrivacyScreen(padding: PaddingValues) {
                 Text(stringResource(R.string.game_files_and_loaders_are_downloaded), style = MaterialTheme.typography.bodySmall)
                 Text(SourcePolicy.TRUSTED_HOSTS.sorted().joinToString("\n"), style = MonoStyle)
                 Text(stringResource(R.string.sign_in_login_microsoftonline_com_user), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.privacy_ely_hosts), style = MaterialTheme.typography.bodySmall)
                 Text(stringResource(R.string.modpacks_mrpack_only_the_download_hosts), style = MaterialTheme.typography.bodySmall)
                 Text(stringResource(R.string.launcher_updates_only_when_you_check) + UpdateChecker.GITHUB_HOSTS.sorted().joinToString(), style = MaterialTheme.typography.bodySmall)
             }

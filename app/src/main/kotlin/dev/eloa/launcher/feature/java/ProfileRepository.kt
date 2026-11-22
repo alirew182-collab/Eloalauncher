@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.java
 
+import dev.eloa.launcher.R
+import dev.eloa.launcher.feature.common.str
 import android.net.Uri
 import dev.eloa.launcher.core.common.io.FileOps
 import dev.eloa.launcher.core.common.io.PathSafety
@@ -61,8 +63,8 @@ class ProfileRepository @Inject constructor(
     suspend fun all() = dao.all()
 
     fun validateName(name: String): String? = when {
-        name.isBlank() -> "Name must not be empty"
-        name.length > 60 -> "Name is too long (max 60)"
+        name.isBlank() -> str(R.string.err_name_empty)
+        name.length > 60 -> str(R.string.err_name_long)
         else -> null
     }
 

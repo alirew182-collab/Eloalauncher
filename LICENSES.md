@@ -35,6 +35,12 @@ These renderer layers are listed and evaluated on the Performance screen. Their 
 | Zink (Mesa) | MIT | https://docs.mesa3d.org/drivers/zink.html |
 | Amethyst (PojavLauncher fork), studied for the backend design | LGPL-3.0 | https://github.com/AngelAuraMC/Amethyst-Android |
 
+## Downloaded at run time
+
+| Component | License | Source |
+|---|---|---|
+| authlib-injector (only for Ely.by accounts, checked against the published SHA-256) | AGPL-3.0 | https://github.com/yushijinhun/authlib-injector |
+
 ## Design and writing references
 
 The interface and text were reviewed against two public rule sets:

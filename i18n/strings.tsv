@@ -881,3 +881,105 @@ crash_none_found	No known failure pattern in recent errors	В недавних �
 crash_analyze_file	Analyse a game log or crash report	Проанализировать журнал игры или отчёт о сбое	Bir oyun kaydını veya çökme raporunu analiz et	Spielprotokoll oder Absturzbericht analysieren
 not_reported	Not reported	Не сообщается	Bildirilmiyor	Nicht gemeldet
 get_minecraft_bedrock	Get Minecraft Bedrock	Установить Minecraft Bedrock	Minecraft Bedrock'u edin	Minecraft Bedrock holen
+err_not_eloapack	Not an Eloa pack: profile.json is missing	Это не пак Eloa: нет profile.json	Eloa paketi değil: profile.json eksik	Kein Eloa-Paket: profile.json fehlt
+stage_version_list	Loading version list	Загрузка списка версий	Sürüm listesi yükleniyor	Versionsliste wird geladen
+stage_modpack_files	Modpack files	Файлы модпака	Mod paketi dosyaları	Modpack-Dateien
+stage_metadata	Metadata	Метаданные	Meta veriler	Metadaten
+stage_libraries	Libraries	Библиотеки	Kütüphaneler	Bibliotheken
+stage_client	Game client	Клиент игры	Oyun istemcisi	Spielclient
+stage_asset_index	Asset index	Индекс ассетов	Varlık dizini	Asset-Index
+stage_assets	Assets	Ассеты	Varlıklar	Assets
+stage_natives	Native libraries	Нативные библиотеки	Yerel kütüphaneler	Native Bibliotheken
+notif_installing_title	Installing game files	Установка файлов игры	Oyun dosyaları yükleniyor	Spieldateien werden installiert
+eta_1_s_2_s	%1$s min %2$s s left	осталось %1$s мин %2$s с	%1$s dk %2$s sn kaldı	noch %1$s min %2$s s
+files_1_s_of_2_s	%1$s/%2$s files	файлов: %1$s/%2$s	%1$s/%2$s dosya	%1$s/%2$s Dateien
+inst_success	Installation completed	Установка завершена	Kurulum tamamlandı	Installation abgeschlossen
+inst_aborted	Installation was cancelled	Установка отменена	Kurulum iptal edildi	Installation abgebrochen
+inst_blocked	Installation was blocked by the system or a device policy	Установку заблокировала система или политика устройства	Kurulum sistem veya cihaz politikası tarafından engellendi	Die Installation wurde vom System oder einer Geräterichtlinie blockiert
+inst_conflict	Conflicts with the installed app (different signature or a downgrade). Back up your worlds, then uninstall the existing app first.	Конфликт с установленным приложением (другая подпись или понижение версии). Сохраните миры и сначала удалите установленное приложение.	Yüklü uygulamayla çakışıyor (farklı imza veya eski sürüm). Dünyalarınızı yedekleyin, sonra mevcut uygulamayı kaldırın.	Konflikt mit der installierten App (andere Signatur oder Downgrade). Sichern Sie Ihre Welten und deinstallieren Sie zuerst die vorhandene App.
+inst_incompatible	This version is not compatible with the device	Эта версия несовместима с устройством	Bu sürüm cihazla uyumlu değil	Diese Version ist nicht mit dem Gerät kompatibel
+inst_invalid	The APK files are invalid or incomplete (a split may be missing)	Файлы APK повреждены или неполные (возможно, не хватает split-файла)	APK dosyaları geçersiz veya eksik (bir parça eksik olabilir)	Die APK-Dateien sind ungültig oder unvollständig (evtl. fehlt ein Split)
+inst_storage	Not enough storage	Недостаточно места	Yetersiz depolama alanı	Nicht genügend Speicher
+inst_failed_1_s	Installation failed: %1$s	Ошибка установки: %1$s	Kurulum başarısız: %1$s	Installation fehlgeschlagen: %1$s
+err_name_empty	Name must not be empty	Имя не может быть пустым	Ad boş olamaz	Der Name darf nicht leer sein
+err_name_long	Name is too long (max 60)	Слишком длинное имя (максимум 60)	Ad çok uzun (en fazla 60)	Name zu lang (max. 60)
+err_tls_1_s	Secure connection failed (%1$s)	Не удалось установить защищённое соединение (%1$s)	Güvenli bağlantı kurulamadı (%1$s)	Sichere Verbindung fehlgeschlagen (%1$s)
+pf_authlib_missing	authlib-injector, needed for Ely.by accounts, could not be downloaded and verified	Не удалось скачать и проверить authlib-injector, нужный для аккаунтов Ely.by	Ely.by hesapları için gereken authlib-injector indirilemedi ve doğrulanamadı	authlib-injector, nötig für Ely.by-Konten, konnte nicht geladen und geprüft werden
+pf_authlib_missing_fix	Connect to the internet once, or switch to the Microsoft account	Подключитесь к интернету хотя бы один раз или выберите аккаунт Microsoft	İnternete bir kez bağlanın veya Microsoft hesabına geçin	Einmal mit dem Internet verbinden oder zum Microsoft-Konto wechseln
+account_type_ely	Ely.by account (skins only, no Mojang ownership)	Аккаунт Ely.by (только скины, без лицензии Mojang)	Ely.by hesabı (yalnızca görünümler, Mojang sahipliği yok)	Ely.by-Konto (nur Skins, kein Mojang-Besitz)
+account_type_ms	Microsoft	Microsoft	Microsoft	Microsoft
+ely_added_1_s	Added %1$s	Добавлен %1$s	Eklendi: %1$s	Hinzugefügt %1$s
+ely_body	Ely.by is a free skin service. When you play with an Ely.by account, the launcher loads authlib-injector so other players on Ely.by servers see your skin. Official Mojang servers will not accept this account.	Ely.by — бесплатный сервис скинов. При игре с аккаунтом Ely.by лаунчер подключает authlib-injector, чтобы игроки на серверах Ely.by видели ваш скин. Официальные серверы Mojang этот аккаунт не принимают.	Ely.by ücretsiz bir görünüm hizmetidir. Ely.by hesabıyla oynadığınızda başlatıcı, Ely.by sunucularındaki oyuncuların görünümünüzü görmesi için authlib-injector yükler. Resmi Mojang sunucuları bu hesabı kabul etmez.	Ely.by ist ein kostenloser Skin-Dienst. Beim Spielen mit einem Ely.by-Konto lädt der Launcher authlib-injector, damit andere Spieler auf Ely.by-Servern deinen Skin sehen. Offizielle Mojang-Server akzeptieren dieses Konto nicht.
+ely_code	Two-factor code	Код двухфакторной защиты	İki adımlı doğrulama kodu	Zwei-Faktor-Code
+ely_code_hint	Your Ely.by account has two-factor sign-in. Enter the code from your authenticator app.	В аккаунте Ely.by включена двухфакторная защита. Введите код из приложения-аутентификатора.	Ely.by hesabınızda iki adımlı doğrulama açık. Kimlik doğrulama uygulamanızdaki kodu girin.	Dein Ely.by-Konto nutzt Zwei-Faktor-Anmeldung. Gib den Code aus deiner Authenticator-App ein.
+ely_login	Ely.by username or email	Логин или e-mail Ely.by	Ely.by kullanıcı adı veya e-posta	Ely.by-Benutzername oder E-Mail
+ely_needs_owner	Add a Microsoft account that owns Minecraft: Java Edition first. Ely.by is only offered to players who own the game.	Сначала добавьте аккаунт Microsoft с купленной Minecraft: Java Edition. Ely.by доступен только владельцам игры.	Önce Minecraft: Java Edition'a sahip bir Microsoft hesabı ekleyin. Ely.by yalnızca oyuna sahip oyunculara sunulur.	Füge zuerst ein Microsoft-Konto hinzu, das Minecraft: Java Edition besitzt. Ely.by wird nur Spielern angeboten, die das Spiel besitzen.
+ely_password	Ely.by password	Пароль Ely.by	Ely.by şifresi	Ely.by-Passwort
+ely_password_note	The password is sent once to authserver.ely.by and is never saved. Only the session token is stored, encrypted.	Пароль отправляется один раз на authserver.ely.by и нигде не сохраняется. Хранится только токен сессии в зашифрованном виде.	Şifre yalnızca bir kez authserver.ely.by adresine gönderilir ve kaydedilmez. Yalnızca oturum anahtarı şifrelenmiş olarak saklanır.	Das Passwort wird einmal an authserver.ely.by gesendet und nie gespeichert. Gespeichert wird nur das verschlüsselte Sitzungstoken.
+ely_sign_in	Sign in to Ely.by	Войти в Ely.by	Ely.by'ye giriş yap	Bei Ely.by anmelden
+ely_subtitle	Skins on Ely.by servers	Скины на серверах Ely.by	Ely.by sunucularında görünümler	Skins auf Ely.by-Servern
+ely_title	Ely.by	Ely.by	Ely.by	Ely.by
+ely_wrong_credentials	Wrong username or password.	Неверный логин или пароль.	Kullanıcı adı veya şifre yanlış.	Falscher Benutzername oder falsches Passwort.
+face_back	Back	Сзади	Arka	Hinten
+face_bottom	Bottom	Снизу	Alt	Unten
+face_front	Front	Спереди	Ön	Vorne
+face_left	Left	Слева	Sol	Links
+face_right	Right	Справа	Sağ	Rechts
+face_top	Top	Сверху	Üst	Oben
+msg_not_a_skin_using_photo	This picture is not a skin, so it was opened in “From photo”.	Это изображение не является скином, поэтому оно открыто в режиме «Из фото».	Bu resim bir görünüm değil, bu yüzden “Fotoğraftan” içinde açıldı.	Dieses Bild ist kein Skin und wurde deshalb in „Aus Foto“ geöffnet.
+msg_skin_deleted	Skin deleted	Скин удалён	Görünüm silindi	Skin gelöscht
+msg_skin_imported	Skin imported	Скин импортирован	Görünüm içe aktarıldı	Skin importiert
+msg_skin_saved	Skin saved	Скин сохранён	Görünüm kaydedildi	Skin gespeichert
+msg_skin_uploaded	Skin set on your Minecraft profile	Скин установлен в профиль Minecraft	Görünüm Minecraft profilinize ayarlandı	Skin im Minecraft-Profil gesetzt
+name	Name	Название	Ad	Name
+nav_skins	Skins	Скины	Görünümler	Skins
+part_body	Body	Тело	Gövde	Körper
+part_hat	Hat layer	Слой шапки	Şapka katmanı	Hut-Ebene
+part_head	Head	Голова	Baş	Kopf
+part_jacket	Jacket layer	Слой куртки	Ceket katmanı	Jacken-Ebene
+part_left_arm	Left arm	Левая рука	Sol kol	Linker Arm
+part_left_leg	Left leg	Левая нога	Sol bacak	Linkes Bein
+part_left_pants	Left pants layer	Слой левой штанины	Sol pantolon katmanı	Ebene linkes Hosenbein
+part_left_sleeve	Left sleeve layer	Слой левого рукава	Sol kol katmanı	Ebene linker Ärmel
+part_right_arm	Right arm	Правая рука	Sağ kol	Rechter Arm
+part_right_leg	Right leg	Правая нога	Sağ bacak	Rechtes Bein
+part_right_pants	Right pants layer	Слой правой штанины	Sağ pantolon katmanı	Ebene rechtes Hosenbein
+part_right_sleeve	Right sleeve layer	Слой правого рукава	Sağ kol katmanı	Ebene rechter Ärmel
+privacy_ely_hosts	Ely.by (only if you add an Ely.by account): authserver.ely.by, skinsystem.ely.by, authlib-injector.yushi.moe	Ely.by (только если добавлен аккаунт Ely.by): authserver.ely.by, skinsystem.ely.by, authlib-injector.yushi.moe	Ely.by (yalnızca Ely.by hesabı eklerseniz): authserver.ely.by, skinsystem.ely.by, authlib-injector.yushi.moe	Ely.by (nur mit Ely.by-Konto): authserver.ely.by, skinsystem.ely.by, authlib-injector.yushi.moe
+skin_base_hint	Base layer: always visible, should be fully opaque.	Основной слой: виден всегда, должен быть непрозрачным.	Temel katman: her zaman görünür, tamamen opak olmalıdır.	Grundebene: immer sichtbar, sollte deckend sein.
+skin_bedrock_pack	Send to Bedrock	Отправить в Bedrock	Bedrock'a gönder	An Bedrock senden
+skin_crop_horizontal	Horizontal position	Положение по горизонтали	Yatay konum	Horizontale Position
+skin_crop_size	Frame size	Размер рамки	Çerçeve boyutu	Rahmengröße
+skin_crop_vertical	Vertical position	Положение по вертикали	Dikey konum	Vertikale Position
+skin_default_name	My skin	Мой скин	Görünümüm	Mein Skin
+skin_delete_body	The skin file is removed from the launcher. Skins already set on your accounts stay.	Файл скина будет удалён из лаунчера. Скины, уже установленные на аккаунты, останутся.	Görünüm dosyası başlatıcıdan kaldırılır. Hesaplarınıza zaten ayarlanmış görünümler kalır.	Die Skin-Datei wird aus dem Launcher entfernt. Bereits gesetzte Skins bleiben erhalten.
+skin_draw_new	Draw new	Нарисовать	Yeni çiz	Neu zeichnen
+skin_export_png	Save PNG	Сохранить PNG	PNG kaydet	PNG speichern
+skin_from_photo	From photo	Из фото	Fotoğraftan	Aus Foto
+skin_full_texture	Full texture	Вся текстура	Tüm doku	Gesamte Textur
+skin_hex_colour	Colour (#RRGGBB)	Цвет (#RRGGBB)	Renk (#RRGGBB)	Farbe (#RRGGBB)
+skin_import_png	Import PNG	Импорт PNG	PNG içe aktar	PNG importieren
+skin_model_classic	Classic (4 px arms)	Классическая (руки 4 px)	Klasik (4 px kollar)	Klassisch (4-px-Arme)
+skin_model_slim	Slim (3 px arms)	Тонкая (руки 3 px)	İnce (3 px kollar)	Schlank (3-px-Arme)
+skin_not_found	This skin could not be opened.	Не удалось открыть скин.	Bu görünüm açılamadı.	Dieser Skin konnte nicht geöffnet werden.
+skin_overlay_hint	Second layer: drawn on top, transparent pixels show the base layer.	Второй слой: рисуется поверх, прозрачные пиксели показывают основной слой.	İkinci katman: üstte çizilir, saydam pikseller temel katmanı gösterir.	Zweite Ebene: liegt oben, transparente Pixel zeigen die Grundebene.
+skin_photo_default_name	Photo skin	Скин из фото	Fotoğraf görünümü	Foto-Skin
+skin_photo_hint	Move the frame over the face. The face and hair colour are copied onto the head; you can finish the rest in the editor.	Наведите рамку на лицо. Лицо и цвет волос переносятся на голову, остальное можно дорисовать в редакторе.	Çerçeveyi yüzün üzerine getirin. Yüz ve saç rengi başa kopyalanır; geri kalanını düzenleyicide tamamlayabilirsiniz.	Schiebe den Rahmen über das Gesicht. Gesicht und Haarfarbe werden auf den Kopf übertragen, den Rest kannst du im Editor zeichnen.
+skin_save_and_edit	Save and edit	Сохранить и редактировать	Kaydet ve düzenle	Speichern und bearbeiten
+skin_upload_action	Set skin	Установить	Görünümü ayarla	Skin setzen
+skin_upload_confirm	The skin will replace the current one on your Minecraft: Java Edition profile through the official Minecraft service.	Скин заменит текущий в профиле Minecraft: Java Edition через официальный сервис Minecraft.	Görünüm, resmi Minecraft hizmeti aracılığıyla Minecraft: Java Edition profilinizdeki mevcut görünümün yerini alacak.	Der Skin ersetzt den aktuellen in deinem Minecraft: Java Edition-Profil über den offiziellen Minecraft-Dienst.
+skin_upload_ms	Set on Microsoft profile	Установить в профиль Microsoft	Microsoft profiline ayarla	Im Microsoft-Profil setzen
+skin_upload_needs_ms	Add a Microsoft account to set skins on your official profile.	Добавьте аккаунт Microsoft, чтобы устанавливать скины в официальный профиль.	Resmi profilinize görünüm ayarlamak için bir Microsoft hesabı ekleyin.	Füge ein Microsoft-Konto hinzu, um Skins im offiziellen Profil zu setzen.
+skins_ely_body	To show a skin on Ely.by servers, upload it on ely.by and sign in with your Ely.by account under Accounts.	Чтобы скин был виден на серверах Ely.by, загрузите его на ely.by и войдите в аккаунт Ely.by в разделе «Аккаунты».	Görünümün Ely.by sunucularında görünmesi için ely.by'ye yükleyin ve Hesaplar bölümünde Ely.by hesabınızla giriş yapın.	Damit ein Skin auf Ely.by-Servern erscheint, lade ihn auf ely.by hoch und melde dich unter Konten mit Ely.by an.
+skins_ely_title	Ely.by	Ely.by	Ely.by	Ely.by
+skins_empty_body	Import a skin PNG, build one from a photo or draw your own.	Импортируйте PNG скина, создайте скин из фото или нарисуйте свой.	Bir görünüm PNG'si içe aktarın, fotoğraftan oluşturun veya kendinizinkini çizin.	Importiere ein Skin-PNG, erstelle eins aus einem Foto oder zeichne deinen eigenen.
+skins_empty_title	No skins yet	Скинов пока нет	Henüz görünüm yok	Noch keine Skins
+skins_intro	Skins are 64×64 PNG files. Use them in Java Edition (Microsoft profile), in Bedrock (skin pack) or on Ely.by.	Скины — это PNG 64×64. Их можно использовать в Java Edition (профиль Microsoft), в Bedrock (набор скинов) или на Ely.by.	Görünümler 64×64 PNG dosyalarıdır. Java Edition'da (Microsoft profili), Bedrock'ta (görünüm paketi) veya Ely.by'de kullanabilirsiniz.	Skins sind 64×64-PNG-Dateien. Nutze sie in der Java Edition (Microsoft-Profil), in Bedrock (Skin-Paket) oder auf Ely.by.
+skins_open_ely	Open ely.by	Открыть ely.by	ely.by'yi aç	ely.by öffnen
+title_skin_editor	Skin editor	Редактор скинов	Görünüm düzenleyici	Skin-Editor
+tool_eraser	Eraser	Ластик	Silgi	Radierer
+tool_fill	Fill	Заливка	Doldur	Füllen
+tool_picker	Pick colour	Пипетка	Renk seç	Farbe aufnehmen
+tool_pencil	Pencil	Карандаш	Kalem	Stift
+tool_redo	Redo	Повторить	Yinele	Wiederholen
+tool_undo	Undo	Отменить	Geri al	Rückgängig

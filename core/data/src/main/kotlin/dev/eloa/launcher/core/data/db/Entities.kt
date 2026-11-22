@@ -113,6 +113,8 @@ data class AccountEntity(
     val skinUrl: String?,
     val addedAt: Long,
     val lastRefreshAt: Long,
+    /** MSA (Microsoft) or ELYBY. */
+    @ColumnInfo(defaultValue = "MSA") val type: String = "MSA",
 ) {
     override fun equals(other: Any?) = other is AccountEntity && other.id == id && other.lastRefreshAt == lastRefreshAt && other.active == active
     override fun hashCode() = id.hashCode()

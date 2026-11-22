@@ -88,5 +88,6 @@ private fun issueText(code: String): Pair<String, String?>? = when (code) {
     "NO_RENDERER" -> stringResource(R.string.pf_no_renderer) to stringResource(R.string.pf_no_renderer_fix)
     "NO_WORLD" -> stringResource(R.string.pf_no_world) to stringResource(R.string.pf_no_world_fix)
     "VERSION_MISMATCH" -> stringResource(R.string.pf_version_mismatch) to null
+    "AUTHLIB_MISSING" -> stringResource(R.string.pf_authlib_missing) to stringResource(R.string.pf_authlib_missing_fix)
     else -> null
 }

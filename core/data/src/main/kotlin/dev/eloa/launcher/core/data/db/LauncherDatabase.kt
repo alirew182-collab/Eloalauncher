@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         JavaProfileEntity::class, AccountEntity::class, LogEntity::class, LaunchHistoryEntity::class,
         WorldBackupEntity::class, NotificationEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 abstract class LauncherDatabase : RoomDatabase() {
@@ -26,6 +26,13 @@ abstract class LauncherDatabase : RoomDatabase() {
 
     companion object {
         const val NAME = "launcher.db"
+
+        /** v3: account type (Microsoft or Ely.by). */
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE accounts ADD COLUMN type TEXT NOT NULL DEFAULT 'MSA'")
+            }
+        }
 
         /** v2: world backups, notification centre, per-profile runtime/renderer/resolution scale. */
         val MIGRATION_1_2 = object : Migration(1, 2) {

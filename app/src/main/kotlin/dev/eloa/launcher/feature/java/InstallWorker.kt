@@ -1,5 +1,6 @@
 package dev.eloa.launcher.feature.java
 
+import dev.eloa.launcher.feature.common.str
 import android.app.Notification
 import android.content.Context
 import android.content.pm.ServiceInfo
@@ -62,7 +63,7 @@ class InstallWorker @AssistedInject constructor(
         runCatching { setForeground(foreground(0f, "Preparing ${profile.name}")) }
         profiles.setInstallState(profileId, InstallState.INSTALLING)
         return try {
-            stage("Loading version list")
+            stage(str(R.string.stage_version_list))
             val manifest = java.refreshManifest() ?: throw IOException("Version list unavailable — check your connection")
             val entry = manifest.versions.firstOrNull { it.id == profile.minecraftVersion }
                 ?: throw IOException("Minecraft ${profile.minecraftVersion} is not in the official version list")
@@ -107,7 +108,7 @@ class InstallWorker @AssistedInject constructor(
     }
 
     private suspend fun installModpackFiles(pack: File, gameDirName: String) {
-        stage("Modpack files")
+        stage(str(R.string.stage_modpack_files))
         val plan = Mrpack.read(pack)
         val gameDir = storage.instance(gameDirName).gameDir
         val requests = plan.files.map { f ->
@@ -121,8 +122,8 @@ class InstallWorker @AssistedInject constructor(
     }
 
     private fun stageLabel(s: InstallStage) = when (s) {
-        InstallStage.METADATA -> "Metadata"; InstallStage.LIBRARIES -> "Libraries"; InstallStage.CLIENT -> "Game client"
-        InstallStage.ASSET_INDEX -> "Asset index"; InstallStage.ASSETS -> "Assets"; InstallStage.NATIVES -> "Native libraries"
+        InstallStage.METADATA -> str(R.string.stage_metadata); InstallStage.LIBRARIES -> str(R.string.stage_libraries); InstallStage.CLIENT -> str(R.string.stage_client)
+        InstallStage.ASSET_INDEX -> str(R.string.stage_asset_index); InstallStage.ASSETS -> str(R.string.stage_assets); InstallStage.NATIVES -> str(R.string.stage_natives)
         InstallStage.VERIFY -> "Verifying"; InstallStage.DONE -> "Done"
     }
 
@@ -136,10 +137,10 @@ class InstallWorker @AssistedInject constructor(
         if (now - lastNotify < 500 && p.active.isNotEmpty()) return
         lastNotify = now
         val detail = buildString {
-            append("${p.completedFiles}/${p.totalFiles} files")
+            append(str(R.string.files_1_s_of_2_s, p.completedFiles, p.totalFiles))
             if (p.totalBytes > 0) append(" · ${FileOps.formatSize(p.downloadedBytes)} / ${FileOps.formatSize(p.totalBytes)}")
             if (p.bytesPerSecond > 0) append(" · ${FileOps.formatSize(p.bytesPerSecond)}/s")
-            p.etaSeconds?.let { append(" · ${it / 60}m ${it % 60}s left") }
+            p.etaSeconds?.let { append(" · " + str(R.string.eta_1_s_2_s, it / 60, it % 60)) }
         }
         setProgressAsync(Data.Builder().putString(KEY_STAGE, stage).putFloat(KEY_FRACTION, p.fraction).putString(KEY_DETAIL, detail).build())
         runCatching { setForegroundAsync(foreground(p.fraction, "$stage · $detail")) }
@@ -148,16 +149,16 @@ class InstallWorker @AssistedInject constructor(
     private fun foreground(fraction: Float, text: String): ForegroundInfo {
         val n: Notification = NotificationCompat.Builder(applicationContext, EloaApp.CHANNEL_DOWNLOADS)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Installing game files")
+            .setContentTitle(str(R.string.notif_installing_title))
             .setContentText(text)
             .setOnlyAlertOnce(true).setOngoing(true)
             .setProgress(100, (fraction * 100).toInt().coerceIn(0, 100), fraction <= 0f)
-            .addAction(0, "Cancel", WorkManager.getInstance(applicationContext).createCancelPendingIntent(id))
+            .addAction(0, str(dev.eloa.launcher.core.designsystem.R.string.ds_cancel), WorkManager.getInstance(applicationContext).createCancelPendingIntent(id))
             .build()
         return if (Build.VERSION.SDK_INT >= 29) ForegroundInfo(NOTIFICATION_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC) else ForegroundInfo(NOTIFICATION_ID, n)
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo = foreground(0f, "Preparing")
+    override suspend fun getForegroundInfo(): ForegroundInfo = foreground(0f, str(R.string.preparing))
 
     companion object {
         const val KEY_PROFILE = "profile"

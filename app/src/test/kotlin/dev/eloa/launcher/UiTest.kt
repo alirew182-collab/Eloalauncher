@@ -1,6 +1,7 @@
 package dev.eloa.launcher
 
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
@@ -12,6 +13,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.eloa.launcher.core.data.settings.SettingsRepository
@@ -37,7 +40,7 @@ val SCREEN_TAGS = mapOf(
     Destination.LIBRARY to "library", Destination.WORLDS to "worlds", Destination.ACCOUNTS to "accounts",
     Destination.RUNTIMES to "runtimes", Destination.DOWNLOADS to "downloads", Destination.PERFORMANCE to "performance",
     Destination.GAME_SETTINGS to "game_settings", Destination.CONTROLS to "controls", Destination.NOTIFICATIONS to "notifications",
-    Destination.UPDATES to "updates", Destination.PRIVACY to "privacy",
+    Destination.UPDATES to "updates", Destination.PRIVACY to "privacy", Destination.SKINS to "skins",
 )
 
 abstract class UiTestBase : HiltTestBase() {
@@ -91,6 +94,26 @@ class PhoneUiTest : UiTestBase() {
         go(Destination.MODS); waitText("No profile")
         go(Destination.PROFILES); waitText("No profiles yet")
         go(Destination.DIAGNOSTICS); waitText("Not run yet")
+    }
+
+    @Test fun `draw a new skin, paint a pixel and save it`() {
+        go(Destination.SKINS)
+        waitText("No skins yet")
+        compose.onNodeWithTag("skin_new").performClick()
+        compose.waitTag("skin_editor")
+        compose.onNodeWithTag("skin_undo").assertIsNotEnabled()
+        compose.onNodeWithTag("skin_canvas").performScrollTo().performClick()
+        compose.onNodeWithTag("skin_undo").assertIsEnabled()
+        compose.onNodeWithTag("skin_save").performScrollTo().performClick()
+        compose.waitTag("skin_item")
+        waitText("My skin")
+    }
+
+    @Test fun `ely by sign-in is locked until a microsoft owner is added`() {
+        go(Destination.ACCOUNTS)
+        compose.onNodeWithTag("accounts").performScrollToNode(hasTestTag("ely_card"))
+        compose.onNodeWithTag("ely_sign_in").assertIsNotEnabled()
+        waitText("Add a Microsoft account that owns")
     }
 
     @Test fun `play without profile explains what to do`() {

@@ -19,7 +19,7 @@ class MigrationTest {
     private val ctx = ApplicationProvider.getApplicationContext<Context>()
 
     /** A database created by launcher 1.0 (schema 1) opens with version 2 and keeps its rows. */
-    @Test fun `v1 database migrates to v2 without data loss`() {
+    @Test fun `v1 database migrates to the current schema without data loss`() {
         val name = "migrate.db"
         ctx.deleteDatabase(name)
         // Create schema 1 exactly as exported by Room for launcher 1.0.
@@ -44,12 +44,13 @@ class MigrationTest {
             "INSERT INTO java_profiles (id, name, description, iconKey, coverKey, minecraftVersion, loader, gameDirName, minMemoryMb, maxMemoryMb, jvmArgs, gameArgs, graphicsPreset, createdAt, installState, pendingProcessors) " +
                 "VALUES ('p1', 'Old', '', 'grass', 'forest', '1.20.1', 'FABRIC', 'old', 512, 2048, '', '', 'HIGH', 1, 'INSTALLED', 0)",
         )
+        helper.writableDatabase.execSQL("INSERT INTO accounts (id, username, xuid, encryptedTokens, minecraftTokenExpiresAt, active, skinUrl, addedAt, lastRefreshAt) VALUES ('u1', 'Steve', NULL, x'00', 0, 1, NULL, 1, 1)")
         helper.close()
 
-        val db = Room.databaseBuilder(ctx, LauncherDatabase::class.java, name).addMigrations(LauncherDatabase.MIGRATION_1_2).allowMainThreadQueries().build()
+        val db = Room.databaseBuilder(ctx, LauncherDatabase::class.java, name).addMigrations(LauncherDatabase.MIGRATION_1_2, LauncherDatabase.MIGRATION_2_3).allowMainThreadQueries().build()
         runBlocking {
             val p = db.profileDao().byId("p1")!!
-            assertEquals("Old", p.name); assertEquals("AUTO", p.renderer); assertNull(p.runtimeName); assertEquals(1f, p.resolutionScale, 0f)
+            assertEquals("Old", p.name); assertEquals("MSA", db.accountDao().byId("u1")!!.type); assertEquals("AUTO", p.renderer); assertNull(p.runtimeName); assertEquals(1f, p.resolutionScale, 0f)
             assertEquals(0, db.worldBackupDao().observeAll().let { it.first() }.size)
             db.notificationDao().insert(dev.eloa.launcher.core.data.db.NotificationEntity(type = "INFO", title = "t", message = "m", createdAt = 1))
             assertEquals(1, db.notificationDao().observeUnread().first())

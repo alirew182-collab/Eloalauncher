@@ -40,11 +40,11 @@ class UserMessages @Inject constructor() {
 
 /** Converts exceptions into short, user-facing explanations. */
 fun Throwable.userMessage(): String = when (this) {
-    is java.net.UnknownHostException -> "No internet connection or the server is unreachable."
-    is java.net.SocketTimeoutException -> "The server did not respond in time. Check your connection and retry."
-    is javax.net.ssl.SSLException -> "Secure connection failed (${message ?: "TLS error"})."
-    is dev.eloa.launcher.domain.java.download.InsufficientSpaceException -> message ?: "Not enough storage."
-    is dev.eloa.launcher.core.common.io.PathTraversalException -> "Rejected unsafe file path."
+    is java.net.UnknownHostException -> str(R.string.err_no_internet)
+    is java.net.SocketTimeoutException -> str(R.string.err_timeout)
+    is javax.net.ssl.SSLException -> str(R.string.err_tls_1_s, message ?: "TLS")
+    is dev.eloa.launcher.domain.java.download.InsufficientSpaceException -> message ?: str(R.string.inst_storage)
+    is dev.eloa.launcher.core.common.io.PathTraversalException -> str(R.string.err_unsafe_path)
     else -> message?.takeIf { it.isNotBlank() } ?: javaClass.simpleName
 }
 

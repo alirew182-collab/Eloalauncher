@@ -74,7 +74,15 @@ class LaunchCoordinator @Inject constructor(
     private val backend: GameRuntimeBackend,
     private val logger: AppLogger,
     private val settings: SettingsRepository,
+    private val http: okhttp3.OkHttpClient,
 ) {
+    /** Verified authlib-injector jar for third-party auth (Ely.by), or null if it can't be obtained. */
+    private suspend fun authlibInjector(): File? {
+        val jar = File(storage.root, "runtime/authlib-injector.jar")
+        return runCatching { dev.eloa.launcher.domain.java.auth.AuthlibInjectorDownloader(http).ensure(jar) }
+            .getOrElse { e -> logger.w("Launch", "authlib-injector unavailable", e); jar.takeIf { it.isFile } }
+    }
+
     fun recent(limit: Int) = history.observeRecent(limit)
 
     suspend fun launchBedrock(id: Long): LaunchOutcome {
@@ -128,16 +136,19 @@ class LaunchCoordinator @Inject constructor(
                 } else null
                 val dev = device.collect(includeGpu = true)
                 val rendererId = rendererFor(p.renderer, dev.gpuProfile(), p.minecraftVersion)
+                val agent = identity.authServer?.let { server -> authlibInjector()?.let { "-javaagent:${it.absolutePath}=$server" } }
                 val env = rendererId?.let { RendererCatalog.environment(it, p.resolutionScale) }.orEmpty()
                 val plan = LaunchPlanBuilder.build(version, java.dirs, gameDir, identity,
                     LaunchSettings(p.minMemoryMb, p.maxMemoryMb, p.width, p.height,
                         p.jvmArgs.split(' ').filter { it.isNotBlank() }, p.gameArgs.split(' ').filter { it.isNotBlank() },
-                        launcherVersion = BuildConfig.VERSION_NAME, quickPlaySingleplayer = world, environment = env),
+                        launcherVersion = BuildConfig.VERSION_NAME, quickPlaySingleplayer = world, environment = env, trustedJvmArgs = listOfNotNull(agent)),
                     java.ruleEnv, java.clientJarIdFor(launchId))
                 val runtime = java.runtimeFor(plan.requiredJavaMajor, p.runtimeName)
                 val issues = LaunchPreflight.check(plan, runtime, device.memorySnapshot().first / 1_048_576, p.pendingProcessors, backend.available).toMutableList()
                 if (rendererId == null) issues += PreflightIssue(PreflightSeverity.BLOCKER, "NO_RENDERER",
                     "No compatible OpenGL translation layer for this GPU and Minecraft ${p.minecraftVersion}.", "Check Performance → Renderers.")
+                if (identity.authServer != null && agent == null) issues += PreflightIssue(PreflightSeverity.BLOCKER, "AUTHLIB_MISSING",
+                    "authlib-injector (needed for Ely.by accounts) could not be downloaded and verified.", "Connect to the internet once, or switch to the Microsoft account.")
                 if (mode == LaunchMode.LOCAL_SINGLEPLAYER && world == null) issues += PreflightIssue(PreflightSeverity.BLOCKER, "NO_WORLD",
                     "Local singleplayer needs an existing world in this profile.", "Create or import a world first.")
                 if (issues.any { it.severity == PreflightSeverity.BLOCKER } || runtime == null) {

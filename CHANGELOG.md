@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0
+
+### Added
+- Skins (Library → Skins): import a 64×64 or legacy 64×32 PNG, build a skin from a photo (choose the face area, the face and hair colour go onto the head), draw a new skin or edit an existing one.
+- Skin editor: front and back preview, classic or slim arms, every body part and its second layer, one face at a time at a large scale or the whole texture; pencil, eraser, fill (stays inside the face), colour picker, palette and hex colour, undo and redo.
+- Skin actions: rename, delete, save as PNG, send to Minecraft Bedrock as a skin pack (`.mcpack`), set on the Microsoft account's Java profile through the official Minecraft Services API.
+- Ely.by accounts: sign in with Ely.by login and password (two-factor code supported). The password is sent once to authserver.ely.by and is not stored. Java launches with an Ely.by account load authlib-injector (downloaded from authlib-injector.yushi.moe and checked against its SHA-256) so the skin is visible on Ely.by servers. Ely.by sign-in is only available when a Microsoft account that owns Java Edition is already added.
+
+### Changed
+- Database schema version 3: accounts have a type (Microsoft or Ely.by).
+- Ely.by accounts are stored under their own key, so an Ely.by profile with the same UUID as the Microsoft profile cannot replace the verified Microsoft account.
+
+### Fixed
+- Several error messages and installer notifications were in English regardless of the interface language.
+
 ## 1.1.0
 
 ### Added

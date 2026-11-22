@@ -113,6 +113,27 @@ Play выполняет все проверки и честно показыва
   singleplayer (Offline + Quick Play в выбранный мир, Minecraft 1.20+). Недоступный режим
   показывается с причиной. Токены не подделываются и не генерируются.
 
+### Ely.by
+* Протокол Yggdrasil (`authserver.ely.by/auth/authenticate`, `refresh`, `validate`, `invalidate`),
+  код 2FA добавляется к паролю как `пароль:код`. Пароль не хранится, в базе только
+  зашифрованные accessToken/clientToken. Аккаунт хранится с ключом `ely:<uuid>`, чтобы не
+  перезаписать аккаунт Microsoft с тем же UUID.
+* Вход доступен только если уже добавлен аккаунт Microsoft, прошедший проверку владения игрой;
+  без него Ely.by-аккаунт не даёт запуска. Так лаунчер не становится обходом покупки.
+* При запуске добавляется `-javaagent:authlib-injector.jar=ely.by` (доверенный аргумент JVM, не
+  из пользовательских настроек). authlib-injector скачивается с authlib-injector.yushi.moe,
+  SHA-256 сверяется с опубликованным в `latest.json`; без файла запуск блокируется с причиной
+  `AUTHLIB_MISSING`.
+
+### Скины
+* Модель `domain/java/skins/Skins.kt`: раскладка UV 64×64 (части тела, грани, второй слой),
+  преобразование 64×32, определение тонких рук, превью спереди и сзади, заливка в пределах
+  грани, скин из фото (кадр → лицо 8×8, цвет волос → макушка и бока), набор скинов Bedrock
+  (`skin_pack`, `geometry.humanoid.custom`/`customSlim`).
+* Хранилище `files/skins/<id>.png` + `index.json`. Установка в профиль Java — официальный
+  `POST api.minecraftservices.com/minecraft/profile/skins` (multipart, ≤ 24 КБ) с токеном
+  аккаунта Microsoft.
+
 ### Производительность
 * Режимы Battery Saver, Balanced, Performance, Extreme Performance, Custom задают `options.txt`,
   кучу Java, масштаб рендера и параметры лаунчера. Системные настройки не меняются.

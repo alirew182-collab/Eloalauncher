@@ -21,6 +21,8 @@ data class LaunchIdentity(
     val xuid: String?,
     val clientId: String?,
     val userType: String = "msa",
+    /** Third-party auth API root for authlib-injector (e.g. "ely.by"); null for Microsoft accounts. */
+    val authServer: String? = null,
 ) {
     override fun toString() = "LaunchIdentity(playerName=$playerName, uuid=$uuid, accessToken=***)"
 }
@@ -38,6 +40,8 @@ data class LaunchSettings(
     val quickPlaySingleplayer: String? = null,
     /** Environment for the runtime backend (renderer selection, resolution scale…). */
     val environment: Map<String, String> = emptyMap(),
+    /** JVM arguments added by the launcher itself (verified authlib-injector agent). Never user input. */
+    val trustedJvmArgs: List<String> = emptyList(),
 )
 
 data class LaunchPlan(
@@ -130,6 +134,7 @@ object LaunchPlanBuilder {
         version.logging?.client?.let { lc ->
             jvm += lc.argument.replace("\${path}", File(dirs.assets, "log_configs/${lc.file.id}").absolutePath)
         }
+        jvm += settings.trustedJvmArgs
         jvm += settings.extraJvmArgs
 
         val game = ArrayList<String>()

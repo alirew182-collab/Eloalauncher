@@ -37,6 +37,7 @@ abstract class HiltTestBase {
 
     @Before fun baseSetUp() {
         hilt.inject()
+        dev.eloa.launcher.feature.common.Strings.init(context)
         WorkManagerTestInitHelper.initializeTestWorkManager(context,
             Configuration.Builder().setExecutor(SynchronousExecutor()).setWorkerFactory(workerFactory).setMinimumLoggingLevel(android.util.Log.ERROR).build())
     }

@@ -1,6 +1,6 @@
 # Eloa Launcher
 
-Лаунчер Minecraft для Android. В одном приложении: Bedrock Edition (запуск установленной игры, свои APK, дополнения, резервные копии миров) и Java Edition (версии Mojang, профили, Fabric/Quilt/Forge/NeoForge, моды, ресурспаки, шейдеры, настройки игры, Microsoft-вход).
+Лаунчер Minecraft для Android. В одном приложении: Bedrock Edition (запуск установленной игры, свои APK, дополнения, резервные копии миров) и Java Edition (версии Mojang, профили, Fabric/Quilt/Forge/NeoForge, моды, ресурспаки, шейдеры, настройки игры, Microsoft- и Ely.by-вход, скины).
 
 Kotlin, Jetpack Compose, Material 3, Coroutines, Room, DataStore, Hilt, WorkManager, SAF. minSdk 26 (Android 8.0), target/compileSdk 36. Интерфейс на английском, русском, турецком и немецком.
 
@@ -21,6 +21,8 @@ Kotlin, Jetpack Compose, Material 3, Coroutines, Room, DataStore, Hilt, WorkMana
 | Java: моды, ресурспаки, шейдеры, датапаки, миры, сборки .mrpack/.eloapack | работает |
 | Java: настройки игры записываются в `options.txt` профиля | работает |
 | Microsoft-вход: браузер (код + PKCE) и код устройства, режимы Online/Offline/Official/Local singleplayer | работает; нужен ваш Azure Client ID, одобренный Mojang |
+| Скины: импорт PNG, скин из фото, редактор (части тела, слои, заливка, пипетка, отмена), экспорт PNG, набор скинов для Bedrock, установка в профиль Microsoft | работает; установка в профиль и Bedrock проверены только на имитации сервера и intent |
+| Ely.by: вход (с 2FA), authlib-injector при запуске Java, только при наличии проверенного аккаунта Microsoft | работает на имитации сервера; на реальном ely.by не проверялось (сеть контейнера закрыта) |
 | Производительность: определение устройства, 5 режимов, память, оценка рендереров, тепловой статус | работает |
 | Управление: редактор сенсорных раскладок, профили геймпадов, тест ввода | работает; раскладки применяются игровым бэкендом, которого в сборке нет |
 | Обновления лаунчера из GitHub Releases с проверкой SHA-256 и подписи | работает |

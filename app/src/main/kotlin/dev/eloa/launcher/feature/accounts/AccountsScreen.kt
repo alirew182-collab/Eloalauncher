@@ -69,6 +69,9 @@ import dev.eloa.launcher.feature.common.formatDate
 import dev.eloa.launcher.feature.common.label
 import dev.eloa.launcher.feature.common.userMessage
 import dev.eloa.launcher.feature.java.AccountRepository
+import dev.eloa.launcher.feature.java.TYPE_ELYBY
+import dev.eloa.launcher.feature.java.TYPE_MSA
+import dev.eloa.launcher.feature.common.str
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -84,6 +87,14 @@ sealed interface SignInState {
     data class WaitingForUser(val code: DeviceCode) : SignInState
     data object WaitingForBrowser : SignInState
     data class Failed(val message: String) : SignInState
+}
+
+sealed interface ElyState {
+    data object Idle : ElyState
+    data object Busy : ElyState
+    data object NeedsCode : ElyState
+    data object Done : ElyState
+    data class Failed(val message: String) : ElyState
 }
 
 data class AccountsUi(val settings: LauncherSettings = LauncherSettings(), val accounts: List<AccountEntity> = emptyList(), val modes: List<ModeAvailability> = emptyList(), val online: Boolean = false)
@@ -146,6 +157,27 @@ class AccountsViewModel @Inject constructor(
     fun setActive(id: String) = act(R.string.msg_account_selected) { accounts.setActive(id) }
     fun refresh(id: String) = act(R.string.msg_session_refreshed) { accounts.refresh(id) }
     fun signOut(id: String) = act(R.string.msg_signed_out) { accounts.signOut(id) }
+
+    // Ely.by sign-in state for the dialog. The password lives only in the dialog's text field.
+    private val _ely = MutableStateFlow<ElyState>(ElyState.Idle)
+    val ely: StateFlow<ElyState> = _ely
+    fun resetEly() { _ely.value = ElyState.Idle }
+    fun signInEly(login: String, password: String, totp: String?) = viewModelScope.launch {
+        _ely.value = ElyState.Busy
+        try {
+            val acc = accounts.addElyBy(login, password, totp)
+            _ely.value = ElyState.Done
+            messages.info(R.string.msg_signed_in_as, acc.username)
+        } catch (e: dev.eloa.launcher.domain.java.auth.ElyAuthException.TwoFactorRequired) {
+            _ely.value = ElyState.NeedsCode
+        } catch (e: dev.eloa.launcher.domain.java.auth.ElyAuthException.InvalidCredentials) {
+            _ely.value = ElyState.Failed(str(R.string.ely_wrong_credentials))
+        } catch (e: dev.eloa.launcher.feature.java.ElyRequiresOwnershipException) {
+            _ely.value = ElyState.Failed(str(R.string.ely_needs_owner))
+        } catch (e: kotlinx.coroutines.CancellationException) { throw e } catch (e: Exception) {
+            _ely.value = ElyState.Failed(e.userMessage())
+        }
+    }
 }
 
 @Composable
@@ -154,6 +186,8 @@ fun AccountsScreen(padding: PaddingValues, vm: AccountsViewModel = hiltViewModel
     val signIn by vm.signIn.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var signOutId by remember { mutableStateOf<String?>(null) }
+    var elyDialog by remember { mutableStateOf(false) }
+    val ely by vm.ely.collectAsStateWithLifecycle()
     val s = ui.settings
     val hasClient = s.msClientId.isNotBlank()
 
@@ -168,8 +202,13 @@ fun AccountsScreen(padding: PaddingValues, vm: AccountsViewModel = hiltViewModel
                         Spacer(Modifier.width(10.dp))
                         Column(Modifier.weight(1f)) {
                             Text(a.username, fontWeight = FontWeight.SemiBold)
-                            Text(stringResource(R.string.session_valid_until_1_s, formatDate(a.minecraftTokenExpiresAt)), style = MaterialTheme.typography.bodySmall)
-                            Text(stringResource(R.string.ownership_verified_added_1_s, formatDate(a.addedAt)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            if (a.type == TYPE_ELYBY) {
+                                Text(stringResource(R.string.account_type_ely), style = MaterialTheme.typography.bodySmall)
+                                Text(stringResource(R.string.ely_added_1_s, formatDate(a.addedAt)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            } else {
+                                Text(stringResource(R.string.account_type_ms) + " · " + stringResource(R.string.session_valid_until_1_s, formatDate(a.minecraftTokenExpiresAt)), style = MaterialTheme.typography.bodySmall)
+                                Text(stringResource(R.string.ownership_verified_added_1_s, formatDate(a.addedAt)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
                         }
                         if (a.active) StatusChip(stringResource(R.string.active), StatusLevel.OK) else TextButton(onClick = { vm.setActive(a.id) }) { Text(stringResource(R.string.use)) }
                     }
@@ -188,6 +227,15 @@ fun AccountsScreen(padding: PaddingValues, vm: AccountsViewModel = hiltViewModel
             }
         }
 
+        item { SectionHeader(stringResource(R.string.ely_title), subtitle = stringResource(R.string.ely_subtitle)) }
+        item {
+            LauncherCard(Modifier.fillMaxWidth().testTag("ely_card")) {
+                val hasOwner = ui.accounts.any { it.type == TYPE_MSA }
+                Text(stringResource(if (hasOwner) R.string.ely_body else R.string.ely_needs_owner), style = MaterialTheme.typography.bodySmall,
+                    color = if (hasOwner) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error)
+                FilledTonalButton(onClick = { elyDialog = true }, enabled = hasOwner && ui.online, modifier = Modifier.testTag("ely_sign_in")) { Text(stringResource(R.string.ely_sign_in)) }
+            }
+        }
         item { SectionHeader(stringResource(R.string.launch_mode), subtitle = stringResource(R.string.each_mode_is_a_real_different)) }
         item {
             LauncherCard(Modifier.fillMaxWidth().testTag("launch_modes")) {
@@ -248,4 +296,41 @@ fun AccountsScreen(padding: PaddingValues, vm: AccountsViewModel = hiltViewModel
         is SignInState.Failed -> AlertDialog(onDismissRequest = vm::cancel, title = { Text(stringResource(R.string.sign_in_failed)) }, text = { Text(si.message) }, confirmButton = { TextButton(onClick = vm::cancel) { Text("OK") } })
         SignInState.Idle -> Unit
     }
+    if (elyDialog) ElyDialog(ely, vm, onClose = { elyDialog = false; vm.resetEly() })
+}
+
+@Composable
+private fun ElyDialog(state: ElyState, vm: AccountsViewModel, onClose: () -> Unit) {
+    var login by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var code by remember { mutableStateOf("") }
+    androidx.compose.runtime.LaunchedEffect(state) { if (state is ElyState.Done) onClose() }
+    if (state is ElyState.Done) return
+    AlertDialog(
+        modifier = Modifier.testTag("ely_dialog"),
+        onDismissRequest = onClose,
+        title = { Text(stringResource(R.string.ely_sign_in)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(R.string.ely_password_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                OutlinedTextField(login, { login = it.trim().take(100) }, label = { Text(stringResource(R.string.ely_login)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("ely_login"),
+                    keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Email))
+                OutlinedTextField(password, { password = it.take(200) }, label = { Text(stringResource(R.string.ely_password)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("ely_password"),
+                    visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                    keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Password))
+                if (state is ElyState.NeedsCode || code.isNotEmpty()) {
+                    OutlinedTextField(code, { code = it.filter(Char::isDigit).take(8) }, label = { Text(stringResource(R.string.ely_code)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("ely_code"),
+                        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number))
+                    Text(stringResource(R.string.ely_code_hint), style = MaterialTheme.typography.bodySmall)
+                }
+                if (state is ElyState.Failed) Text(state.message, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                if (state is ElyState.Busy) CircularProgressIndicator()
+            }
+        },
+        confirmButton = {
+            Button(onClick = { vm.signInEly(login, password, code.ifBlank { null }) }, enabled = state !is ElyState.Busy && login.isNotBlank() && password.isNotEmpty(),
+                modifier = Modifier.testTag("ely_confirm")) { Text(stringResource(R.string.ely_sign_in)) }
+        },
+        dismissButton = { TextButton(onClick = onClose) { Text(stringResource(dev.eloa.launcher.core.designsystem.R.string.ds_cancel)) } },
+    )
 }

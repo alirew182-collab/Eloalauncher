@@ -1,5 +1,7 @@
 package dev.eloa.launcher.feature.bedrock
 
+import dev.eloa.launcher.R
+import dev.eloa.launcher.feature.common.str
 import androidx.core.net.toUri
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -118,14 +120,14 @@ class InstallResultReceiver : BroadcastReceiver() {
         }
         val msg = intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE)
         val text = when (status) {
-            PackageInstaller.STATUS_SUCCESS -> "Installation completed."
-            PackageInstaller.STATUS_FAILURE_ABORTED -> "Installation was cancelled."
-            PackageInstaller.STATUS_FAILURE_BLOCKED -> "Installation was blocked by the system or a device policy."
-            PackageInstaller.STATUS_FAILURE_CONFLICT -> "Conflicts with the installed app (different signature or downgrade). Uninstall the existing app first after backing up your worlds."
-            PackageInstaller.STATUS_FAILURE_INCOMPATIBLE -> "This version is not compatible with the device."
-            PackageInstaller.STATUS_FAILURE_INVALID -> "The APK files are invalid or incomplete (missing split?)."
-            PackageInstaller.STATUS_FAILURE_STORAGE -> "Not enough storage to install."
-            else -> "Installation failed${msg?.let { ": $it" } ?: "."}"
+            PackageInstaller.STATUS_SUCCESS -> str(R.string.inst_success)
+            PackageInstaller.STATUS_FAILURE_ABORTED -> str(R.string.inst_aborted)
+            PackageInstaller.STATUS_FAILURE_BLOCKED -> str(R.string.inst_blocked)
+            PackageInstaller.STATUS_FAILURE_CONFLICT -> str(R.string.inst_conflict)
+            PackageInstaller.STATUS_FAILURE_INCOMPATIBLE -> str(R.string.inst_incompatible)
+            PackageInstaller.STATUS_FAILURE_INVALID -> str(R.string.inst_invalid)
+            PackageInstaller.STATUS_FAILURE_STORAGE -> str(R.string.inst_storage)
+            else -> str(R.string.inst_failed_1_s, msg ?: "-")
         }
         PackageInstallerGateway.emit(InstallEvent(sessionId, status == PackageInstaller.STATUS_SUCCESS, text, pkg))
     }
