@@ -49,12 +49,16 @@ class ThermalMonitor @Inject constructor(
     private val _state = MutableStateFlow(read())
     val state: StateFlow<ThermalState> = _state
     private var started = false
+    /** False when the device does not report thermal changes; the state is then refreshed on demand only. */
+    @Volatile var listenerActive = false
+        private set
 
     fun start() {
         if (started) return
         started = true
         if (Build.VERSION.SDK_INT >= 29) {
-            power.addThermalStatusListener(context.mainExecutor) { onChange() }
+            // Some devices (and test environments) have no thermal service; the API then throws.
+            listenerActive = runCatching { power.addThermalStatusListener(context.mainExecutor) { onChange() } }.isSuccess
         }
     }
 
@@ -72,7 +76,7 @@ class ThermalMonitor @Inject constructor(
     }
 
     fun read(): ThermalState {
-        val level = if (Build.VERSION.SDK_INT >= 29) ThermalLevel.entries.getOrElse(power.currentThermalStatus) { ThermalLevel.UNSUPPORTED } else ThermalLevel.UNSUPPORTED
+        val level = if (Build.VERSION.SDK_INT >= 29) runCatching { ThermalLevel.entries.getOrElse(power.currentThermalStatus) { ThermalLevel.UNSUPPORTED } }.getOrDefault(ThermalLevel.UNSUPPORTED) else ThermalLevel.UNSUPPORTED
         val headroom = if (Build.VERSION.SDK_INT >= 30) runCatching { power.getThermalHeadroom(10) }.getOrNull()?.takeIf { !it.isNaN() } else null
         val temp = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
             ?.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, Int.MIN_VALUE)?.takeIf { it != Int.MIN_VALUE }?.let { it / 10f }

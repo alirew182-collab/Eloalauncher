@@ -34,6 +34,10 @@ val SCREEN_TAGS = mapOf(
     Destination.TEXTURES to "content_RESOURCE_PACKS", Destination.SHADERS to "content_SHADER_PACKS",
     Destination.ADDONS to "addons", Destination.FILES to "files", Destination.PROFILES to "profiles",
     Destination.SETTINGS to "settings", Destination.DIAGNOSTICS to "diagnostics", Destination.LOGS to "logs",
+    Destination.LIBRARY to "library", Destination.WORLDS to "worlds", Destination.ACCOUNTS to "accounts",
+    Destination.RUNTIMES to "runtimes", Destination.DOWNLOADS to "downloads", Destination.PERFORMANCE to "performance",
+    Destination.GAME_SETTINGS to "game_settings", Destination.CONTROLS to "controls", Destination.NOTIFICATIONS to "notifications",
+    Destination.UPDATES to "updates", Destination.PRIVACY to "privacy",
 )
 
 abstract class UiTestBase : HiltTestBase() {

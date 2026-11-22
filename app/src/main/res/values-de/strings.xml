@@ -856,4 +856,15 @@
     <string name="msg_cut_1_s">%1$s ausgeschnitten; Ziel öffnen und „Einfügen“ tippen</string>
     <string name="msg_copied_1_s">%1$s kopiert; Ziel öffnen und „Einfügen“ tippen</string>
     <string name="version_code_1_s_2_s">%1$s (Code %2$s)</string>
+    <string name="bedrock_on_device">Minecraft auf diesem Gerät</string>
+    <string name="detection_failed">Erkennung fehlgeschlagen</string>
+    <string name="detection_failed_reason">Android hat keine Paketinformationen geliefert: %1$s</string>
+    <string name="installed_not_launchable">Installiert, startet nicht</string>
+    <string name="bedrock_install_instructions">Minecraft Bedrock ist nicht installiert. Kaufen und installieren Sie es mit Ihrem Konto über Google Play oder installieren Sie Ihre eigene APK im Tab „Bibliothek“ unten. Spieldateien werden nie aus inoffiziellen Quellen geladen.</string>
+    <string name="bedrock_not_launchable_reason">Das Paket ist installiert, hat aber keine Startaktivität (evtl. deaktiviert oder im Arbeitsprofil). Aktivieren Sie es in den Systemeinstellungen.</string>
+    <string name="open_google_play">Google Play öffnen</string>
+    <string name="launch_minecraft_bedrock">Minecraft Bedrock starten</string>
+    <string name="crash_analysis">Absturzanalyse</string>
+    <string name="crash_none_found">Keine bekannte Fehlerursache in den letzten Fehlern</string>
+    <string name="crash_analyze_file">Spielprotokoll oder Absturzbericht analysieren</string>
 </resources>

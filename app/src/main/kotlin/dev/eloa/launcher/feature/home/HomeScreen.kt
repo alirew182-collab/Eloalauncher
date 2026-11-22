@@ -228,7 +228,7 @@ private fun BedrockCard(s: HomeState, launching: Boolean, vm: HomeViewModel, onN
         Spacer(Modifier.height(10.dp))
         if (s.bedrock.launchable) StatusChip(stringResource(R.string.installed), StatusLevel.OK) else StatusChip(stringResource(R.string.not_installed), StatusLevel.WARNING)
         Spacer(Modifier.height(14.dp))
-        LaunchButton(if (launching) stringResource(R.string.starting) else stringResource(R.string.play), vm::launchBedrock, Modifier.fillMaxWidth().testTag("bedrock_play"), enabled = !launching, icon = Icons.Outlined.PlayArrow)
+        LaunchButton(if (launching) stringResource(R.string.starting) else stringResource(R.string.play), vm::launchBedrock, Modifier.fillMaxWidth(), enabled = !launching, icon = Icons.Outlined.PlayArrow, tag = "bedrock_play")
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(onClick = { onNavigate(Destination.BEDROCK) }, modifier = Modifier.weight(1f)) {

@@ -305,11 +305,11 @@ fun MetricTile(label: String, value: String, icon: ImageVector, modifier: Modifi
 
 /** Big gradient call-to-action used for "PLAY". */
 @Composable
-fun LaunchButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, icon: ImageVector? = null) {
+fun LaunchButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, icon: ImageVector? = null, tag: String = "launch_button") {
     Box(
         modifier.heightIn(min = 52.dp).clip(RoundedCornerShape(12.dp))
             .background(if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant)
-            .clickable(enabled = enabled, onClick = onClick).padding(horizontal = 28.dp, vertical = 14.dp).testTag("launch_button"),
+            .clickable(enabled = enabled, onClick = onClick).padding(horizontal = 28.dp, vertical = 14.dp).testTag(tag),
         contentAlignment = Alignment.Center,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {

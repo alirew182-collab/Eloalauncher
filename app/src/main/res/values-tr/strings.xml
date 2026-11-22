@@ -856,4 +856,15 @@
     <string name="msg_cut_1_s">%1$s kesildi; hedefi açıp Yapıştır\'a dokunun</string>
     <string name="msg_copied_1_s">%1$s kopyalandı; hedefi açıp Yapıştır\'a dokunun</string>
     <string name="version_code_1_s_2_s">%1$s (kod %2$s)</string>
+    <string name="bedrock_on_device">Bu cihazdaki Minecraft</string>
+    <string name="detection_failed">Algılama başarısız</string>
+    <string name="detection_failed_reason">Android paket bilgisini döndürmedi: %1$s</string>
+    <string name="installed_not_launchable">Yüklü, başlatılamıyor</string>
+    <string name="bedrock_install_instructions">Minecraft Bedrock yüklü değil. Hesabınızla Google Play\'den satın alıp yükleyin veya aşağıdaki Kütüphane sekmesinden kendi APK\'nızı yükleyin. Oyun dosyaları asla resmi olmayan kaynaklardan indirilmez.</string>
+    <string name="bedrock_not_launchable_reason">Paket yüklü ancak başlatıcı etkinliği yok (devre dışı olabilir veya iş profilindeki bir kopya olabilir). Sistem ayarlarından etkinleştirin.</string>
+    <string name="open_google_play">Google Play\'i aç</string>
+    <string name="launch_minecraft_bedrock">Minecraft Bedrock\'u başlat</string>
+    <string name="crash_analysis">Çökme analizi</string>
+    <string name="crash_none_found">Son hatalarda bilinen bir arıza kalıbı yok</string>
+    <string name="crash_analyze_file">Bir oyun kaydını veya çökme raporunu analiz et</string>
 </resources>

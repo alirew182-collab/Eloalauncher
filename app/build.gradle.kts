@@ -14,7 +14,7 @@ val keystoreProps = Properties().apply {
     val f = rootProject.file("keystore.properties")
     if (f.isFile) f.inputStream().use { load(it) }
 }
-fun signingValue(key: String): String? = keystoreProps.getProperty(key) ?: System.getenv("ELOA_" + key.uppercase())
+fun signingValue(key: String): String? = (keystoreProps.getProperty(key) ?: System.getenv("ELOA_" + key.uppercase()))?.takeIf { it.isNotBlank() }
 
 android {
     namespace = "dev.eloa.launcher"

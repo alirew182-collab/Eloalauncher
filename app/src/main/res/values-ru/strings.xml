@@ -856,4 +856,15 @@
     <string name="msg_cut_1_s">Вырезано: %1$s; откройте нужную папку и нажмите «Вставить»</string>
     <string name="msg_copied_1_s">Скопировано: %1$s; откройте нужную папку и нажмите «Вставить»</string>
     <string name="version_code_1_s_2_s">%1$s (код %2$s)</string>
+    <string name="bedrock_on_device">Minecraft на этом устройстве</string>
+    <string name="detection_failed">Ошибка обнаружения</string>
+    <string name="detection_failed_reason">Android не вернул сведения о пакете: %1$s</string>
+    <string name="installed_not_launchable">Установлен, но не запускается</string>
+    <string name="bedrock_install_instructions">Minecraft Bedrock не установлен. Купите и установите его из Google Play под своим аккаунтом или установите свой APK на вкладке «Библиотека» ниже. Файлы игры никогда не скачиваются из неофициальных источников.</string>
+    <string name="bedrock_not_launchable_reason">Пакет установлен, но у него нет активности запуска (возможно, он отключён или установлен в рабочем профиле). Включите его в системных настройках.</string>
+    <string name="open_google_play">Открыть Google Play</string>
+    <string name="launch_minecraft_bedrock">Запустить Minecraft Bedrock</string>
+    <string name="crash_analysis">Анализ сбоев</string>
+    <string name="crash_none_found">В недавних ошибках известных причин не найдено</string>
+    <string name="crash_analyze_file">Проанализировать журнал игры или отчёт о сбое</string>
 </resources>

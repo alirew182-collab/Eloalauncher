@@ -77,6 +77,8 @@ fun BedrockScreen(padding: PaddingValues, vm: BedrockViewModel = hiltViewModel()
     val plan by vm.plan.collectAsStateWithLifecycle()
     val outcome by vm.outcome.collectAsStateWithLifecycle()
     val needsPermission by vm.needsPermission.collectAsStateWithLifecycle()
+    val detection by vm.detection.collectAsStateWithLifecycle()
+    androidx.compose.runtime.LaunchedEffect(Unit) { vm.detect() }
     val context = LocalContext.current
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { vm.import(it) }
     val exporter = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { it?.let(vm::exportMetadata) }
@@ -116,11 +118,9 @@ fun BedrockScreen(padding: PaddingValues, vm: BedrockViewModel = hiltViewModel()
             when {
                 ui.loading -> SkeletonList(4, Modifier.padding(16.dp))
                 tab == 0 -> LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    item { DetectionCard(detection, vm) }
                     item {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FilledTonalButton(onClick = vm::launchInstalled) { Icon(Icons.Outlined.PlayArrow, null); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.play_installed)) }
-                            OutlinedButton(onClick = { exporter.launch("bedrock-library.json") }, enabled = ui.versions.isNotEmpty()) { Text(stringResource(R.string.backup_metadata)) }
-                        }
+                        OutlinedButton(onClick = { exporter.launch("bedrock-library.json") }, enabled = ui.versions.isNotEmpty()) { Text(stringResource(R.string.backup_metadata)) }
                     }
                     if (ui.versions.isEmpty()) item {
                         EmptyState(Icons.Outlined.Android, stringResource(R.string.no_bedrock_versions_yet),
@@ -251,4 +251,35 @@ private fun ImportReportDialog(r: ImportReport, onDismiss: () -> Unit) {
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text("OK") } },
     )
+}
+
+@Composable
+private fun DetectionCard(d: BedrockDetection, vm: BedrockViewModel) {
+    val context = LocalContext.current
+    LauncherCard(Modifier.fillMaxWidth().testTag("bedrock_detection")) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(stringResource(R.string.bedrock_on_device), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+            when {
+                d.problem != null -> StatusChip(stringResource(R.string.detection_failed), StatusLevel.ERROR)
+                d.launchable -> StatusChip(stringResource(R.string.installed), StatusLevel.OK)
+                d.installedVersion != null -> StatusChip(stringResource(R.string.installed_not_launchable), StatusLevel.WARNING)
+                else -> StatusChip(stringResource(R.string.not_installed), StatusLevel.WARNING)
+            }
+        }
+        if (d.installedVersion != null) LabeledValue(stringResource(R.string.version), stringResource(R.string.version_code_1_s_2_s, d.installedVersion, d.versionCode ?: 0))
+        d.problem?.let { Text(stringResource(R.string.detection_failed_reason, it), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
+        if (d.installedVersion == null && d.problem == null) {
+            Text(stringResource(R.string.bedrock_install_instructions), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            OutlinedButton(onClick = { runCatching { context.startActivity(vm.storeIntent()) }.onFailure { runCatching { context.startActivity(vm.webStoreIntent()) } } }) {
+                Text(stringResource(R.string.open_google_play))
+            }
+        } else if (!d.launchable) {
+            Text(stringResource(R.string.bedrock_not_launchable_reason), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Spacer(Modifier.height(8.dp))
+        Button(onClick = vm::launchInstalled, enabled = d.launchable, modifier = Modifier.fillMaxWidth().testTag("bedrock_launch_installed")) {
+            Icon(Icons.Outlined.PlayArrow, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.launch_minecraft_bedrock))
+        }
+        TextButton(onClick = vm::detect) { Text(stringResource(R.string.re_check)) }
+    }
 }

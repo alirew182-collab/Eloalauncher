@@ -28,6 +28,9 @@ import javax.inject.Inject
 
 data class BedrockUi(val loading: Boolean = true, val versions: List<BedrockVersionEntity> = emptyList(), val selectedId: Long = -1)
 
+/** What Android reports about the installed game. [problem] explains a failed detection. */
+data class BedrockDetection(val installedVersion: String? = null, val versionCode: Long? = null, val launchable: Boolean = false, val problem: String? = null)
+
 @HiltViewModel
 class BedrockViewModel @Inject constructor(
     private val repo: BedrockRepository,
@@ -43,6 +46,25 @@ class BedrockViewModel @Inject constructor(
 
     private val _progress = MutableStateFlow<ProgressInfo?>(null)
     val progress: StateFlow<ProgressInfo?> = _progress
+    private val _detection = MutableStateFlow(BedrockDetection())
+    val detection: StateFlow<BedrockDetection> = _detection
+
+    /** Re-reads the installed package through PackageManager (package visibility is declared in the manifest). */
+    fun detect() {
+        _detection.value = try {
+            val pkg = installer.installedPackage(dev.eloa.launcher.domain.bedrock.apk.KnownPackages.MINECRAFT_BEDROCK)
+            BedrockDetection(pkg?.versionName, pkg?.versionCode, installer.launchIntent(dev.eloa.launcher.domain.bedrock.apk.KnownPackages.MINECRAFT_BEDROCK) != null)
+        } catch (e: Exception) {
+            BedrockDetection(problem = e.userMessage())
+        }
+    }
+
+    fun storeIntent(): android.content.Intent = android.content.Intent(android.content.Intent.ACTION_VIEW,
+        android.net.Uri.parse("market://details?id=" + dev.eloa.launcher.domain.bedrock.apk.KnownPackages.MINECRAFT_BEDROCK))
+        .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+    fun webStoreIntent(): android.content.Intent = android.content.Intent(android.content.Intent.ACTION_VIEW,
+        android.net.Uri.parse("https://play.google.com/store/apps/details?id=" + dev.eloa.launcher.domain.bedrock.apk.KnownPackages.MINECRAFT_BEDROCK))
+        .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
     private val _report = MutableStateFlow<ImportReport?>(null)
     val report: StateFlow<ImportReport?> = _report
     private val _plan = MutableStateFlow<InstallPlan?>(null)
@@ -111,7 +133,7 @@ class BedrockViewModel @Inject constructor(
     fun appSettingsIntent(): Intent = installer.appDetailsIntent(KnownPackages.MINECRAFT_BEDROCK)
 
     fun launch(id: Long) = viewModelScope.launch { _outcome.value = launcher.launchBedrock(id) }
-    fun launchInstalled() { if (!launcher.launchInstalledBedrock()) messages.error(R.string.minecraft_bedrock_is_not_installed_on) }
+    fun launchInstalled() { if (!launcher.launchInstalledBedrock()) messages.error(R.string.minecraft_bedrock_is_not_installed_on); detect() }
     fun dismissOutcome() { _outcome.value = null }
 
     fun exportMetadata(uri: Uri) = viewModelScope.launch {
